@@ -1,23 +1,18 @@
-development:
-  adapter: mysql
-  database: rails_development
+login: &login
+  adapter: postgresql
   host: localhost
-  username: root
-  password: 
+  port: 5406
+  username: pdxruby
+  password: CHANGEME
 
-# Warning: The database defined as 'test' will be erased and
-# re-generated from your development database when you run 'rake'.
-# Do not set this db to the same as development or production.
+development:
+  database: pdxruby_dev
+  <<: *login
+
 test:
-  adapter: mysql
-  database: rails_test
-  host: localhost
-  username: root
-  password:
+  database: pdxruby_test
+  <<: *login
 
 production:
-  adapter: mysql
-  database: rails_production
-  host: localhost
-  username: root
-  password: 
+  database: pdxruby_production
+  <<: *login
