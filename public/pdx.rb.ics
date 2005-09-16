@@ -1,0 +1,62 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+X-WR-CALNAME:pdx.rb
+PRODID:-//Apple Computer\, Inc//iCal 2.0//EN
+X-WR-RELCALID:23263AA0-2C16-4AB9-B485-538527B54DC0
+X-WR-TIMEZONE:US/Pacific
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VTIMEZONE
+TZID:US/Pacific
+LAST-MODIFIED:20050914T160243Z
+BEGIN:DAYLIGHT
+DTSTART:20050403T100000
+TZOFFSETTO:-0700
+TZOFFSETFROM:+0000
+TZNAME:PDT
+END:DAYLIGHT
+BEGIN:STANDARD
+DTSTART:20051030T020000
+TZOFFSETTO:-0800
+TZOFFSETFROM:-0700
+TZNAME:PST
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:20060402T010000
+TZOFFSETTO:-0700
+TZOFFSETFROM:-0800
+TZNAME:PDT
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+LOCATION:Rose & Raindrop\, 522 SE Grand
+DTSTAMP:20050914T160154Z
+UID:5A277FB2-6EB6-4023-8D07-E734E16F2DD0
+SEQUENCE:12
+URL;VALUE=URI:http://pdxruby.org
+DTSTART;TZID=US/Pacific:20050917T110000
+SUMMARY:pdx.rb codefest
+DTEND;TZID=US/Pacific:20050917T190000
+DESCRIPTION:On Saturday\, September 17\, we will be holding a codefest t
+ o build the next version of this website. We want to have:\n\n* an event
+  planner (‘cat herder’) application that will help us coordinate meeting
+ s and other events\n\n* member journals/blogs\, with an aggregator\, so 
+ you can subscribe to the pdx.rb RSS feed\na roster/directory of our memb
+ ers\n\n* We’ll be working collaboratively\, both on design and implement
+ ation\, and plan to have something workable by the end of the day — when
+ ever that is.\n\nWe’ll gather at 11am\, meet each other\, set up\, grab 
+ some food\, and some planning. Then\, on to coding! We figure it will la
+ st until early evening.\n\nHave some thoughts? Want to code? Please cont
+ act John Labovitz <johnl@johnlabovitz.com> for more information.
+END:VEVENT
+BEGIN:VEVENT
+DTSTAMP:20050910T210109Z
+UID:BF727E9B-6C26-4B43-A274-A8BB4C725064
+SEQUENCE:6
+URL;VALUE=URI:http://pdxruby.org
+DTSTART;TZID=US/Pacific:20051004T190000
+SUMMARY:pdx.rb general meeting
+DTEND;TZID=US/Pacific:20051004T220000
+RRULE:FREQ=MONTHLY;INTERVAL=1;BYDAY=1TU
+END:VEVENT
+END:VCALENDAR

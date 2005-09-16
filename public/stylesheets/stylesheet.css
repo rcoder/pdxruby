@@ -1,0 +1,62 @@
+body {
+  font-family: Georgia, serif;
+}
+
+#banner {
+}
+
+#banner-left {
+  font-size: 36px;
+  color: red;
+  float: left;
+}
+
+#banner-right {
+  margin-left: 10em;
+}
+
+#banner h1 {
+  font-size: 36px;
+  font-weight: normal;
+}
+
+#sidebar {
+  float: left;
+}
+
+#content {
+  float: right;
+  margin-left: 12em;
+  margin-right: 10em;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+#content h2 {
+  margin: 0 0 0 -3em;
+  padding: 1em 0 0 0;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 3px;
+}
+
+#content p {
+}
+
+#content A:link {
+  color: #00c;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#content A:visited {
+  color: #009;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#content A:hover {
+  color: #00f;
+  font-weight: bold;
+}
