@@ -1,0 +1,25 @@
+<%= error_messages_for 'event' %>
+
+<!--[form:event]-->
+<p><label for="event_name">Name</label><br/>
+<%= text_field 'event', 'name'  %></p>
+
+<p><label for="event_starts_at">Starts at</label><br/>
+<%= datetime_select 'event', 'starts_at'  %></p>
+
+<p><label for="event_ends_at">Ends at</label><br/>
+<%= datetime_select 'event', 'ends_at'  %></p>
+
+<p><label for="event_agenda">Agenda</label><br/>
+<%= text_area 'event', 'agenda'  %></p>
+
+<p><label for="event_status">Status</label><br/>
+<%= text_field 'event', 'status'  %></p>
+
+<p><label for="event_minutes">Minutes</label><br/>
+<%= text_area 'event', 'minutes'  %></p>
+
+<p><label for="event_created_at">Created at</label><br/>
+<%= datetime_select 'event', 'created_at'  %></p>
+<!--[eoform:event]-->
+

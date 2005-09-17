@@ -1,0 +1,8 @@
+<% for column in Participant.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @participant.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @participant %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,22 @@
+<%= error_messages_for 'member' %>
+
+<!--[form:member]-->
+<p><label for="member_name">Name</label><br/>
+<%= text_field 'member', 'name'  %></p>
+
+<p><label for="member_email">Email</label><br/>
+<%= text_field 'member', 'email'  %></p>
+
+<p><label for="member_password">Password</label><br/>
+<%= password_field 'member', 'password'  %></p>
+
+<p><label for="member_feed_url">Feed url</label><br/>
+<%= text_field 'member', 'feed_url'  %></p>
+
+<p><label for="member_about">About</label><br/>
+<%= text_area 'member', 'about'  %></p>
+
+<p><label for="member_created_at">Created at</label><br/>
+<%= datetime_select 'member', 'created_at'  %></p>
+<!--[eoform:member]-->
+
