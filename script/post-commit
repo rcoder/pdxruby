@@ -70,7 +70,7 @@ commit_info = browser.info(rev)
 msgstr = <<END
 From: #{@conf[:sender_email]}
 To: #{@conf[:recipient_email]}
-Subject: COMMIT to '#{commit_info[:repository]}' rev.#{commit_info[:revision]'} by #{commit_info[:author]}
+Subject: COMMIT to '#{commit_info[:repository]}' rev.#{commit_info[:revision'} by #{commit_info[:author]}
 
 REV: #{commit_info[:revision]}
 
