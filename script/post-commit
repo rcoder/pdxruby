@@ -1,0 +1,89 @@
+#!/usr/bin/env ruby
+# post-commit - a hook to talk to the svnwatch rbot plugin
+# author(s): Robby Russell and Ben Bleything of the PDX.rb
+#
+# This file should be placed in the repository's hooks directory
+
+require 'time'
+
+module Subversion
+
+    class Browser
+
+        attr_accessor :path
+        attr_accessor :repos
+
+        def initialize(path)
+            @path = File.expand_path(path)
+            # guess what the repository name is
+            @repos = path.split(/\//).last
+        end
+
+        def info(revision)
+            committer, timestamp, log_size, log = `svnlook info --revision #{revision} #{@path}`.split(/\n/, 4)
+            committer = '(anonymous)' if committer.empty?
+            changed = `svnlook changed --revision #{revision} #{@path}`.split(/\n/)
+            { 
+                :author     => committer,
+                :revision   => revision.to_i,
+                :timestamp  => Time.parse(timestamp),
+                :repository => @repos,
+                :log        => log,
+                :changed    => changed, 
+            }
+        end
+
+    end
+
+end
+
+
+# confuration Options
+@conf = { 
+    :sender_email => 'johnl@johnlabovitz.com',
+    :recipient_email => 'johnl@johnlabovitz.com',
+    :smtp_host => 'localhost',
+}
+
+
+# Okay.  So we get two args from svn.
+#
+# [1] - repo path
+# [2] - revision number
+#
+# We then use this information to gather relevant data about the commit
+# and do with it as we please.
+
+path = ARGV[0]
+rev = ARGV[1]
+
+if (path.nil? || rev.nil?)
+  puts "Usage: post-commit <repo path> <rev number>"
+  exit
+end
+
+browser = Subversion::Browser.new(path)
+
+commit_info = browser.info(rev)
+
+subject = "COMMIT to '#{commit_info[:repository]}' by #{commit_info[:author]}"
+
+msgstr = <<END
+From: #{@conf[:sender_email]}
+To: #{@conf[:recipient_email]}
+Subject: #{subject}
+
+#{commit_info[:log].strip}
+
+-----
+
+#{commit_info[:changed].join("\n")}
+END
+
+require 'net/smtp'
+
+Net::SMTP.start(@conf[:smtp_host], 25) do |smtp|
+  smtp.send_message msgstr,
+                    @conf[:sender_email],
+                    @conf[:recipient_email]
+end
