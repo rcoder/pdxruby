@@ -1,4 +1,3 @@
 #!/bin/sh
 
-/usr/local/lighttpd/sbin/lighttpd -D -f config/lighttpd.conf
- 
+/usr/local/lighttpd/sbin/lighttpd -f config/lighttpd.conf
