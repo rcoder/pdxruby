@@ -4,6 +4,12 @@
 <p><label for="event_name">Name</label><br/>
 <%= text_field 'event', 'name'  %></p>
 
+
+<p><label for="location_id">Location (leave blank for other)</label><br/>
+<%= collection_select 'event', 'location_id', Location.find(:all), :id, :name, {:include_blank => true }  %>
+
+<%= render :partial => "locations/form" %>
+
 <p><label for="event_starts_at">Starts at</label><br/>
 <%= datetime_select 'event', 'starts_at'  %></p>
 

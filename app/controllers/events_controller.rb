@@ -14,14 +14,32 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @location = Location.new
   end
 
   def create
     @event = Event.new(params[:event])
+    if params[:event][:location_id] == ""
+      location = Location.find_by_name(params[:location][:name])
+      if location.nil?
+        location = Location.new(params[:location]) 
+        unless location.save
+          @location = location
+          render :action => 'new' and return
+        end
+      end
+      @location = location
+    else
+      @location = Location.find(params[:event][:location_id].to_i)
+    end
+    
+    @event.location = @location
+    
     if @event.save
       flash[:notice] = 'Event was successfully created.'
       redirect_to :action => 'list'
     else
+      @location = Location.new
       render :action => 'new'
     end
   end
