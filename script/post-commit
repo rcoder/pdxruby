@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
-# post-commit - a hook to talk to the svnwatch rbot plugin
+# post-commit - a hook to send an email to the development list
 # author(s): Robby Russell, Ben Bleything, and John Labovitz of the 
 # Portland Ruby Brigade - PDX.rb- http://www.pdxruby.org/
+#
 # This file should be placed in the repository's hooks directory
 
 require 'time'
