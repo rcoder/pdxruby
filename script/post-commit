@@ -39,9 +39,9 @@ end
 
 
 # confuration Options
-@conf = { 
-    :sender_email => 'pdxruby-dev@pdxruby.org',
-    :recipient_email => 'pdxruby-dev@pdxruby.org',
+@conf = {
+    :sender_email => 'pdxruby-dev@lists.pdxruby.org',
+    :recipient_email => 'pdxruby-dev@lists.pdxruby.org',
     :smtp_host => 'localhost',
 }
 
@@ -66,12 +66,10 @@ browser = Subversion::Browser.new(path)
 
 commit_info = browser.info(rev)
 
-subject = "COMMIT to '#{commit_info[:repository]}' by #{commit_info[:author]}"
-
 msgstr = <<END
 From: #{@conf[:sender_email]}
 To: #{@conf[:recipient_email]}
-Subject: #{subject}
+Subject: COMMIT to '#{commit_info[:repository]}' by #{commit_info[:author]}
 
 #{commit_info[:log].strip}
 
@@ -79,6 +77,8 @@ Subject: #{subject}
 
 #{commit_info[:changed].join("\n")}
 END
+
+;;puts msgstr
 
 require 'net/smtp'
 
