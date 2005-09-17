@@ -40,7 +40,7 @@ end
 
 # confuration Options
 @conf = {
-    :sender_email => 'pdxruby-dev@lists.pdxruby.org',
+    :sender_email => 'svn@pdxruby.org',
     :recipient_email => 'pdxruby-dev@lists.pdxruby.org',
     :smtp_host => 'localhost',
 }
