@@ -32,7 +32,7 @@ CREATE TABLE members (
 	id SERIAL,
 	name VARCHAR(128),
 	email VARCHAR(128),
-	password HASH,
+	password VARCHAR(32),
 	feed_url VARCHAR(256),
 	about TEXT,
 	created_at TIMESTAMP,
