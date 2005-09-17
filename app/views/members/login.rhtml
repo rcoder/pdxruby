@@ -1,0 +1,13 @@
+<!--[form:member]-->
+
+<%= start_form_tag %>
+
+<p><label for="member_email">Email</label><br/>
+<%= text_field 'member', 'email'  %></p>
+
+<p><label for="member_password">Password</label><br/>
+<%= password_field 'member', 'password'  %></p>
+
+<!--[eoform:member]-->
+
+<%= submit_tag "Login" %>

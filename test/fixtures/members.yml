@@ -1,5 +1,8 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first_member:
   id: 1
+  name: Bob
+  email: bob@bob.com
+  password: abc
 another_member:
   id: 2

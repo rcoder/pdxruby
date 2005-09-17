@@ -38,15 +38,6 @@ class MembersControllerTest < Test::Unit::TestCase
     assert assigns(:member).valid?
   end
 
-  def test_new
-    get :new
-
-    assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:member)
-  end
-
   def test_create
     num_members = Member.count
 
@@ -85,4 +76,18 @@ class MembersControllerTest < Test::Unit::TestCase
       Member.find(1)
     }
   end
+  
+  def test_anyone_can_register_to_be_a_member
+    post :new, :member => { :name => 'Bob', :email => 'bob@bob.com', :password => 'abc',
+      :feed_url => 'http://foo/bar.xml', :about => 'Something about me.' }
+    assert_response :success
+    #assert_redirected_to :action => 'show'
+  end
+
+  def test_member_can_login
+    post :login, :member => { :email => 'bob@bob.com', :password => 'abc' }
+    assert_response :redirect
+    assert_redirected_to :action => 'show'
+  end
+  
 end

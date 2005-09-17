@@ -1,3 +1,5 @@
+require 'pp'
+
 class MembersController < ApplicationController
   def index
     list
@@ -44,4 +46,24 @@ class MembersController < ApplicationController
     Member.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+  
+  def login
+    if request.get?
+    elsif request.post?
+      email = params[:member][:email]
+      password = params[:member][:password]
+      member = Member.find_by_email(email)
+      if member.nil?
+        flash[:notice] = "That member doesn't exist."
+      else
+        if password != member.password
+          flash[:notice] = "Wrong password."
+        else
+          session[:member] = member
+          redirect_to :action => 'show', :id => member
+        end
+      end
+    end
+  end
+  
 end
