@@ -40,8 +40,8 @@ end
 
 # confuration Options
 @conf = { 
-    :sender_email => 'johnl@johnlabovitz.com',
-    :recipient_email => 'johnl@johnlabovitz.com',
+    :sender_email => 'pdxruby-dev@pdxruby.org',
+    :recipient_email => 'pdxruby-dev@pdxruby.org',
     :smtp_host => 'localhost',
 }
 
