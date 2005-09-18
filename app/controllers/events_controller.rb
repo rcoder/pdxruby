@@ -59,11 +59,21 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    if session[:member].id != @event.member_id
+    	flash[:notice] = "Sorry. You do not own this event."
+	redirect_to :action => 'list'
+	return
+    end
     @location = @event.location
   end
 
   def update
     @event = Event.find(params[:id])
+    if session[:member].id != @event.member_id
+    	flash[:notice] = "Sorry. You do not own this event."
+	redirect_to :action => 'list'
+	return
+    end
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
       redirect_to :action => 'show', :id => @event
@@ -73,8 +83,14 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    Event.find(params[:id]).destroy
+    @event = Event.find(params[:id])
+    if session[:member].id != @event.member_id
+    	flash[:notice] = "Sorry. You do not own this event."
+	redirect_to :action => 'list'
+	return
+    end
+    @event.destroy
     redirect_to :action => 'list'
   end
-
+  
 end
