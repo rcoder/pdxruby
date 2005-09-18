@@ -3,14 +3,11 @@ require 'pp'
 class MembersController < ApplicationController
   
   before_filter :authenticate, :except => [ :login, :new ]
+  before_filter :verify, :only => [ :show, :edit, :update ]
   
   def index
-    list
-    render :action => 'list'
-  end
-
-  def list
-    @member_pages, @members = paginate :member, :per_page => 10
+    login
+    render :action => 'login'
   end
 
   def show
@@ -44,11 +41,6 @@ class MembersController < ApplicationController
       render :action => 'edit'
     end
   end
-
-  def destroy
-    Member.find(params[:id]).destroy
-    redirect_to :action => 'list'
-  end
   
   def login
     if request.get?
@@ -76,6 +68,20 @@ class MembersController < ApplicationController
     reset_session
     flash[:notice] = "You are logged out."
     redirect_to :action => 'login'
+  end
+  
+  private
+  
+  def verify
+    begin
+      requested_member = Member.find(params[:id])
+    rescue
+      render_text "That member does not exist."
+      return false
+    end
+    if requested_member != session[:member]
+      redirect_to :action => 'logout'
+    end
   end
     
 end
