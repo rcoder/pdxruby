@@ -2,16 +2,32 @@
 
 <table>
   <tr>
-  <% for column in Event.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Name</th>
+    <th>Owner</th>
+    <th>Location</th>
+    <th>Starts At</th>
+    <th>Ends At</th>
+    <th>Agenda</th>
+    <th>Status</th>
+    <th>Minutes</th>
+    <th>Created At</th>
   </tr>
   
 <% for event in @events %>
   <tr>
-  <% for column in Event.content_columns %>
-    <td><%=h event.send(column.name) %></td>
-  <% end %>
+    <td><%= event.name %></td>
+    <td><%= event.member %></td>
+    <% if event.location.nil? %>
+      <td></td>
+    <% else %>
+      <td><%= event.location.name %></td>
+    <% end %>
+    <td><%= event.starts_at %></td>
+    <td><%= event.ends_at %></td>
+    <td><%= event.agenda %></td>
+    <td><%= event.status %></td>
+    <td><%= event.minutes %></td>
+    <td><%= event.created_at %></td>
     <td><%= link_to 'Show', :action => 'show', :id => event %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => event %></td>
     <td><%= link_to 'Destroy', {:action => 'destroy', :id => event}, :confirm => 'Are you sure?' %></td>
