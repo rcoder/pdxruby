@@ -70,8 +70,6 @@ class EventsController < ApplicationController
     if session[:member].nil?
       flash[:notice] = "Must be logged in to edit events"
       redirect_to :action => "index" and return
-    else
-      @event.member = session[:member]
     end    
   end
 
