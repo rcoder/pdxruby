@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :login_required, :only => [ :edit, :create, :new, :destroy ]
+  before_filter :authenticate, :only => [ :edit, :create, :new, :destroy ]
 
   def index
     list
@@ -75,13 +75,6 @@ class EventsController < ApplicationController
   def destroy
     Event.find(params[:id]).destroy
     redirect_to :action => 'list'
-  end
-
-  def login_required
-    if session[:member].nil?
-      flash[:notice] = "Must be logged in to edit events"
-      redirect_to :action => "index" and return
-    end    
   end
 
 end
