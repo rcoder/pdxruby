@@ -1,6 +1,8 @@
 <% for column in Member.content_columns %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
+  <% if column.name != "password" %>
+    <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
+  <% end %>
 </p>
 <% end %>
 

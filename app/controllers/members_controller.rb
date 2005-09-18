@@ -1,5 +1,3 @@
-require 'pp'
-
 class MembersController < ApplicationController
   
   before_filter :authenticate, :except => [ :login, :new ]
@@ -20,6 +18,11 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(params[:member])
+    if !check_passwords_match
+      flash[:notice] = 'Passwords do not match'
+      render :action => 'new'
+      return
+    end
     if @member.save
       flash[:notice] = 'Member was successfully created.'
       redirect_to :action => 'list'
@@ -34,6 +37,11 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
+    if !check_passwords_match
+      flash[:notice] = 'Passwords do not match'
+      render :action => 'edit'
+      return
+    end
     if @member.update_attributes(params[:member])
       flash[:notice] = 'Member was successfully updated.'
       redirect_to :action => 'show', :id => @member
@@ -82,6 +90,13 @@ class MembersController < ApplicationController
     if requested_member != session[:member]
       redirect_to :action => 'logout'
     end
+  end
+  
+  def check_passwords_match
+    if params[:member][:password] != params[:verify_password]
+      return false
+    end
+    return true
   end
     
 end
