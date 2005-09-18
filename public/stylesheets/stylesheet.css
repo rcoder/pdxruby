@@ -22,12 +22,16 @@ body {
 
 #sidebar {
   float: left;
+  width: 5em;
+  position: absolute;
+  top: 8em;
 }
 
 #content {
-  float: right;
   margin-left: 12em;
   margin-right: 10em;
+  position: absolute;
+  top: 8em;
   font-size: 14px;
   line-height: 20px;
 }
@@ -44,19 +48,19 @@ body {
 #content p {
 }
 
-#content A:link {
+A:link {
   color: #00c;
   text-decoration: none;
   font-weight: bold;
 }
 
-#content A:visited {
+A:visited {
   color: #009;
   text-decoration: none;
   font-weight: bold;
 }
 
-#content A:hover {
+A:hover {
   color: #00f;
   font-weight: bold;
 }
