@@ -16,7 +16,7 @@
 <% for event in @events %>
   <tr>
     <td><%= event.name %></td>
-    <td><%= event.member %></td>
+    <td><%= event.member.name %></td>
     <% if event.location.nil? %>
       <td></td>
     <% else %>
