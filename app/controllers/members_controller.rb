@@ -4,8 +4,7 @@ class MembersController < ApplicationController
   before_filter :verify, :only => [ :show, :edit, :update ]
   
   def index
-    login
-    render :action => 'login'
+    redirect_to :action => 'login'
   end
 
   def show
