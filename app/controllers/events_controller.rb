@@ -12,6 +12,16 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @participants = @event.participants
+
+    @participants_by_status = HashWithIndifferentAccess.new
+    @participants_by_status[:yes]   = Array.new
+    @participants_by_status[:no]    = Array.new
+    @participants_by_status[:maybe] = Array.new
+    @participants.each do |participant|
+      @participants_by_status[participant.status.to_sym] << participant
+    end
+
   end
 
   def new
