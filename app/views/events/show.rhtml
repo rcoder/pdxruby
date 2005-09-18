@@ -8,7 +8,10 @@
 
 <h3>Participants</h3>
 
-<% unless @event.participants.member?(session[:member]) %>
+<!-- <%= @event.participants.inspect %> -->
+<!-- <%= session[:member].inspect %> -->
+
+<% unless @event.participants.map {|p| p.member }.member?(session[:member]) %>
 <p>
 <%= link_to 'Will you be attending?', :controller => 'participants', :action => 'new', :event => @event %>
 </p>

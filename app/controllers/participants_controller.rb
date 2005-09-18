@@ -22,7 +22,7 @@ class ParticipantsController < ApplicationController
     @participant.member = session[:member]
     @participant.event = Event.find(params[:event][:id].to_i)
     if @participant.save
-      flash[:notice] = 'Participant was successfully created.'
+      flash[:notice] = 'Thank you for signing up'
       redirect_to :controller => 'events', :action => 'show', :id => params[:event][:id]
     else
       render :action => 'new'
