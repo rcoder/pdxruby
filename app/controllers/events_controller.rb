@@ -19,7 +19,7 @@ class EventsController < ApplicationController
     @participants_by_status[:no]    = Array.new
     @participants_by_status[:maybe] = Array.new
     @participants.each do |participant|
-      @participants_by_status[participant.status.to_sym] << participant
+      @participants_by_status[participant.attending.to_sym] << participant
     end
 
   end

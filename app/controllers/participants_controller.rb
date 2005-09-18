@@ -14,13 +14,16 @@ class ParticipantsController < ApplicationController
 
   def new
     @participant = Participant.new
+    @event = Event.find(params[:event])
   end
 
   def create
     @participant = Participant.new(params[:participant])
+    @participant.member = session[:member]
+    @participant.event = Event.find(params[:event][:id].to_i)
     if @participant.save
       flash[:notice] = 'Participant was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :controller => 'events', :action => 'show', :id => params[:event][:id]
     else
       render :action => 'new'
     end

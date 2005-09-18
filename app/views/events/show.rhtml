@@ -1,8 +1,37 @@
-<% for column in Event.content_columns %>
+<h2><%= @event.name %></h2>
+<p>Organized by <%= @event.member.name %></p>
+<p>Time: <%= @event.starts_at %> - <%= @event.ends_at %></p>
+<p>Location: <%= @event.location.name %>, <%= @event.location.address %></p>
+
+<h3>Agenda</h3>
+<p><%= @event.agenda %></p>
+
+<h3>Participants</h3>
+
+<% unless @event.participants.member?(session[:member]) %>
 <p>
-  <b><%= column.human_name %>:</b> <%=h @event.send(column.name) %>
+<%= link_to 'Will you be attending?', :controller => 'participants', :action => 'new', :event => @event %>
 </p>
 <% end %>
 
-<%= link_to 'Edit', :action => 'edit', :id => @event %> |
-<%= link_to 'Back', :action => 'list' %>
+<h4>Yes</h4>
+<%= render :partial => 'rsvp', :collection => @participants_by_status[:yes] %>
+
+<h4>No</h4>
+<%= render :partial => 'rsvp', :collection => @participants_by_status[:no] %>
+
+<h4>Maybe</h4>
+<%= render :partial => 'rsvp', :collection => @participants_by_status[:maybe] %>
+
+<hr/>
+
+<% if session[:member] == @event.member %>
+<p>
+<%= link_to 'Edit this event', :action => 'edit', :id => @event %>
+</p>
+<% end %>
+
+
+<p>
+<%= link_to 'Browse other events', :action => 'list' %>
+</p>

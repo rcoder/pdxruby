@@ -2,6 +2,7 @@
 
 <%= start_form_tag :action => 'create' %>
   <%= render_partial 'form' %>
+  <%= hidden_field('event', 'id') %>
   <%= submit_tag "Create" %>
 <%= end_form_tag %>
 
