@@ -1,7 +1,7 @@
 login: &login
   adapter: postgresql
   host: localhost
-  port: 5406
+  port: 5460
   username: pdxruby
   password: CHANGEME
 
