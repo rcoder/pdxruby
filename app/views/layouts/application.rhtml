@@ -1,0 +1,52 @@
+<html>
+<head>
+  <title>Events: index</title>
+  <link href="/stylesheets/scaffold.css" media="screen" rel="Stylesheet" type="text/css" />
+</head>
+<body>
+
+<p style="color: green"></p>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+  
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  	<meta http-equiv="Content-Language" content="en-us">
+  	<meta name="copyright" content="(c) Copyright 2005 John Labovitz">
+	<%= stylesheet_link_tag 'stylesheet' %>
+        <%= stylesheet_link_tag 'scaffold' %>
+  	<title>The Portland Ruby Brigade (PDX.rb)</title>
+  </head>
+  
+  <body>
+
+    <div id="banner">
+
+      
+      <div id="banner-left">
+        pdx.rb
+      </div>
+    
+      <div id="banner-right">
+        <h1>The Portland Ruby Brigade</h1>
+      </div>
+    
+    </div>
+
+    <div id="sidebar">
+      <% if session[:member].nil? %>
+            <a href="/members/login">Member Login/Preferences</a>
+      <% else %>
+            <a href="/members/logout">Logout</a>
+      <% end %>
+    </div>
+    
+    <div id="content">
+      <p style="color: green"><%= flash[:notice] %></p>
+      <%= @content_for_layout %>
+    </div>
+    
+  </body>
+</html>
