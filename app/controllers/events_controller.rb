@@ -21,6 +21,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(params[:event])
+    @event.member = session[:member]
     if params[:event][:location_id] == ""
       location = Location.find_by_name(params[:location][:name])
       if location.nil?
