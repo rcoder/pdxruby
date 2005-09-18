@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_filter :login_required, :only => [ :edit, :create, :new, :destroy ]
+
   def index
     list
     render :action => 'list'
@@ -46,6 +48,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    @location = @event.location
   end
 
   def update
@@ -62,4 +65,14 @@ class EventsController < ApplicationController
     Event.find(params[:id]).destroy
     redirect_to :action => 'list'
   end
+
+  def login_required
+    if session[:member].nil?
+      flash[:notice] = "Must be logged in to edit events"
+      redirect_to :action => "index" and return
+    else
+      @event.member = session[:member]
+    end    
+  end
+
 end
