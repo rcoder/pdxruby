@@ -46,16 +46,31 @@
       <p>You can also find some of us on our IRC channel at <a href="irc://irc.freenode.net/#pdx.rb">#pdx.rb</a> on irc.freenode.net.
       
       
-      <h2>Recent events</h2>
-      
-      <p>In August, we put on FOSCON (&lsquo;Free OSCON&rsquo;), a guerilla gathering of Ruby folks from O&rsquo;Reilly&rsquo;s <a href="http://www.oreillynet.com/oscon2005/" target="_blank">OSCON 2005</a> conference.  There are some great photos on <a href="http://flickr.com/photos/tags/foscon/" target="_blank">Flickr</a>, and some blog coverage by <a href="http://scottstuff.net/blog/articles/2005/08/05/foscon" target="_blank">Scott Laird</a> and <a href="http://redhanded.hobix.com/cult/theStarryAfternoonHasExpanded.html" target="_blank">_why</a>.
-      
-    
       <h2>Upcoming events</h2>
-        <% for event in @upcoming_events  %>
-		<%= event.name %> <br/>
-   	<% end %> 
-    
+	<ul>
+        	<% for event in @upcoming_events  %>
+			<li>
+				<%= link_to event.name, { :controller => 'events',
+							  :action     => 'show',
+							  :id	      => event.id } %><br/>
+				<%= event.starts_at.to_formatted_s("%A %b %d at %I:%M %p") %> - <%= event.location.name %>
+			</li>
+   		<% end %> 
+    	</ul>
+
+      <h2>Recent events</h2>
+        <ul>
+                <% for event in @recent_events  %>
+                        <li>
+                                <%= link_to event.name, { :controller => 'events',
+                                                          :action     => 'show',
+                                                          :id         => event.id } %><br/>
+                                <%= event.starts_at.to_formatted_s("%A %b %d at %I:%M %p") %> - <%= event.location.name %>
+                        </li>
+                <% end %>
+        </ul>
+
+
       <h2>Looking for more information?</h2>
       
       <p>Although no longer a true wiki, you may find what you&rsquo;re seeking at <a href="http://pdxruby.org/pdxruby/show/HomePage">the archives of our old wiki</a>.
