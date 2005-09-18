@@ -24,10 +24,9 @@
     
     </div>
 
-    <div id="sidebar" style="width:5em">
-		<a href="members/login">Member login/prefs</a>
+    <div id="sidebar">
     </div>
-
+    
     <div id="content">
       
       <h2>Who are we?</h2>
@@ -52,23 +51,9 @@
       
     
       <h2>Upcoming events</h2>
-    
-      <p>On Saturday, September 17, we will be holding a codefest to build the next version of this website.  We want to have:
-    
-      <ul>
-      
-        <li>an event planner (&lsquo;cat herder&rsquo;) application that will help us coordinate meetings and other events
-        <li>member journals/blogs, with an aggregator, so you can subscribe to the pdx.rb RSS feed
-        <li>a roster/directory of our members
-      
-      </ul>
-    
-      <p>We&rsquo;ll be working collaboratively, both on design and implementation, and plan to have something workable by the end of the day &mdash; whenever that is.
-      
-      <p>The codefest will take place in Portland at the <a href="http://www.roseandraindrop.com/" target="_new">Rose &amp; Raindrop</a> on 532 SE Grand [<a href="http://www.google.com/maps?q=532+SE+Grand+Ave,+Portland,+OR+97214&spn=0.056447,0.046070&hl=en" target="_new">map</a>].  We&rsquo;ll gather at 11am, meet each other, set up, grab some food, and some planning.  Then, on to coding!  We figure it will last until early evening (we have the room reserved until 7pm).
-      
-      <p>Have some thoughts?  Want to code?  Please contact <a href="mailto:johnl@johnlabovitz.com">John Labovitz</a> for more information, or just sign up on the <a href="http://lists.pdxruby.org/mailman/listinfo/pdxruby-dev">development mailing list</a>.  You can also watch for code commits on <a href="irc://irc.freenode.net/#pdx.rb">#pdx.rb</a>.
-    
+        <% for event in @upcoming_events  %>
+		<%= event.name %> <br/>
+   	<% end %> 
     
       <h2>Looking for more information?</h2>
       
