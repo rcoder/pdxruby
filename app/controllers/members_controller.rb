@@ -1,6 +1,9 @@
 require 'pp'
 
 class MembersController < ApplicationController
+  
+  before_filter :authenticate, :except => [ :login, :new ]
+  
   def index
     list
     render :action => 'list'
@@ -49,6 +52,9 @@ class MembersController < ApplicationController
   
   def login
     if request.get?
+      if session[:member]
+        redirect_to :action => 'show', :id => session[:member]
+      end
     elsif request.post?
       email = params[:member][:email]
       password = params[:member][:password]
@@ -66,4 +72,10 @@ class MembersController < ApplicationController
     end
   end
   
+  def logout
+    reset_session
+    flash[:notice] = "You are logged out."
+    redirect_to :action => 'login'
+  end
+    
 end
