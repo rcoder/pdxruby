@@ -36,14 +36,16 @@
     </div>
 
     <div id="sidebar">
+      <%= link_to 'Home', :controller => nil %>
       <% if session[:member].nil? %>
-            <a href="/members/login">Member Login/Preferences</a>
+            <%= link_to '<nobr>Member Login</nobr>', :controller => "members", :action => "login" %>
       <% else %>
+            
             <!-- nobr is deprecated. other ideas? okay for now -->
-            <a href="/"><nobr>Home</nobr></a><br>
-            <a href="/members/logout">Logout</a><br>
-	    <%= link_to '<nobr>Member Home</nobr>', :controller => "members", :action => "show", :id => session[:member].id %><br>
-	    <a href="/events/list">Event List</a><br>
+	    <%= link_to 'Logout', :controller => "members", :action => "logout" %><br>
+	    <%= link_to '<nobr>Member Home</nobr>', :controller => "members", 
+	          :action => "show", :id => session[:member].id %><br>
+	    <%= link_to '<nobr>Event List</nobr>', :controller => "events", :action => "list" %>
       <% end %>
     </div>
     
