@@ -1,13 +1,33 @@
-<% for column in Member.content_columns %>
-<p>
-  <% if column.name != "password" %>
-    <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
-  <% end %>
-</p>
-<% end %>
+<h3>Profile</h3>
+<blockquote>
+ <% for column in Member.content_columns %>
+ <p>
+   <% if column.name != "password" %>
+     <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
+   <% end %>
+ </p>
+ <% end %>
+</blockquote>
 
-<%= link_to 'Edit', :action => 'edit', :id => @member %> |
-
+<h3>Upcoming Participations</h3>
+<blockquote>
+<%
+  if @participations.empty?
+%>
+  (none)
+<%
+  else
+    @participations.each do |participation|
+      # TODO: filter out participations in the past
+%>
+    <%= link_to participation.event.name, :controller => "events", :action => "show", 
+          :id => participation.event.id %> at <%= participation.event.starts_at 
+    %>
+<%
+    end
+  end
+%>
+</blockquote>
+<%= link_to 'Edit Profile', :action => 'edit', :id => @member %> |
 <a href="/">pdx.rb Home</a> |
-
 <%= link_to 'Logout', :action => 'logout' %>

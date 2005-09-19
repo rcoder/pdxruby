@@ -9,6 +9,7 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
+    @participations = @member.participants
   end
 
   def new

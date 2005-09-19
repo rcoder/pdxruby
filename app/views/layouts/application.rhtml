@@ -39,7 +39,11 @@
       <% if session[:member].nil? %>
             <a href="/members/login">Member Login/Preferences</a>
       <% else %>
-            <a href="/members/logout">Logout</a>
+            <!-- nobr is deprecated. other ideas? okay for now -->
+            <a href="/"><nobr>Home</nobr></a><br>
+            <a href="/members/logout">Logout</a><br>
+	    <%= link_to '<nobr>Member Home</nobr>', :controller => "members", :action => "show", :id => session[:member].id %><br>
+	    <a href="/events/list">Event List</a><br>
       <% end %>
     </div>
     

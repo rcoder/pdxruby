@@ -7,6 +7,7 @@
 <p><%= @event.agenda %></p>
 
 <h3>Participants</h3>
+<blockquote>
 
 <!-- <%= @event.participants.inspect %> -->
 <!-- <%= session[:member].inspect %> -->
@@ -16,17 +17,35 @@
 <%= link_to 'Will you be attending?', :controller => 'participants', :action => 'new', :event => @event %>
 </p>
 <% end %>
-
-<h4>Yes</h4>
-<%= render :partial => 'rsvp', :collection => @participants_by_status[:yes] %>
-
-<h4>No</h4>
-<%= render :partial => 'rsvp', :collection => @participants_by_status[:no] %>
-
-<h4>Maybe</h4>
-<%= render :partial => 'rsvp', :collection => @participants_by_status[:maybe] %>
-
-<hr/>
+ <h4>Yes</h4>
+ <blockquote>
+<%= if @participants_by_status[:yes].empty?
+      "(none)"
+    else
+      render :partial => 'rsvp', :collection => @participants_by_status[:yes] 
+    end
+%>
+ </blockquote>
+ <h4>No</h4>
+ <blockquote>
+<%= if @participants_by_status[:no].empty?
+      "(none)"
+    else
+      render :partial => 'rsvp', :collection => @participants_by_status[:no] 
+    end
+%>
+ </blockquote>
+ <h4>Maybe</h4>
+ <blockquote>
+<%= if @participants_by_status[:maybe].empty?
+      "(none)"
+    else
+      render :partial => 'rsvp', :collection => @participants_by_status[:maybe] 
+    end
+%>
+ </blockquote>
+</blockquote>
+ <hr/>
 
 <% if session[:member] == @event.member %>
 <p>
