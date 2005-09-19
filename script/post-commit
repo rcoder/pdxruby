@@ -6,87 +6,137 @@
 # This file should be placed in the repository's hooks directory
 
 require 'time'
+require 'optparse'
+require 'ostruct'
+require 'rmail'
+require 'net/smtp'
+require 'pp'
+
 
 module Subversion
 
-    class Browser
+  class Browser
 
-        attr_accessor :path
-        attr_accessor :repos
+    attr_accessor :path
+    attr_accessor :repos
 
-        def initialize(path)
-            @path = File.expand_path(path)
-            # guess what the repository name is
-            @repos = path.split(/\//).last
-        end
-
-        def info(revision)
-            committer, timestamp, log_size, log = `svnlook info --revision #{revision} #{@path}`.split(/\n/, 4)
-            committer = '(anonymous)' if committer.empty?
-            changed = `svnlook changed --revision #{revision} #{@path}`.split(/\n/)
-            { 
-                :author     => committer,
-                :revision   => revision.to_i,
-                :timestamp  => Time.parse(timestamp),
-                :repository => @repos,
-                :log        => log,
-                :changed    => changed, 
-            }
-        end
-
+    def initialize(path)
+      @path = File.expand_path(path)
+      # guess what the repository name is
+      @repos = path.split(/\//).last
     end
 
+    def info(revision)
+      cmd = "svnlook info --revision #{revision} #{@path}"
+      author, timestamp, log_size, log = `#{cmd}`.split(/\n/, 4)
+      author = '(anonymous)' if author.empty?
+      cmd = "svnlook changed --revision #{revision} #{@path}"
+      changed = `#{cmd}`
+      info = OpenStruct.new
+      info.author = author
+      info.revision   = revision.to_i
+      info.timestamp  = Time.parse(timestamp)
+      info.repository = @repos
+      info.log        = log.chomp
+      info.changed    = changed
+      info
+    end
+
+  end
+  
 end
 
 
-# confuration Options
-@conf = {
-    :sender_email => 'svn@pdxruby.org',
-    :recipient_email => 'pdxruby-dev@lists.pdxruby.org',
-    :smtp_host => 'localhost',
-}
+class PostCommitOptionParser
+  
+  def self.parse(args)
+    
+    options = OpenStruct.new
+    options.sender_email = RMail::Address.parse('svn@localhost').first
+    options.recipient_email = nil
+    options.smtp_host = 'localhost'
+    
+    OptionParser.accept(RMail::Address, /(^.*?@.*$)/) do |address, *more|
+      RMail::Address.parse(address).first
+    end
 
+    opts = OptionParser.new do |opts|
+      
+      opts.banner = "Usage: #{$0} [options] repository-path revision-number"
+      opts.separator ""
+      opts.separator "Options:"
+      
+      opts.on('-f', '--from VALUE', "Set email from address", RMail::Address) do |value|
+        options.sender_email = value
+      end
 
-# Okay.  So we get two args from svn.
-#
-# [1] - repo path
-# [2] - revision number
-#
-# We then use this information to gather relevant data about the commit
-# and do with it as we please.
+      opts.on('-t', '--to VALUE', "Set email to address", RMail::Address) do |value|
+        options.recipient_email = value
+      end
 
-path = ARGV[0]
-rev = ARGV[1]
+      opts.on('-s VALUE', '--smtp VALUE', "Set SMTP host") do |value|
+        options.smtp_host = value
+      end
+      
+      opts.on('-h', '--help', "Show this message") do
+        puts opts
+        exit
+      end
+      
+    end
+    
+    opts.parse!(args)
+    
+    unless options.sender_email && options.recipient_email
+      puts opts
+      exit
+    end
 
-if (path.nil? || rev.nil?)
-  puts "Usage: post-commit <repo path> <rev number>"
-  exit
+    # Okay.  So we get two args from svn.
+    #
+    # [1] - repo path
+    # [2] - revision number
+    #
+    # We then use this information to gather relevant data about the commit
+    # and do with it as we please.
+    
+    unless args.length == 2
+      puts opts
+      exit
+    end
+
+    options.path = args[0]
+    options.revision = args[1].to_i
+    
+    options
+    
+  end
+  
 end
 
-browser = Subversion::Browser.new(path)
 
-commit_info = browser.info(rev)
+options = PostCommitOptionParser.parse(ARGV)
 
-msgstr = <<END
-From: #{@conf[:sender_email]}
-To: #{@conf[:recipient_email]}
-Subject: COMMIT to '#{commit_info[:repository]}' ##{commit_info[:revision]} by #{commit_info[:author]}
+browser = Subversion::Browser.new(options.path)
 
-REV: #{commit_info[:revision]}
+rev_info = browser.info(options.revision)
 
-#{commit_info[:log].strip}
+msg = RMail::Message.new
+msg.header.from = options.sender_email
+msg.header.to = options.recipient_email
+msg.header.subject = "COMMIT to '#{rev_info.repository}' ##{rev_info.revision} by #{rev_info.author}"
+msg.header.date = rev_info.timestamp
+msg.body = <<END
+REV: #{rev_info.revision}
+#{rev_info.log}
 
 -----
 
-#{commit_info[:changed].join("\n")}
+#{rev_info.changed}
 END
 
-;;puts msgstr
-
-require 'net/smtp'
-
-Net::SMTP.start(@conf[:smtp_host], 25) do |smtp|
-  smtp.send_message msgstr,
-                    @conf[:sender_email],
-                    @conf[:recipient_email]
+Net::SMTP.start(options.smtp_host) do |smtp|
+  smtp.send_message(msg,
+                    options.sender_email.address,
+                    options.recipient_email.address)
 end
