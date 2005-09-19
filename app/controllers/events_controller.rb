@@ -12,6 +12,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    
     @participants = @event.participants
 
     @participants_by_status = HashWithIndifferentAccess.new
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.ends_at = @event.starts_at + (60*60)
     @location = Location.new
   end
 
@@ -47,6 +49,7 @@ class EventsController < ApplicationController
     end
     
     @event.location = @location
+    @event.active!
     
     if @event.save
       flash[:notice] = 'Event was successfully created.'
@@ -85,11 +88,23 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
-    	flash[:notice] = "Sorry. You do not own this event."
-	redirect_to :action => 'list'
-	return
+      flash[:notice] = "Sorry. You do not own this event."
+	    redirect_to :action => 'list'
+    	return
     end
     @event.destroy
+    redirect_to :action => 'list'
+  end
+
+  def cancel
+    @event = Event.find(params[:id])
+    if session[:member].id != @event.member_id
+      flash[:notice] = "Sorry. You do not own this event."
+	    redirect_to :action => 'list'
+    	return
+    end
+    @event.cancel!
+    @event.save
     redirect_to :action => 'list'
   end
   

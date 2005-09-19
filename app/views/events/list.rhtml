@@ -7,30 +7,42 @@
     <th>Location</th>
     <th>Starts At</th>
     <th>Ends At</th>
-    <th>Agenda</th>
     <th>Status</th>
-    <th>Minutes</th>
     <th>Created At</th>
   </tr>
   
 <% for event in @events %>
-  <tr>
-    <td><%= event.name %></td>
-    <td><%= event.member.name %></td>
+  <tr class="<%= event.status %>_event">
+    <td>
+      <%= link_to event.name, :action => 'show', :id => event.id %>
+    </td>
+    <td>
+      <%= link_to event.member.name, 
+          :controller => 'members', 
+          :action => 'show',
+          :id => event.member.id
+      %></td>
     <% if event.location.nil? %>
-      <td></td>
+      <td><i>unknown</i></td>
     <% else %>
-      <td><%= event.location.name %></td>
+      <td>
+        <%= link_to event.location.name, 
+            :controller => 'locations', 
+            :action => 'show', 
+            :id => event.location.id 
+        %>
+        </td>
     <% end %>
     <td><%= event.starts_at %></td>
     <td><%= event.ends_at %></td>
-    <td><%= event.agenda %></td>
     <td><%= event.status %></td>
-    <td><%= event.minutes %></td>
     <td><%= event.created_at %></td>
-    <td><%= link_to 'Show', :action => 'show', :id => event %></td>
+    <% if event.member_id == session[:member].id %>
     <td><%= link_to 'Edit', :action => 'edit', :id => event %></td>
-    <td><%= link_to 'Destroy', {:action => 'destroy', :id => event}, :confirm => 'Are you sure?' %></td>
+    <% unless event.cancelled? %>
+    <td><%= link_to 'Cancel', {:action => 'cancel', :id => event}, :confirm => 'Are you sure?' %></td>
+    <% end %>
+    <% end %>
   </tr>
 <% end %>
 </table>

@@ -60,6 +60,9 @@ table#eventlist{
 table#eventlist td{
   padding: 3px;
 }
+table#eventlist tr.cancelled_event {
+  background: #fba;
+}
 
 A:link {
   color: #00c;
