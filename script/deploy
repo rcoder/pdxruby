@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+
+echo 'broken!'
+exit 1
+
+#base=~/sites/dev
+base=/tmp/dev
+
+repos=$1; shift
+rev=$1; shift
+
+if [ ! "$repos" -o ! "$rev"]; then
+  echo "Usage:"
+  exit 1
+fi
+
+dev_rev=r$rev
+
+svn co http://svn.pdxruby.org/repos/www/trunk $dev_rev
+
+cd $dev_rev
+
+mkdir -p $dev_rev/log
+
+{ rake 2>&1 >log/build.log || mail -s "Tests failed for revision $rev" $mail <log/build.log; exit 1 }
+
+{ cd custom && find . -type f -exec cp '{}' '$dev_rev/{}' \; }
+
+for log in development test production; do
+  touch $log
+  chmod 0666 $dev_rev/log/$log
+end
+
+cd $base
+
+relink current $dev_rev
