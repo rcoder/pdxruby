@@ -1,22 +1,23 @@
 The following are behaviors that were left over from the initial codefest.  If you complete one
-of these, please remove it from the list.
+of these, please remove it from the list. If you want to "claim" a task (i.e. you plan on doing
+it shortly), put your name in [square brackets] at the end of the event.
 
+_Spamming_
   - When event is over, ask participants for feedback.
-  
-  - Anyone should be able to view the list of members.
   
   - Participants are notified via email of change to core event information (agenda, location, time, status).
   
-  - Participants can add feedback to event after it happened.
-  
   - Participants are notified of reminder of event (eg, day before).
-  
-  - Owner can give event to another participant.
-  
-  - Participant can change their RSVP and comment.
   
   - Owner is notified via email of RSVPs and comments.
   
   - All members are notified of new events.
+
+_Other_
+  - Anyone should be able to view the list of members. [caleb]
   
+  - Participants can add feedback to event after it happened.
   
+  - Owner can give event to another participant.
+  
+  - Participant can change their RSVP and comment. [caleb]
