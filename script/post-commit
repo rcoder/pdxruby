@@ -66,16 +66,24 @@ class PostCommitOptionParser
       opts.separator ""
       opts.separator "Options:"
       
-      opts.on('-f', '--from VALUE', "Set email from address", RMail::Address) do |value|
-        options.sender_email = value
+      opts.on('-f ADDRESS', '--from ADDRESS', 
+              "Set email from address",
+              "Default: " + (options.sender_email || 'none'),
+              RMail::Address) do |address|
+        options.sender_email = address
       end
 
-      opts.on('-t', '--to VALUE', "Set email to address", RMail::Address) do |value|
-        options.recipient_email = value
+      opts.on('-t ADDRESS', '--to ADDRESS',
+              "Set email to address",
+              "Default: " + (options.recipient_email || 'none'),
+              RMail::Address) do |address|
+        options.recipient_email = address
       end
 
-      opts.on('-s VALUE', '--smtp VALUE', "Set SMTP host") do |value|
-        options.smtp_host = value
+      opts.on('-s HOST', '--smtp HOST',
+              "Set SMTP host",
+              "Default: " + options.smtp_host) do |host|
+        options.smtp_host = host
       end
       
       opts.on('-h', '--help', "Show this message") do
@@ -85,7 +93,14 @@ class PostCommitOptionParser
       
     end
     
-    opts.parse!(args)
+    begin
+      opts.parse!(args)
+    rescue OptionParser::ParseError => e
+      puts e
+      puts
+      puts opts
+      exit
+    end
     
     unless options.sender_email && options.recipient_email
       puts opts
