@@ -11,7 +11,7 @@
 <%= password_field 'member', 'password'  %></p>
 
 <p><label for="member_verify_password">Verify Password</label><br/>
-<%= password_field_tag 'verify_password'  %></p>
+<%= password_field_tag 'verify_password', @member.password  %></p>
 
 <p><label for="member_feed_url">Feed url</label><br/>
 <%= text_field 'member', 'feed_url'  %></p>
@@ -20,4 +20,3 @@
 <%= text_area 'member', 'about'  %></p>
 
 <!--[eoform:member]-->
-

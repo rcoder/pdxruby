@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   before_create :status_active
 
-	EVENT_STATUS = { :active 	=>	'active',
+  EVENT_STATUS = { :active 	=>	'active',
                    :canceled 	=>	'cancelled' }
 
   belongs_to :member
