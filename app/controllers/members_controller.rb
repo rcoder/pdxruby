@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   
-  before_filter :authenticate, :except => [ :login, :new ]
+  before_filter :authenticate, :except => [ :login, :new, :create ]
   before_filter :verify, :only => [ :show, :edit, :update ]
   
   def index
@@ -24,7 +24,8 @@ class MembersController < ApplicationController
     end
     if @member.save
       flash[:notice] = 'Member was successfully created.'
-      redirect_to :action => 'list'
+      session[:member] = @member
+      redirect_to :action => 'show', :id => @member.id
     else
       render :action => 'new'
     end
