@@ -48,6 +48,19 @@ body {
 #content p {
 }
 
+/* /members/list */
+table#memberlist{
+}
+table#memberlist td{
+  padding: 3px;
+}
+/* /events/list */
+table#eventlist{
+}
+table#eventlist td{
+  padding: 3px;
+}
+
 A:link {
   color: #00c;
   text-decoration: none;

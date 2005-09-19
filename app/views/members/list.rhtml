@@ -1,0 +1,21 @@
+<h3>Members</h3>
+
+<table id="memberlist">
+  <tr>
+   <th>Name</td>
+   <th>Email</td>
+   <td></td>
+  </tr>
+  
+<% for member in @members %>
+  <tr>
+    <td><%= member.name %></td>
+    <td><%= member.email %></td>
+    <td><%= link_to 'View Profile', :action => 'show', :id => member %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New member', :action => 'new' %>

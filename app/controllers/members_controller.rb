@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   
   before_filter :authenticate, :except => [ :login, :new, :create ]
-  before_filter :verify, :only => [ :show, :edit, :update ]
+  before_filter :verify, :only => [ :edit, :update ]
   
   def index
     redirect_to :action => 'login'
@@ -10,6 +10,10 @@ class MembersController < ApplicationController
   def show
     @member = Member.find(params[:id])
     @participations = @member.participants
+  end
+
+  def list
+    @members = Member.find :all, :order => "name"
   end
 
   def new
