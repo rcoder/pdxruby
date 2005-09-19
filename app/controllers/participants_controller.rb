@@ -31,10 +31,18 @@ class ParticipantsController < ApplicationController
 
   def edit
     @participant = Participant.find(params[:id])
+    if !member_is_this_member? @participant.member_id
+      flash[:notice] = "Sorry, That's not yours."
+      redirect_to :controller => 'members', :action => 'show', :id => session[:member].id
+    end
   end
 
   def update
     @participant = Participant.find(params[:id])
+    if !member_is_this_member? @participant.member_id
+      flash[:notice] = "Sorry, That's not yours."
+      redirect_to :controller => 'members', :action => 'show', :id => session[:member].id
+    end
     if @participant.update_attributes(params[:participant])
       flash[:notice] = 'Participant was successfully updated.'
       redirect_to :action => 'show', :id => @participant

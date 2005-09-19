@@ -21,8 +21,12 @@
       # TODO: filter out participations in the past
 %>
     <%= link_to participation.event.name, :controller => "events", :action => "show", 
-          :id => participation.event.id %> at <%= participation.event.starts_at 
-    %>
+          :id => participation.event.id %> at <%= participation.event.starts_at %>
+    <%= if member_is_this_member?
+          link_to '[change]', :controller => "participants", :action => "edit", :id => participation.id 
+	end
+     %>
+    <br>
 <%
     end
   end
