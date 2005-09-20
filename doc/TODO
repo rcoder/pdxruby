@@ -14,9 +14,9 @@ _Spamming_
   - All members are notified of new events.
 
 _Other_
-  - Participants can add feedback to event after it happened.
-  
   - Owner can give event to another participant.
+  
+  - Event attributes (other than minutes) should be locked after event is completed
 
 _Input Validation_
   - lots more not listed here...
