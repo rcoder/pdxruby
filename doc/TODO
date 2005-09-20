@@ -19,10 +19,6 @@ _Other_
   - Owner can give event to another participant.
 
 _Input Validation_
-  - starts_at must be less than ends_at for event
-
-  - starts_at must be after *now*
-
   - lots more not listed here...
 
 _Testing_

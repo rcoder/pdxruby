@@ -27,6 +27,7 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    @event.starts_at = Time.now
     @event.ends_at = @event.starts_at + (60*60)
     @location = Location.new
   end

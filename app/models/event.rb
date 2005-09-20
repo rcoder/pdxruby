@@ -14,6 +14,14 @@ class Event < ActiveRecord::Base
   validates_presence_of :ends_at
   validates_presence_of :location_id
   
+  validates_each :starts_at, :ends_at do |record, attr|
+  	record.errors.add attr, 'must be later than now' if record.send(attr) < Time.now
+  end
+  
+  validates_each :ends_at do |record, attr|
+  	record.errors.add attr, 'must be later than start time' if record.ends_at < record.starts_at
+  end
+  
   def cancelled?
     self.status == EVENT_STATUS[:canceled]
   end
