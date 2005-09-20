@@ -1,66 +1,83 @@
-#!/bin/sh -x
-
-errors_email=johnl
-repo_url=http://svn.pdxruby.org/repos/www/trunk
-dev=~/sites/dev
-current_tree=$dev/current
-custom_tree=$dev/custom
+#!/bin/sh
 
 ######################################################################
 
-if [ $# != 2 ]; then
-    echo "Usage: $0 repository path revision"
-    exit 1
+# check out a tree of the given revision
+
+function check_out { # (revision, repos-path, dest-dir)
+  svn co -r$2 $1 $3
+}
+
+# copies in any files in the custom tree
+
+function config_tree {
+  if [ -d $custom_tree ]; then
+    echo "Installing custom files:"
+    (cd $custom_tree && find . -type f | cpio -pdmuv $new_tree)
+  fi
+}
+
+# make sure log directory exists, and has the usual Rails logs ready for anyone to write to :)
+
+function initialize_logs {
+  mkdir -p $new_tree/log
+  for name in development test production; do
+    log=$new_tree/log/$name.log
+    touch $log
+    chmod 0666 $log
+  done
+}
+
+# run tests and save to build log
+
+function run_tests {
+  (cd $new_tree && rake 2>&1 >log/build.log)
+}
+
+######################################################################
+
+# set things up
+
+if [ $# != 3 ]; then
+  echo "Usage: $0 repository-URL site-dir revision"
+  exit 1
 fi
 
 repo=$1; shift
+dev=$1; shift
 rev=$1; shift
 
-######################################################################
-
-function check_out {
-    echo 'WOULD:' svn co -r$2 $1 $3
-    cp -rp ~/src/projects/pdxruby.org/trunk $3
-}
-
-function config_tree {
-    for file in `cd $custom_tree && find . -type f `; do
-        cp $custom_tree/$file $new_tree/$file
-    done
-}
-
-function initialize_logs {
-    mkdir -p $new_tree/log
-    for name in development test production; do
-        log=$new_tree/log/$name
-        touch $log
-        chmod 0666 $log
-    done
-}
-
-function run_tests {
-    rake 2>&1 >$new_tree/log/build.log
-    echo '[not exiting]'
-}
+if [ ! -d $dev ]; then
+  echo "$dev is not a directory!"
+  exit 1
+fi
 
 ######################################################################
 
+# do the work
+
+current_tree=$dev/current
+custom_tree=$dev/custom
 new_tree=$dev/r$rev
 
-check_out $repo_url $rev $new_tree
+check_out $repo $rev $new_tree
 
 if ! config_tree; then
-    echo "failed to configure tree"
-    exit 1
+  echo "failed to configure tree"
+  exit 1
 fi
 
 initialize_logs
 
 if ! run_tests; then
-    mail -s "Revision $rev failed tests" $errors_email < $new_tree/log/build.log
-    exit 1
+  echo "Revision $rev failed tests (see $new_tree/log/build.log)."
+  if [ "$mailto" ]; then
+    mail -s "Revision $rev failed tests" $mailto < $new_tree/log/build.log
+  fi
+  exit 1
 fi
 
-ln -sf $new_tree $current_tree
+rm $current_tree
+ln -s $new_tree $current_tree
 
-######################################################################
+echo "Installed revision $rev."
