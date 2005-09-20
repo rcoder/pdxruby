@@ -28,7 +28,7 @@
 <h3>Participants</h3>
 <blockquote>
 
-<% unless @event.has_participant(session[:member]) %>
+<% unless (session[:member].nil?) || (@event.has_participant(session[:member])) %>
 <p>
 <%= link_to 'Will you be attending?', 
 	:controller => 'participants', 
@@ -83,9 +83,9 @@
 
 <% if @event.feedbacks.size > 0 %>	
 <%= render :partial => 'feedback', :collection => @event.feedbacks %>
-<% end %>
 <% else %>
 <p>(none)</p>
+<% end %>
 <% end %>
 
  <hr/>
