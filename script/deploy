@@ -71,8 +71,8 @@ initialize_logs
 
 if ! run_tests; then
   echo "Revision $rev failed tests (see $new_tree/log/build.log)."
-  if [ "$mailto" ]; then
-    mail -s "Revision $rev failed tests" $mailto < $new_tree/log/build.log
+  if [ "$MAILTO" != "" ]; then
+    mail -s "Revision $rev failed tests" $MAILTO < $new_tree/log/build.log
   fi
   exit 1
 fi
