@@ -108,5 +108,4 @@ class EventsController < ApplicationController
     @event.save
     redirect_to :action => 'list'
   end
-  
 end

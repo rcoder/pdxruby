@@ -1,4 +1,11 @@
 <p>
-<%= link_to rsvp.member.name, :controller => 'members', :action => 'show', :id => rsvp.member %> said, "
-<%= rsvp.comments %>"
+<%= link_to rsvp.member.name, 
+	:controller => 'members', 
+	:action => 'show', 
+	:id => rsvp.member
+%> said, 
+"<%= rsvp.comments %>"
+<%= if rsvp.member.id == session[:member] and not participation.event.started?
+	link_to '[change]', :controller => 'participants', :action => 'edit', :id => rsvp.id
+end %>
 </p>

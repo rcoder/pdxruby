@@ -30,7 +30,11 @@
 
 <% unless @event.has_participant(session[:member]) %>
 <p>
-<%= link_to 'Will you be attending?', :controller => 'participants', :action => 'new', :event => @event %>
+<%= link_to 'Will you be attending?', 
+	:controller => 'participants', 
+	:action => 'new', 
+	:event => @event unless @event.ended?
+%>
 </p>
 <% end %>
  <h4>Yes</h4>
@@ -63,9 +67,25 @@
 </blockquote>
 <% end %>
 
-<% if @event.ended? and not @event.minutes.nil? %>
+<% if @event.ended? %>
+
+<% unless @event.minutes.nil? %>
 <h3>Minutes</h3>
 <p><%= textilize @event.minutes %></p>
+<% end %>
+
+
+<h3>Feedback</h3>
+<%= link_to 'Leave feedback',
+	:controller => 'feedbacks',
+	:action => 'new',
+	:event => @event if @event.has_participant(session[:member]) %>
+
+<% if @event.feedbacks.size > 0 %>	
+<%= render :partial => 'feedback', :collection => @event.feedbacks %>
+<% end %>
+<% else %>
+<p>(none)</p>
 <% end %>
 
  <hr/>
@@ -73,7 +93,7 @@
 <% if session[:member] == @event.member %>
 <p>
 <%= link_to 'Edit this event', :action => 'edit', :id => @event %>
-<% if not @event.cancelled? %>
+<% if not (@event.cancelled? or @event.ended?) %>
 | <%= link_to 'Cancel this event', :action => 'cancel', :id => @event, :confirm => 'Are you sure?' %>
 <% end %>
 </p>

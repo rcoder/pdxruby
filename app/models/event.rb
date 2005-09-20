@@ -14,12 +14,12 @@ class Event < ActiveRecord::Base
   validates_presence_of :ends_at
   validates_presence_of :location_id
   
-  validates_each :starts_at, :ends_at do |record, attr|
-  	record.errors.add attr, 'must be later than now' if record.send(attr) < Time.now
+  validates_each :starts_at, :ends_at do |rec, attr|
+  	rec.errors.add attr, 'must be later than now' if rec.send(attr) < Time.now
   end
   
-  validates_each :ends_at do |record, attr|
-  	record.errors.add attr, 'must be later than start time' if record.ends_at < record.starts_at
+  validates_each :ends_at do |rec, attr|
+  	rec.errors.add attr, 'must be later than start time' if rec.ends_at < rec.starts_at
   end
   
   def cancelled?
@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
   end
   
   def has_participant(member)
-    self.participants.map {|p| p.member}.member?(member)
+    self.participants.map {|p| p.member }.member?(member)
   end
   
   def started?
@@ -48,6 +48,10 @@ class Event < ActiveRecord::Base
   
   def ended?
     self.ends_at < Time.now
+  end
+  
+  def feedbacks
+  	self.participants.map {|p| p.feedbacks }.flatten
   end
 
   private

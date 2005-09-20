@@ -14,13 +14,24 @@ class FeedbacksController < ApplicationController
 
   def new
     @feedback = Feedback.new
+    @participant = Participant.find(
+    	:first,
+    	:condition => [
+    		'member = ? and event = ?', 
+    		session[:member].id, 
+    		params[:event]
+    	]
+    )
   end
 
   def create
     @feedback = Feedback.new(params[:feedback])
+    @feedback.participant = Participant.find(params[:participant][:id])
     if @feedback.save
       flash[:notice] = 'Feedback was successfully created.'
-      redirect_to :action => 'list'
+      redirect_to :controller => 'events', 
+      	:action => 'show', 
+      	:id => @feedback.participant.event.id
     else
       render :action => 'new'
     end
