@@ -67,3 +67,4 @@ while (true)
   STDOUT.puts("Done. Sleeping for #{wait} seconds...")
   sleep wait
 end
+
