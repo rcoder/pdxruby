@@ -1,0 +1,10 @@
+RSS feed support requires an additional component, the 'feeder'. To run it, just
+execute the following from the root dir of the project:
+
+ruby scripts/feeder
+
+By default, this script will poll each member's RSS feed (if they have one) once
+every five minutes, remove any existing articles, and add the current contents
+of their RSS feeds as separate Article instances.
+
+It depends on the 'simple-rss' gem, and may well fail on some feeds.
