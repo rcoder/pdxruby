@@ -15,28 +15,19 @@
       
       
       <h2>Upcoming events</h2>
-	<ul>
-        	<% for event in @upcoming_events  %>
-			<li>
-				<%= link_to event.name, { :controller => 'events',
-							  :action     => 'show',
-							  :id	      => event.id } %><br/>
-				<%= event.starts_at.to_formatted_s("%A %b %d at %I:%M %p") %> - <%= event.location.name %>
-			</li>
-   		<% end %> 
-    	</ul>
+        <ul>
+	        <%= render :partial => 'event', :collection => @upcoming_events %>
+        </ul>
 
       <h2>Recent events</h2>
         <ul>
-                <% for event in @recent_events  %>
-                        <li>
-                                <%= link_to event.name, { :controller => 'events',
-                                                          :action     => 'show',
-                                                          :id         => event.id } %><br/>
-                                <%= event.starts_at.to_formatted_s("%A %b %d at %I:%M %p") %> - <%= event.location.name %>
-                        </li>
-                <% end %>
+          <%= render :partial => 'event', :collection => @recent_events %>
         </ul>
+        
+      <h2>Recent articles</h2>
+      <ul>
+        <%= render :partial => 'article', :collection => @member_articles %>
+      </ul>
 
 
       <h2>Looking for more information?</h2>

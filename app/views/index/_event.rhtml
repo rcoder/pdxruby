@@ -1,0 +1,7 @@
+<li>
+<%= link_to event.name,
+    :controller => 'events',
+    :action     => 'show',
+    :id         => event.id %><br/>
+<%= event.starts_at.to_formatted_s("%A %b %d at %I:%M %p") %> @ <%= event.location.name %>
+</li>

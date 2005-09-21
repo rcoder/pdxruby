@@ -53,6 +53,16 @@ class Event < ActiveRecord::Base
   def feedbacks
   	self.participants.map {|p| p.feedbacks }.flatten
   end
+  
+  def Event.find_upcoming(limit=10)
+    find(:all, :limit => limit, :order_by => 'starts_at desc', 
+         :conditions => ['starts_at > ? and status = ?', Time.now, EVENT_STATUS[:active]])
+  end
+  
+  def Event.find_recent(limit=10)
+    find(:all, :limit => limit, :order_by => 'ends_at desc',
+         :conditions => ['ends_at < ? and status = ?', Time.now, EVENT_STATUS[:upcoming]])
+  end
 
   private
 

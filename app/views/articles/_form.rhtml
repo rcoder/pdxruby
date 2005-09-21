@@ -1,0 +1,16 @@
+<%= error_messages_for 'article' %>
+
+<!--[form:article]-->
+<p><label for="article_created_at">Created at</label><br/>
+<%= datetime_select 'article', 'created_at'  %></p>
+
+<p><label for="article_title">Title</label><br/>
+<%= text_field 'article', 'title'  %></p>
+
+<p><label for="article_summary">Summary</label><br/>
+<%= text_field 'article', 'summary'  %></p>
+
+<p><label for="article_link">Link</label><br/>
+<%= text_field 'article', 'link'  %></p>
+<!--[eoform:article]-->
+

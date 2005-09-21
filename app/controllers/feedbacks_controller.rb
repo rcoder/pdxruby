@@ -16,7 +16,7 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.new
     @participant = Participant.find(
     	:first,
-    	:condition => [
+    	:conditions => [
     		'member = ? and event = ?', 
     		session[:member].id, 
     		params[:event]

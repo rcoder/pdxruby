@@ -1,0 +1,14 @@
+<li>
+<p><b><%= article.title %></b>
+(<%= link_to 'Show', 
+  :controller => 'articles',
+  :action => 'show',
+  :id => article.id %>)
+<br/>
+Posted at <%= article.modified_at.to_formatted_s("%A %b %d at %I:%M %p") %>
+by <%= link_to article.member.name,
+    :controller => 'members',
+    :action => 'show',
+    :id => article.member.id %>
+</p>
+</li>
