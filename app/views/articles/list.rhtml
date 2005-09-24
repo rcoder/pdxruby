@@ -4,7 +4,6 @@
   <tr>
     <th>Member</th>
     <th>Title</th>
-    <th>Summary</th>
   </tr>
   
 <% for article in @articles %>
@@ -15,7 +14,6 @@
             :id => article.member.id
         %></td>
     <td><%= link_to article.title, article.link %></td>
-    <td><%= article.filtered_content %></td>
     <% if article.member == session[:member] %>
     <td><%= link_to 'Delete', :action => 'destroy', :id => article.id %></td>
     <% end %>
