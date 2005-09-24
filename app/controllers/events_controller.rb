@@ -101,11 +101,15 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
       flash[:notice] = "Sorry. You do not own this event."
-	    redirect_to :action => 'list'
-    	return
+      redirect_to :action => 'list'
+      return
     end
     @event.cancel!
-    @event.save
+    if @event.save
+      flash[:notice] = "Event cancelled."
+    else
+      flash[:notice] = "Failed to cancel event."
+    end
     redirect_to :action => 'list'
   end
 end
