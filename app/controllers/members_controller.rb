@@ -129,7 +129,7 @@ class MembersController < ApplicationController
       return
     end
     
-    filename = "images/members/" + @member.id.to_s + ".jpg"
+    filename = RAILS_ROOT + "/public/images/members/" + @member.id.to_s + ".jpg"
     # make sure filetype is okay
     if image_file.content_type.scan(/image\/jpeg/).empty?
       raise "Mugshot must be of type image/jpeg. (not " + image_file.content_type + ")"
