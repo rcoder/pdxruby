@@ -54,7 +54,7 @@ while (true)
         article.modified_at = (item.modified || Time.now)
         article.title = unescape(item.title)
         article.link = item.link
-        article.content = unescape(item.summary || item.content)
+	article.content = unescape(item.summary || item.content || item.description)
         article.save
       end
     rescue Exception => e
