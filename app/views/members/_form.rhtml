@@ -13,6 +13,9 @@
 <p><label for="member_verify_password">Verify Password</label><br/>
 <%= password_field_tag 'verify_password', @member.password  %></p>
 
+<p><label for="member_image_file">Mugshot</label><br/>
+<%= file_field_tag 'image_file' %></p>
+
 <p><label for="member_feed_url">Feed url</label><br/>
 <%= text_field 'member', 'feed_url'  %></p>
 

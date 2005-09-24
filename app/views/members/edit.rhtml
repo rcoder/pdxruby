@@ -1,6 +1,6 @@
 <h1>Editing member</h1>
 
-<%= start_form_tag :action => 'update', :id => @member %>
+<%= form_tag({:action => 'update', :id => @member}, {:multipart => true}) %>
   <%= render_partial 'form' %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>

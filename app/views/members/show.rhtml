@@ -1,10 +1,19 @@
 <h3>Profile</h3>
 <blockquote>
+ <p>
+  <% if !File.exist?('images/members/' + @member.id.to_s + ".jpg") %>
+    <%= image_tag '/images/members/default.jpg' %>
+  <% else %>
+    <%= image_tag '/images/members/' + @member.id.to_s + ".jpg" %>
+  <% end %>
+ </p>
  <% for column in Member.content_columns %>
  <p>
    <% if column.name != "password" %>
      <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
    <% end %>
+ </p>
+ <p>
  </p>
  <% end %>
 </blockquote>
