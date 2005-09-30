@@ -32,6 +32,10 @@ _Other_
   - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
     This way, we would be able to easily see what revision the dev.pdxruby.org is running.
 
+  - Cache index page. How should this be done? Periodically or when some set of DB modifications
+    occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
+    the index should be able to handle a slashdotting.
+
 _Input Validation_
   - make sure email address and feed URL (for Member) look like an email address and URL
   
