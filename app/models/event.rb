@@ -13,9 +13,11 @@ class Event < ActiveRecord::Base
   validates_presence_of :starts_at
   validates_presence_of :ends_at
   validates_presence_of :location_id
-  
-  validates_each :starts_at, :ends_at do |rec, attr|
-  	rec.errors.add attr, 'must be later than now' if rec.send(attr) < Time.now
+ 
+  validates_each :starts_at do |rec, attr|
+  	unless rec.ends_at < Time.now
+  		rec.errors.add attr, 'must be later than now' if rec.send(attr) < Time.now
+	end
   end
   
   validates_each :ends_at do |rec, attr|
