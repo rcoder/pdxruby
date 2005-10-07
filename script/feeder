@@ -11,6 +11,7 @@ require 'rubygems'
 require 'net/http'
 require 'simple-rss'
 require 'rexml/text'
+require 'digest/md5'
 
 OPTIONS = {
   :environment => "development",
@@ -18,7 +19,7 @@ OPTIONS = {
   # otherwise, set it to the number of seconds between polls
   :wait_time => 0,
   # set true if you prefer silence, false if you like verbosage
-  :quiet => true
+  :quiet => false
 }
 
 ARGV.options do |opts|
@@ -55,19 +56,47 @@ while (true)
       data = Net::HTTP.get(uri)
       rss = SimpleRSS.parse(data)
       
-      puts "Saving #{rss.items.size} items for member #{member.name}..." unless quiet
+      puts "Inspecting #{rss.items.size} items for member #{member.email}..." unless quiet
       
-      Article.find(:all, :conditions => ['member_id = ?', member.id]).each {|a| a.destroy}
+      update_count = 0
+      new_count = 0
       
       rss.items.each do |item|
-        article = Article.new
-        article.member = member
-        article.modified_at = (item.modified || Time.now)
-        article.title = unescape(item.title)
-        article.link = item.link
-	article.content = unescape(item.summary || item.content || item.description)
-        article.save
+        content = unescape(item.summary || item.content || item.description)
+	hash = Digest::MD5.hexdigest(content)
+	
+	# only look at the first one found (there should only be one)
+	# since we "index" on the link, if a post is deleted, we would never know...
+        found = Article.find(:all, :conditions => ['link = ?', item.link]).shift
+
+	if !found.nil?
+	  # no change, nothing to see here
+	  next if found.content_hash == hash
+
+	  # update exisiting article
+	  found.title = unescape(item.title)
+	  found.modified_at = (item.modified || Time.now)
+	  found.content = content
+	  found.content_hash = hash
+	  found.save
+	  
+	  update_count += 1
+	else
+	  # create a new article
+	  article = Article.new
+          article.member = member
+          article.modified_at = (item.modified || Time.now)
+          article.title = unescape(item.title)
+          article.link = item.link
+	  article.content = content
+	  article.content_hash = hash.to_s
+          article.save
+
+	  new_count += 1
+	end
       end
+
+      puts "Updated #{update_count} items and created #{new_count} new items for #{member.email}." unless quiet
     rescue Exception => e
       STDERR.puts("Error loading #{member.feed_url}: '#{e}'")
       next

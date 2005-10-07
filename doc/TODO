@@ -49,14 +49,7 @@ _Testing_
   - this is a placeholder
 
 _Feeds_
-  - Feeds should be interleaved/randomized. Currently, each users feeds are imported
-    entirely, one after another. The result, is that the Recent Articles field on the main
-    page, which has a threshold of 5 articles, will display 5 articles by the same member.
-
   - It would be nice if the feeds could be moderated by people. If one
     person posts a bunch of off-topic entries, then the last 5 isn't very
     Ruby-based. Currently, a user can delete his or her own articles, which is probably
     good-enough for a little while.
-
-  - The feeder should only import feeds that have a) changed or b) are actually new. Right
-    now, it just deletes everything and starts over.
