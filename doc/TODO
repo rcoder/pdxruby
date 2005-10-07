@@ -60,5 +60,3 @@ _Feeds_
 
   - The feeder should only import feeds that have a) changed or b) are actually new. Right
     now, it just deletes everything and starts over.
-
-  - Feeder should be added to CRON rather than running ever x seconds.

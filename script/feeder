@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
+# feeder
+#
+# purpose: updates the Articles relation, aggregating
+# Members' feeds. Can be run as a daemon, or
+# just once.
+
 require 'optparse'
 require 'rubygems'
 require 'net/http'
@@ -8,7 +14,11 @@ require 'rexml/text'
 
 OPTIONS = {
   :environment => "development",
-  :wait_time => 300
+  # set this to 0 if you only want it to run once
+  # otherwise, set it to the number of seconds between polls
+  :wait_time => 0,
+  # set true if you prefer silence, false if you like verbosage
+  :quiet => true
 }
 
 ARGV.options do |opts|
@@ -32,9 +42,10 @@ end
 ENV["RAILS_ENV"] = OPTIONS[:environment]
 require File.dirname(__FILE__) + '/../config/environment'
 
+quiet = OPTIONS[:quiet]
 while (true)
   members = Member.find(:all, "feed_url <> '' and feed_url is not null")
-  STDOUT.puts "Beginning feed refresh for #{members.size} URL(s)..."
+  STDOUT.puts "Beginning feed refresh for #{members.size} URL(s)..." unless quiet
   
   members.each do |member|
     begin
@@ -44,7 +55,7 @@ while (true)
       data = Net::HTTP.get(uri)
       rss = SimpleRSS.parse(data)
       
-      puts "Saving #{rss.items.size} items for member #{member.name}..."
+      puts "Saving #{rss.items.size} items for member #{member.name}..." unless quiet
       
       Article.find(:all, :conditions => ['member_id = ?', member.id]).each {|a| a.destroy}
       
@@ -64,7 +75,11 @@ while (true)
   end
   
   wait = OPTIONS[:wait_time]
-  STDOUT.puts("Done. Sleeping for #{wait} seconds...")
-  sleep wait
+  if wait == 0
+    puts "Done." unless quiet
+    break
+  else
+    puts "Done. Sleeping for #{wait} seconds..." unless quiet
+    sleep wait
+  end
 end
-
