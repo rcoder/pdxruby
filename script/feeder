@@ -46,7 +46,7 @@ require File.dirname(__FILE__) + '/../config/environment'
 quiet = OPTIONS[:quiet]
 while (true)
   members = Member.find(:all, "feed_url <> '' and feed_url is not null")
-  STDOUT.puts "Beginning feed refresh for #{members.size} URL(s)..." unless quiet
+  STDOUT.puts "Beginning feed refresh for #{members.size} Members..." unless quiet
   
   members.each do |member|
     begin
@@ -61,13 +61,18 @@ while (true)
       update_count = 0
       new_count = 0
       
+      seen = Hash.new
+      
       rss.items.each do |item|
         content = unescape(item.summary || item.content || item.description)
 	hash = Digest::MD5.hexdigest(content)
 	
 	# only look at the first one found (there should only be one)
 	# since we "index" on the link, if a post is deleted, we would never know...
-        found = Article.find(:all, :conditions => ['link = ?', item.link]).shift
+        found = Article.find(:all, :conditions => ['member_id = ? and link = ?',member.id,item.link]).shift
+
+	# note that we saw this item
+	seen[item.link] = 1
 
 	if !found.nil?
 	  # no change, nothing to see here
@@ -94,9 +99,22 @@ while (true)
 
 	  new_count += 1
 	end
+
       end
 
-      puts "Updated #{update_count} items and created #{new_count} new items for #{member.email}." unless quiet
+      # delete any we didn't see. this will get rid of old entries and
+      # ones that have been deleted. it is also probably not the most
+      # efficient way to go about this, but it works for now (famous last words)
+      delete_count = 0
+      Article.find(:all, :conditions => ['member_id = ?',member.id]).each{ |a|
+        unless seen.has_key? a.link
+	  a.destroy
+	  delete_count += 1
+	end
+      }
+
+      puts "Updated #{update_count} items, created #{new_count} new items, " +
+           "and deleted #{delete_count} items for #{member.email}." unless quiet
     rescue Exception => e
       STDERR.puts("Error loading #{member.feed_url}: '#{e}'")
       next
