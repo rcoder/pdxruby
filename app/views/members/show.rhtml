@@ -27,11 +27,10 @@
 <%
   else
     @participations.each do |participation|
-      # TODO: filter out participations in the past
 %>
     <%= link_to participation.event.name, :controller => "events", :action => "show", 
           :id => participation.event.id %> at <%= participation.event.starts_at %>
-    <%= if @member.id == session[:member].id and not participation.event.started?
+    <%= if @member.id == session[:member].id
           link_to '[change]', :controller => "participants", :action => "edit", :id => participation.id 
 	end
      %>

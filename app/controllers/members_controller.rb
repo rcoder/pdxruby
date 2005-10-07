@@ -12,7 +12,7 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @participations = @member.participants
+    @participations = Participant.find_upcoming(params[:id])
   end
 
   def list

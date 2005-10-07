@@ -38,8 +38,6 @@ _Other_
 
   - Member.password should actually be md5-hashed in the database.
 
-  - Upcoming participations on member page should only show participations in the future
-
 _Input Validation_
   - make sure email address and feed URL (for Member) look like an email address and URL
 
