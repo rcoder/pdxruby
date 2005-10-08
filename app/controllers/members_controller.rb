@@ -29,7 +29,7 @@ class MembersController < ApplicationController
     if !check_passwords_match
       flash[:notice] = 'Passwords do not match'
       render :action => 'new'
-      return
+      return false
     end
     # enhash password before insertion
     params[:member][:password] = Digest::MD5.hexdigest(params[:member][:password])
@@ -41,13 +41,16 @@ class MembersController < ApplicationController
       rescue StandardError => message
         flash[:notice] = message
         redirect_to :action => 'edit', :id => @member
-	return
+        return false
       end
       flash[:notice] = 'Member was successfully created.'
       session[:member] = @member
       redirect_to :action => 'show', :id => @member.id
+      return false
     else
+      flash[:notice] = "Sorry, but the member couldn't be created for some reason."
       render :action => 'new'
+      return false
     end
   end
 
@@ -61,7 +64,7 @@ class MembersController < ApplicationController
     if !check_passwords_match
       flash[:notice] = 'Passwords do not match'
       render :action => 'edit'
-      return
+      return false
     end
     # enhash the password only if it came in as a parameter, and is longer than 0
     # this will avoid enhashing a hash and enhashing ''
@@ -76,12 +79,15 @@ class MembersController < ApplicationController
       rescue StandardError => message
         flash[:notice] = message
         redirect_to :action => 'edit', :id => @member
-	return
+        return false
       end
       flash[:notice] = 'Member was successfully updated.'
       redirect_to :action => 'show', :id => @member
+      return false
     else
+      flash[:notice] = "Sorry, but the member profile couldn't be updated for some reason."
       render :action => 'edit'
+      return false
     end
   end
   
@@ -89,6 +95,7 @@ class MembersController < ApplicationController
     if request.get?
       if session[:member]
         redirect_to :action => 'show', :id => session[:member]
+        return false
       end
     elsif request.post?
       email = params[:member][:email]
@@ -102,6 +109,7 @@ class MembersController < ApplicationController
         else
           session[:member] = member
           redirect_to :action => 'show', :id => member
+          return false
         end
       end
     end
@@ -127,6 +135,7 @@ class MembersController < ApplicationController
     if requested_member.nil?
       flash[:notice] = "That Member Doesn't Exist. Try Again."
       redirect_to :action => 'list'
+      return false
     end
   end
   
@@ -134,6 +143,7 @@ class MembersController < ApplicationController
     if !member_is_this_member? params[:id]
       flash[:notice] = "No Peeking."
       redirect_to :action => 'list'
+      return false
     end
   end
   

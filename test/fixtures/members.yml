@@ -1,8 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first_member:
+member_bob:
   id: 1
   name: Bob
   email: bob@bob.com
-  password: abc
-another_member:
+  password: <%= Digest::MD5.hexdigest('abc') %>
+  feed_url: http://foo/bar
+  about: something
+  created_at: <%= Time.now %>
+member_sue:
   id: 2
+  name: Sue
+  email: sue@sue.com
+  password: <%= Digest::MD5.hexdigest('abc') %>
+  feed_url: http://foo/bar
+  about: something
+  created_at: <%= Time.now %>

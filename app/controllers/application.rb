@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
     unless session[:member] && Member.find(session[:member].id)
       reset_session
       redirect_to :controller => 'members', :action => 'login'
+      return false
     end
   end
   

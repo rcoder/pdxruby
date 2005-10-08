@@ -23,4 +23,15 @@ class Test::Unit::TestCase
   end
 
   # Add more helper methods to be used by all tests here...
+  
+  def login(email='bob@bob.com', password='abc')
+    post :login, :member => { :email => email, :password => password }
+    assert_nil flash[:notice]
+    assert_response :redirect
+    assert_redirected_to :action => 'show'
+    member = session[:member]
+    assert_not_nil member
+    assert_equal email, member.email, "Email should match session email"
+  end
+  
 end

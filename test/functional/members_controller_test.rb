@@ -15,11 +15,12 @@ class MembersControllerTest < Test::Unit::TestCase
 
   def test_index
     get :index
-    assert_response :success
-    assert_template 'list'
+    assert_response :redirect
+    assert_redirected_to :action => 'login'
   end
 
   def test_list
+    login(@member_bob.email, 'abc') # in test_helper
     get :list
 
     assert_response :success
@@ -29,65 +30,72 @@ class MembersControllerTest < Test::Unit::TestCase
   end
 
   def test_show
+    login(@member_bob.email, 'abc') # in test_helper
     get :show, :id => 1
 
     assert_response :success
     assert_template 'show'
-
-    assert_not_nil assigns(:member)
-    assert assigns(:member).valid?
-  end
-
-  def test_create
-    num_members = Member.count
-
-    post :create, :member => {}
-
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_equal num_members + 1, Member.count
   end
 
   def test_edit
+    login(@member_bob.email, 'abc') # in test_helper
     get :edit, :id => 1
 
     assert_response :success
     assert_template 'edit'
-
-    assert_not_nil assigns(:member)
-    assert assigns(:member).valid?
   end
 
   def test_update
-    post :update, :id => 1
+    login(@member_bob.email, 'abc') # in test_helper
+    changed_member = @member_bob.dup
+    changed_member.name = 'Bob Jr.'
+    post :update, :id => @member_bob.id, :commit => 'Edit', :member => changed_member.attributes, :password => 'abc', :verify_password => 'abc'
+    assert_equal "Member was successfully updated.", flash[:notice]
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
-  end
-
-  def test_destroy
-    assert_not_nil Member.find(1)
-
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Member.find(1)
-    }
+    assert_redirected_to :action => 'show'
   end
   
   def test_anyone_can_register_to_be_a_member
-    post :new, :member => { :name => 'Bob', :email => 'bob@bob.com', :password => 'abc',
-      :feed_url => 'http://foo/bar.xml', :about => 'Something about me.' }
-    assert_response :success
-    #assert_redirected_to :action => 'show'
-  end
-
-  def test_member_can_login
-    post :login, :member => { :email => 'bob@bob.com', :password => 'abc' }
+    post :create, :member => { :name => 'Anyone', :email => 'anyone@anywhere.com',
+      :feed_url => 'http://foo/bar.xml', :about => 'Something about me.' }, :password => 'abc', :verify_password => 'abc'
     assert_response :redirect
     assert_redirected_to :action => 'show'
+    assert_not_nil Member.find_by_email('anyone@anywhere.com')
+  end
+  
+  def test_member_cannot_register_again
+    post :create, :member => @member_bob.attributes, :password => 'abc', :verify_password => 'abc'
+    assert_response :success
+    # FIXME: A bit of a hack, but it's hard to get to the "errors" array from the functional tests.  That's
+    # actually where the details of the error would be.
+    assert_equal "Sorry, but the member couldn't be created for some reason.", flash[:notice]
+  end
+
+  def test_valid_login
+    login(@member_bob.email, 'abc')
+  end
+  
+  def test_invalid_login_with_unregistered_member
+    post :login, :member => { :email => 'bad@bad', :password => 'bad' }
+    assert_response :success
+    assert_template 'members/login'
+    assert_equal "That member doesn't exist.", flash[:notice]
+    assert !assigns(:member)
+  end
+    
+  def test_invalid_login_with_wrong_password
+    post :login, :member => { :email => @member_bob.email, :password => 'bad' }
+    assert_response :success
+    assert_template 'members/login'
+    assert_equal "Wrong password.", flash[:notice]
+    assert !assigns(:member)
+  end
+    
+  def test_logout
+    get :logout
+    assert_response :redirect
+    assert_redirected_to :action => 'login'
+    assert session.empty?
   end
   
 end
