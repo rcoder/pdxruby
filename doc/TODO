@@ -21,8 +21,6 @@ _Spamming_
 _Other_
   - Owner can give event to another participant.
   
-  - Event attributes (other than minutes) should be locked after event is completed
-
   - Export events to an iCalendar (http://en.wikipedia.org/wiki/ICalendar) file
 
   - Make forms prettier (i.e. make input sizes more appropriate)

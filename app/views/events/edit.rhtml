@@ -1,7 +1,12 @@
 <h1>Editing event</h1>
 
 <%= start_form_tag :action => 'update', :id => @event %>
-  <%= render_partial 'form' %>
+  <%= unless @event.ended? 
+        render_partial 'form' 
+      else
+        render_partial 'form_ended'
+      end
+  %>
   <%= submit_tag 'Edit' %>
 <%= end_form_tag %>
 

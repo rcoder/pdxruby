@@ -1,0 +1,26 @@
+<%= error_messages_for 'event' %>
+
+<!--[form:event]-->
+<p><label for="event_name">Name</label><br/>
+<%= @event.name  %></p>
+
+<p>Location:
+<%= link_to @event.location.name,
+    :controller => 'locations',
+    :action => 'show',
+    :id => @event.location.id
+%>,
+<%= @event.location.address %>
+</p>
+			  
+<p>Time: <%= @event.starts_at %> - <%= @event.ends_at %></p>
+
+<p><label for="event_agenda">Agenda</label><br/>
+<%= @event.agenda  %></p>
+
+<p><label for="event_status">Status</label><br/>
+<%= @event.status  %></p>
+
+<p><label for="event_minutes">Minutes</label><br/>
+<%= text_area 'event', 'minutes' %></p>
+<!--[eoform:event]-->
