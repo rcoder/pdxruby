@@ -25,12 +25,16 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(params[:member])
+    params[:member][:password] = params[:password]
     if !check_passwords_match
       flash[:notice] = 'Passwords do not match'
       render :action => 'new'
       return
     end
+    # enhash password before insertion
+    params[:member][:password] = Digest::MD5.hexdigest(params[:member][:password])
+    # create a new member from given values
+    @member = Member.new(params[:member])
     if @member.save
       begin
         save_mugshot params[:image_file]
@@ -52,11 +56,19 @@ class MembersController < ApplicationController
   end
 
   def update
+    params[:member][:password] = params[:password]
     @member = Member.find(params[:id])
     if !check_passwords_match
       flash[:notice] = 'Passwords do not match'
       render :action => 'edit'
       return
+    end
+    # enhash the password only if it came in as a parameter, and is longer than 0
+    # this will avoid enhashing a hash and enhashing ''
+    if params[:member][:password].length > 0
+      params[:member][:password] = Digest::MD5.hexdigest(params[:member][:password])
+    else
+      params[:member][:password] = @member.password
     end
     if @member.update_attributes(params[:member])
       begin
