@@ -8,7 +8,7 @@ class Participant < ActiveRecord::Base
   validates_presence_of :attending
 
   def self.find_upcoming(member_id)
-    return self.find_by_sql "SELECT * FROM events e, participants p " +
-      "WHERE p.event_id=e.id AND p.member_id=#{member_id} AND e.starts_at>now()"
+    return self.find_by_sql("SELECT * FROM events e, participants p " +
+      "WHERE p.event_id=e.id AND p.member_id=#{member_id} AND e.starts_at>now()")
   end
 end

@@ -1,10 +1,15 @@
 #!/usr/bin/env ruby
 
-# feeder
+# = feeder
 #
-# purpose: updates the Articles relation, aggregating
-# Members' feeds. Can be run as a daemon, or
-# just once.
+# purpose:: updates the Articles relation, aggregating
+#   Members' feeds. Can be run as a daemon, or
+#   just once.
+#
+# = Useful Links
+#
+#  * http://simple-rss.rubyforge.org/
+#  * http://blogs.law.harvard.edu/tech/rss
 
 require 'optparse'
 require 'rubygems'
@@ -64,6 +69,10 @@ while (true)
       seen = Hash.new
       
       rss.items.each do |item|
+        # we care enough about the pubdate to skip items
+        # that dont have it
+        next if item.pubDate.nil?
+				      
         content = unescape(item.summary || item.content || item.description)
 	hash = Digest::MD5.hexdigest(content)
 	
@@ -80,7 +89,7 @@ while (true)
 
 	  # update exisiting article
 	  found.title = unescape(item.title)
-	  found.modified_at = (item.modified || Time.now)
+	  found.modified_at = item.pubDate
 	  found.content = content
 	  found.content_hash = hash
 	  found.save
@@ -90,7 +99,7 @@ while (true)
 	  # create a new article
 	  article = Article.new
           article.member = member
-          article.modified_at = (item.modified || Time.now)
+          article.modified_at = (item.pubDate)
           article.title = unescape(item.title)
           article.link = item.link
 	  article.content = content
