@@ -30,6 +30,7 @@
 %>
     <%= link_to participation.event.name, :controller => "events", :action => "show", 
           :id => participation.event.id %> at <%= participation.event.starts_at %>
+    (<%= participation.attending %>)
     <%= if @member.id == session[:member].id
           link_to '[change]', :controller => "participants", :action => "edit", :id => participation.id 
 	end

@@ -3,7 +3,7 @@
 <!--[form:participant]-->
 <p><label for="participant_attending">Attending</label><br/>
 <!-- <%= text_field 'participant', 'attending'  %></p> -->
-<%= collection_select 'participant', 'attending', %w{yes no maybe}, 'to_s', 'capitalize' %>
+<%= collection_select 'participant', 'attending', Participant::PARTICIPANT_ATTENDING.values, 'to_s', 'capitalize' %>
 
 <p><label for="participant_comments">Comments</label><br/>
 <%= text_area 'participant', 'comments'  %></p>
