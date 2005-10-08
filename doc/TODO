@@ -36,8 +36,6 @@ _Other_
     occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
     the index should be able to handle a slashdotting.
 
-  - Member.password should actually be md5-hashed in the database.
-
 _Input Validation_
   - make sure email address and feed URL (for Member) look like an email address and URL
 

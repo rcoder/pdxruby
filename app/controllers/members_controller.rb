@@ -5,6 +5,7 @@ class MembersController < ApplicationController
   before_filter :member_exists!, :only => [ :show ]
   
   require 'RMagick'
+  require 'digest/md5'
   
   def index
     redirect_to :action => 'login'
@@ -79,7 +80,7 @@ class MembersController < ApplicationController
       end
     elsif request.post?
       email = params[:member][:email]
-      password = params[:member][:password]
+      password = Digest::MD5.hexdigest(params[:member][:password])
       member = Member.find_by_email(email)
       if member.nil?
         flash[:notice] = "That member doesn't exist."
