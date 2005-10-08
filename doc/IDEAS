@@ -1,0 +1,14 @@
+== pdxruby.org ideas ==
+
+Notes:
+
+1) If you're interested in implementing one of these ideas, send an
+   email to the -dev mailing list to make sure it fits in with the
+   current direction of the site.
+
+2) Once you start work on a task, please move it to the TODO file
+   and put your name in [square brackets] at the end of the item.
+
+_Community Stuff_
+  - del.icio.us aggregator.  Let members share their del username
+    and fetch certain tags
