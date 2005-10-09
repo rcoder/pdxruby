@@ -62,3 +62,7 @@ _Feeds_
     person posts a bunch of off-topic entries, then the last 5 isn't very
     Ruby-based. Currently, a user can delete his or her own articles, which is probably
     good-enough for a little while.
+    	- Perhaps a field should be added to the articles relation
+	  that contains the number of 'nay' votes. When some threshold
+	  is reached, the article is not shown (but not deleted - if
+	  it were, the feeder would just grab it again next run)

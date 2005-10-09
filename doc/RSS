@@ -3,8 +3,11 @@ execute the following from the root dir of the project:
 
 ruby scripts/feeder
 
-By default, this script will poll each member's RSS feed (if they have one) once
-every five minutes, remove any existing articles, and add the current contents
-of their RSS feeds as separate Article instances.
+By default, this script will poll each member's RSS feed (if they have one) once,
+adding any articles that are new, updating any that have changed, and deleting
+any that are no longer present. If you wish for the script to run continuously
+(on some interval), this can be configured. Also, by default, it is fairly
+verbose about it's task - if you prefer it to be quiet, this can also be
+configured.
 
 It depends on the 'simple-rss' gem, and may well fail on some feeds.
