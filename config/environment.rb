@@ -84,4 +84,4 @@ Controllers = Dependencies::LoadingModule.root(
 )
 
 # Include your app's configuration here:
-
+require 'lib/r_e'

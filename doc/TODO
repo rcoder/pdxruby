@@ -29,15 +29,18 @@ _Other_
 
   - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
     This way, we would be able to easily see what revision the dev.pdxruby.org is running.
+    	- the deploy script may make this unessicary
+	- a post-commit hook that dumps the revision number into a file in /public/
+	  would be one solution
 
   - Cache index page. How should this be done? Periodically or when some set of DB modifications
     occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
     the index should be able to handle a slashdotting.
 
-_Input Validation_
-  - make sure email address and feed URL (for Member) look like an email address and URL
+  - Some way for a user to reset/change their password
 
-  - lots more not listed here...
+_Input Validation_
+  - more??? can you think of any?
 
 _Testing_
   - write functional tests for application.rb

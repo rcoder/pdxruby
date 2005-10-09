@@ -12,4 +12,18 @@ class Member < ActiveRecord::Base
   validates_length_of :email, :maximum => 128
   validates_length_of :feed_url, :maximum => 256
 
+  validates_each :email do |rec, attr|
+    re = Regexp.new(RE::EMAIL)
+    unless re =~ rec.send(attr)
+      rec.errors.add attr, "looks awry. An email address should look something like user@host.tld."
+    end
+  end
+
+  validates_each :feed_url do |rec, attr|
+    re = Regexp.new(RE::URL)
+    unless re =~ rec.send(attr)
+      rec.errors.add attr, "looks awry. A URL should look something like http://som/ewh/ere."
+    end
+  end
+
 end
