@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   before_filter :member_is_this_member!, :only => [ :edit, :update ]
   before_filter :member_exists!, :only => [ :show ]
   
-  require 'RMagick'
+  require 'imageops'
   require 'digest/md5'
   
   def index
@@ -174,9 +174,7 @@ class MembersController < ApplicationController
     file.close
     
     # you can comment out these three lines if you don't want to do dynamic resizing
-    im = Magick::ImageList.new filename
-    im.change_geometry!("64x64"){ |cols,rows,img| img.resize!(cols,rows) }
-    im.write filename
+    ImageOps.resize(filename, "64x64")
   end
 
 end
