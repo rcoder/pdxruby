@@ -23,6 +23,7 @@ class ParticipantsController < ApplicationController
     @participant.event = Event.find(params[:event][:id].to_i)
     if @participant.save
       flash[:notice] = 'Thank you for signing up'
+      MailBot::deliver_rsvp_message(self, @participant) if @participant.is_attending?
       redirect_to :controller => 'events', :action => 'show', :id => params[:event][:id]
     else
       render :action => 'new'
@@ -45,6 +46,7 @@ class ParticipantsController < ApplicationController
     end
     if @participant.update_attributes(params[:participant])
       flash[:notice] = 'Participant was successfully updated.'
+      MailBot::deliver_rsvp_message(self, @participant) if @participant.is_attending?
       redirect_to :action => 'show', :id => @participant
     else
       render :action => 'edit'

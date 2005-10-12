@@ -1,0 +1,13 @@
+You signed up to participate in <%= @event.name %>. That event's organizer,
+<%= @event.member.email %>, has cancelled the event.
+
+If you'd still like to participate, maybe you should organize another event.
+
+You can create a new event at the following location:
+
+<%= url_for :controller => 'events',
+      :action => 'new',
+      :only_path => false %>
+
+The PDX.rb Crew 
+http://www.pdxruby.org/

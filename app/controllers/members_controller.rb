@@ -44,6 +44,7 @@ class MembersController < ApplicationController
         return false
       end
       flash[:notice] = 'Member was successfully created.'
+      MailBot::deliver_signup_message(self, @member)
       session[:member] = @member
       redirect_to :action => 'show', :id => @member.id
       return false

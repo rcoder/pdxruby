@@ -1,0 +1,17 @@
+<% 
+member = @feedback.participant.member
+event = @feedback.participant.event 
+%><%= member.email %> has left the following feedback for your event <%= event.name %>:
+
+<%= @feedback.feedback %>
+
+You can view other feedback for your event, as well as other details, at the 
+following location:
+
+<%= url_for :controller => 'events', 
+      :action => 'show', 
+      :id => event.id, 
+      :only_path => false %>
+
+The PDX.rb Crew 
+http://www.pdxruby.org/

@@ -1,0 +1,13 @@
+You signed up to participate in <%= @event.name %>. That event's organizer,
+<%= @event.member.email %>, has made changes to the event.
+
+You should double-check the new details, and update your participation status
+if necessary:
+
+<%= url_for :controller => 'events', 
+      :action => 'show', 
+      :id => event.id, 
+      :only_path => false %>
+
+The PDX.rb Crew 
+http://www.pdxruby.org/

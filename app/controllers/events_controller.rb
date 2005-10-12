@@ -54,6 +54,9 @@ class EventsController < ApplicationController
     
     if @event.save
       flash[:notice] = 'Event was successfully created.'
+      Member.find(:all) do |member| 
+         MailBot::deliver_new_event_message(self, @event, member)
+      end
       redirect_to :action => 'list'
     else
       @location = Location.new
@@ -80,6 +83,7 @@ class EventsController < ApplicationController
     end
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
+      MailBot::deliver_change_message(self, @event)
       redirect_to :action => 'show', :id => @event
     else
       render :action => 'edit'
@@ -107,6 +111,7 @@ class EventsController < ApplicationController
     @event.cancel!
     if @event.save
       flash[:notice] = "Event cancelled."
+      MailBot::deliver_cancel_message(self, @event)
     else
       flash[:notice] = "Failed to cancel event."
     end

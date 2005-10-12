@@ -8,15 +8,17 @@ Notes:
    put your name in [square brackets] at the end of the event.
 
 _Spamming_
-  - When event is over, ask participants for feedback.
+  - When event is over, ask participants for feedback. [lennon]
   
-  - Participants are notified via email of change to core event information (agenda, location, time, status).
+  - Participants are notified via email of change to core event information [lennon]
   
-  - Participants are notified of reminder of event (eg, day before).
+  - Participants are notified via email if event is cancelled [lennon]
   
-  - Owner is notified via email of RSVPs and comments.
+  - Participants are notified of reminder of event (eg, day before) [lennon]
   
-  - All members are notified of new events.
+  - Owner is notified via email of RSVPs and comments [lennon]
+  
+  - All members are notified of new events [lennon]
 
 _Other_
   - Owner can give event to another participant.

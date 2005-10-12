@@ -15,7 +15,10 @@ class Participant < ActiveRecord::Base
   validates_each :attending do |rec,attr|
     rec.errors.add attr, 'that response is not one I know about' unless PARTICIPANT_ATTENDING.has_value? rec.send(attr)
   end
-	     
+
+  def is_attending?
+     %w( yes maybe ).member?(self.attending)
+  end
 
   def self.find_upcoming(member_id)
     return self.find_by_sql("SELECT * FROM events e, participants p " +

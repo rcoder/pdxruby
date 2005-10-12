@@ -1,0 +1,17 @@
+<% 
+member = @participant.member
+event = @participant.event 
+%><%= member.email %> has signed up to attend your event <%= event.name %>:
+
+<%= @participant.comments %>
+
+You can view other participants for your event, as well as other details, at the 
+following location:
+
+<%= url_for :controller => 'events', 
+      :action => 'show', 
+      :id => event.id, 
+      :only_path => false %>
+
+The PDX.rb Crew 
+http://www.pdxruby.org/

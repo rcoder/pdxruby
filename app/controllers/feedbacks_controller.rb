@@ -29,6 +29,7 @@ class FeedbacksController < ApplicationController
     @feedback.participant = Participant.find(params[:participant][:id])
     if @feedback.save
       flash[:notice] = 'Feedback was successfully created.'
+      MailBot::deliver_feedback_message(self, @feedback)
       redirect_to :controller => 'events', 
       	:action => 'show', 
       	:id => @feedback.participant.event.id
@@ -45,6 +46,7 @@ class FeedbacksController < ApplicationController
     @feedback = Feedback.find(params[:id])
     if @feedback.update_attributes(params[:feedback])
       flash[:notice] = 'Feedback was successfully updated.'
+      MailBot::deliver_feedback_message(self, @feedback)
       redirect_to :action => 'show', :id => @feedback
     else
       render :action => 'edit'
