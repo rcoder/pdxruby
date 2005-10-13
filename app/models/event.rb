@@ -18,19 +18,19 @@ class Event < ActiveRecord::Base
 
   # make sure the status is in EVENT_STATUS
   validates_each :status do |rec,attr|
-       rec.errors.add attr, 'that status is not one I know about' unless EVENT_STATUS.has_value? rec.send(attr)
+    rec.errors.add attr, 'that status is not one I know about' unless EVENT_STATUS.has_value? rec.send(attr)
   end
  
   # make sure the start time is in the future (unless it is already past)
   validates_each :starts_at do |rec, attr|
-  	unless rec.ends_at < Time.now
-  		rec.errors.add attr, 'must be later than now' if rec.send(attr) < Time.now
-	end
+    unless rec.ends_at < Time.now
+      rec.errors.add attr, 'must be later than now' if rec.send(attr) < Time.now
+    end
   end
   
   # make sure the end time is later than the start time (i.e. interval is positive)
   validates_each :ends_at do |rec, attr|
-  	rec.errors.add attr, 'must be later than start time' if rec.ends_at < rec.starts_at
+    rec.errors.add attr, 'must be later than start time' if rec.ends_at < rec.starts_at
   end
   
   def cancelled?
@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
   end
   
   def feedbacks
-  	self.participants.map {|p| p.feedbacks }.flatten
+    self.participants.map {|p| p.feedbacks }.flatten
   end
   
   def Event.find_upcoming(limit=10)
