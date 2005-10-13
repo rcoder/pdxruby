@@ -21,7 +21,8 @@ class Member < ActiveRecord::Base
 
   validates_each :feed_url do |rec, attr|
     re = Regexp.new(RE::URL)
-    unless re =~ rec.send(attr)
+    url = rec.send(attr)
+    unless url.nil? or url == '' or re =~ url
       rec.errors.add attr, "looks awry. A URL should look something like http://som/ewh/ere."
     end
   end
