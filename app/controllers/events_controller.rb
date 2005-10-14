@@ -117,4 +117,11 @@ class EventsController < ApplicationController
     end
     redirect_to :action => 'list'
   end
+  
+  ICAL_EVENT_LIMIT = 100
+  def ical
+     @headers['content-type'] = 'text/plain'
+     @events = Event.find_upcoming(ICAL_EVENT_LIMIT)
+     render_without_layout
+  end
 end

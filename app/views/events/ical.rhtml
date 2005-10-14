@@ -1,0 +1,5 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:pdxruby.org event planner
+<%= render :partial => 'ical_event', :collection => @events %>
+END:VCALENDAR

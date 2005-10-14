@@ -1,0 +1,9 @@
+BEGIN:VEVENT
+LOCATION:<%= ical_event.location.name %>, <%= ical_event.location.address %>
+DTSTAMP:<%= ical_event.created_at.utc.strftime('%Y%m%dT%H%M%SZ') %>
+URL;VALUE=URI:<%= url_for :action => 'show', :id => ical_event.id, :only_path => false %>
+DTSTART:<%= ical_event.starts_at.utc.strftime('%Y%m%dT%H%M%S') %>
+SUMMARY:<%= ical_event.name %>
+DTEND:<%= ical_event.ends_at.utc.strftime('%Y%m%dT%H%M%S') %>
+DESCRIPTION:<%= ical_event.agenda.split(/\r?\n/).join("\\n") %>
+END:VEVENT
