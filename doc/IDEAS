@@ -12,3 +12,12 @@ Notes:
 _Community Stuff_
   - del.icio.us aggregator.  Let members share their del username
     and fetch certain tags
+  
+  - provide an rss feed of our aggregated/combined feed data
+
+  - provide an rss feed of events, and maybe an rss feed for
+    the participations for an event
+
+_UI Stuff_
+
+  - "calender view" for events, perhaps week-at-a-time too
