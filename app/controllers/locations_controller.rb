@@ -1,4 +1,6 @@
 class LocationsController < ApplicationController
+  before_filter :authenticate, :only => [ :edit, :create, :new, :destroy ]
+
   def index
     list
     render :action => 'list'
