@@ -23,15 +23,15 @@ ADDITIONAL_LOAD_PATHS.concat(Dir["#{RAILS_ROOT}/components/[_a-z]*"])
 
 # Followed by the standard includes.
 ADDITIONAL_LOAD_PATHS.concat %w(
-  app 
-  app/models 
-  app/controllers 
-  app/helpers 
-  app/apis 
-  components 
-  config 
-  lib 
-  vendor 
+  app
+  app/models
+  app/controllers
+  app/helpers
+  app/apis
+  components
+  config
+  lib
+  vendor
   vendor/rails/railties
   vendor/rails/railties/lib
   vendor/rails/actionpack/lib
@@ -85,3 +85,4 @@ Controllers = Dependencies::LoadingModule.root(
 
 # Include your app's configuration here:
 require 'lib/r_e'
+require '0-13-activerecord-associations'
