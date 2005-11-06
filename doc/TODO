@@ -58,7 +58,6 @@ _Testing_
   - write unit tests for event.rb [edavis]
   - write unit tests for feedback.rb [edavis]
   - write unit tests for location.rb [edavis]
-  - write unit tests for member.rb [edavis]
   - write unit tests for participant.rb [edavis]
 
 _Feeds_
