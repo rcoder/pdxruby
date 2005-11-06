@@ -54,12 +54,12 @@ _Testing_
   - write functional tests for index_controller.rb
   - write functional tests for locations_controller.rb
   - write functional tests for participants_controller.rb
-  - write unit tests for article.rb
-  - write unit tests for event.rb
-  - write unit tests for feedback.rb
-  - write unit tests for location.rb
-  - write unit tests for member.rb
-  - write unit tests for participant.rb
+  - write unit tests for article.rb [edavis]
+  - write unit tests for event.rb [edavis]
+  - write unit tests for feedback.rb [edavis]
+  - write unit tests for location.rb [edavis]
+  - write unit tests for member.rb [edavis]
+  - write unit tests for participant.rb [edavis]
 
 _Feeds_
   - It would be nice if the feeds could be moderated by people. If one
