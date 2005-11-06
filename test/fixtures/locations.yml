@@ -1,5 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 first_location:
   id: 1
+  name: Somewhere Under the Rainbow
+  address: 100 Yellow Brick Rd, Oz
+  homepage: http://www.oz.wiz
+  created_at: <%= Time.now %>
 another_location:
   id: 2
+  name: My backyard
+  address: 001 Main Street, USA
+  homepage: http://www.localhost.local
+  created_at: <%= Time.now %>
