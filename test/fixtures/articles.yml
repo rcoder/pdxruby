@@ -12,8 +12,8 @@ peatsbooks_article:
   content: meep. meep. moop. 
   link: http//www.peatbooks.com/
 hackfest_article:
-	  id: 3
-	  member_id: 2
-	  title: PDX.rb gets drunk. Ben takes off his clothes
-	  content: Seriously... he took his clothes off and sat on PeatsBooks.com. 
-	  link: http//blog.bleything.net/
+  id: 3
+  member_id: 2
+  title: PDX.rb gets drunk. Ben takes off his clothes
+  content: Seriously... he took his clothes off and sat on PeatsBooks.com. 
+  link: http//blog.bleything.net/
