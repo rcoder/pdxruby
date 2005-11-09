@@ -3,11 +3,18 @@
 <% end %>
 
 <p>Organized by 
+  <% if @event.member.nil? %>
+  no one 
+  (<%= link_to 'claim',
+        {:id => @event.id, :action => 'claim'},
+        :confirm => 'Are you sure?' %>)
+  <% else %>
   <%= link_to @event.member.name, 
       :controller => 'members', 
       :action => 'show', 
       :id => @event.member.id 
   %>
+  <% end %>
 </p>
 <p>Time: <%= @event.starts_at %> - <%= @event.ends_at %></p>
 <p>Location: 
@@ -96,9 +103,21 @@
 <% if not (@event.cancelled? or @event.ended?) %>
 | <%= link_to 'Cancel this event', :action => 'cancel', :id => @event, :confirm => 'Are you sure?' %>
 <% end %>
+<% if @event.member == session[:member] %>
+| <%= link_to 'Give up ownership', 
+    :action => 'release', 
+    :id => @event,
+    :confirm => 'Are you sure?' %>
+<% end %>
 </p>
 <% end %>
 
+<% if @event.unclaimed? and session[:member] %>
+<%= link_to 'Claim ownership',
+    :action => 'claim',
+    :id => @event,
+    :confirm => 'Are you sure?' %>
+<% end %>
 
 <p>
 <%= link_to 'Browse other events', :action => 'list' %>

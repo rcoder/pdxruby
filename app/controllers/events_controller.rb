@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
-  before_filter :authenticate, :only => [ :edit, :create, :new, :destroy ]
+  before_filter :authenticate, :only => [ :edit, :create, :new, :claim ]
+  before_filter :member_is_owner, :only => [ :edit, :destroy, :release ]
  
   def index
     list
@@ -7,7 +8,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    @event_pages, @events = paginate :event, :per_page => 10, :order => 'starts_at ASC'
+    @event_pages, @events = paginate :event, :per_page => 10, :order_by => 'starts_at ASC'
   end
 
   def show
@@ -118,10 +119,52 @@ class EventsController < ApplicationController
     redirect_to :action => 'list'
   end
   
+  def release
+    @event = Event.find(params[:id])
+    if session[:member].id != @event.member_id
+      flash[:notice] = "Only an event owner can release it."
+      redirect_to :action => 'list'
+      return
+    end
+    @event.member = nil
+    if @event.save
+      flash[:notice] = "Event released."
+    else
+      flash[:notice] = "Failed to release event."
+    end
+    redirect_to :action => 'list'
+  end
+  
+  def claim
+    @event = Event.find(params[:id])
+    unless @event.unclaimed?
+      flash[:notice] = "This event already has an owner. They must release it before it can be claimed."
+      redirect_to :action => 'show', :id => @event.id
+      return
+    end
+    @event.member = session[:member]
+    if @event.save
+      flash[:notice] = "Event ownership claimed. Thank you!"
+    else
+      flash[:notice] = "Failed to claim event."
+    end
+    redirect_to :action => 'show', :id => @event.id
+  end
+  
   ICAL_EVENT_LIMIT = 100
   def ical
      @headers['content-type'] = 'text/plain'
      @events = Event.find_upcoming(ICAL_EVENT_LIMIT)
      render_without_layout
+  end
+  
+  private
+  
+  def member_is_owner
+    if !member_is_this_member? Event.find(params[:id]).member.id
+      flash[:notice] = "Only the owner can edit or remove events."
+      redirect_to :action => 'list'
+      return false
+    end
   end
 end

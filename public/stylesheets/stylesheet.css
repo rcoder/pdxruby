@@ -116,5 +116,11 @@ table#eventlist td{
   padding: 3px;
 }
 table#eventlist tr.cancelled_event {
-  background: #fba;
+  background: #ecb;
+  color: #444;
+}
+
+.attention {
+  font-weight: bold;
+  background: #ff9;
 }

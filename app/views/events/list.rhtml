@@ -17,11 +17,19 @@
       <%= link_to event.name, :action => 'show', :id => event.id %>
     </td>
     <td>
-      <%= link_to event.member.name, 
-          :controller => 'members', 
-          :action => 'show',
-          :id => event.member.id
-      %></td>
+      <% if event.member %>
+          <%= link_to event.member.name, 
+              :controller => 'members', 
+              :action => 'show',
+              :id => event.member.id %>
+      <% else %>
+        <span class="attention">no one</span> 
+        (<%= link_to 'claim',
+            {:action => 'claim',
+             :id => event.id },
+             :confirm => 'Are you sure?' %>)
+      <% end %>
+    </td>
     <% if event.location.nil? %>
       <td><i>unknown</i></td>
     <% else %>

@@ -8,22 +8,11 @@ Notes:
    put your name in [square brackets] at the end of the event.
 
 _Spamming_
-  - When event is over, ask participants for feedback. [lennon]
-  
-  - Participants are notified via email of change to core event information [lennon]
-  
-  - Participants are notified via email if event is cancelled [lennon]
-  
-  - Participants are notified of reminder of event (eg, day before) [lennon]
-  
-  - Owner is notified via email of RSVPs and comments [lennon]
   
   - All members are notified of new events [lennon]
 
 _Other_
   - Owner can give event to another participant.
-  
-  - Export events to an iCalendar (http://en.wikipedia.org/wiki/ICalendar) file
 
   - Make forms prettier (i.e. make input sizes more appropriate)
   	- on Edit/New Event, when existing location is selected, alternative location
@@ -38,8 +27,6 @@ _Other_
   - Cache index page. How should this be done? Periodically or when some set of DB modifications
     occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
     the index should be able to handle a slashdotting.
-
-  - Some way for a user to reset/change their password
 
   - User should be able to delete their own account...
 

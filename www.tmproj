@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>app/models/mail_bot.rb</string>
+	<string>app/views/events/list.rhtml</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -23,98 +23,70 @@
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>app/models/mail_bot.rb</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>39</integer>
-				<key>line</key>
-				<integer>28</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>6</integer>
-		</dict>
-		<key>app/views/mail_bot/cancel_message.rhtml</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>23</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/mail_bot/change_message.rhtml</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>28</integer>
-				<key>line</key>
-				<integer>9</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>app/views/mail_bot/feedback_message.rhtml</key>
+		<key>app/controllers/articles_controller.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>0</integer>
 				<key>line</key>
-				<integer>4</integer>
+				<integer>61</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>23</integer>
 		</dict>
-		<key>app/views/mail_bot/new_event_message.rhtml</key>
+		<key>app/controllers/events_controller.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>28</integer>
+				<integer>8</integer>
 				<key>line</key>
-				<integer>5</integer>
+				<integer>115</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>97</integer>
 		</dict>
-		<key>app/views/mail_bot/rsvp_message.rhtml</key>
+		<key>app/models/event.rb</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
 				<integer>19</integer>
 				<key>line</key>
-				<integer>8</integer>
+				<integer>83</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>49</integer>
+		</dict>
+		<key>app/views/events/list.rhtml</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>44</integer>
+				<key>line</key>
+				<integer>29</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>app/views/mail_bot/signup_message.rhtml</key>
+		<key>app/views/events/show.rhtml</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>16</integer>
+				<integer>9</integer>
 				<key>line</key>
-				<integer>13</integer>
+				<integer>8</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -124,17 +96,15 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>app/views/mail_bot/rsvp_message.rhtml</string>
-		<string>app/views/mail_bot/feedback_message.rhtml</string>
-		<string>app/views/mail_bot/change_message.rhtml</string>
-		<string>app/views/mail_bot/cancel_message.rhtml</string>
-		<string>app/views/mail_bot/new_event_message.rhtml</string>
-		<string>app/views/mail_bot/signup_message.rhtml</string>
-		<string>app/models/mail_bot.rb</string>
+		<string>app/controllers/events_controller.rb</string>
+		<string>app/views/events/list.rhtml</string>
+		<string>app/views/events/show.rhtml</string>
+		<string>app/controllers/articles_controller.rb</string>
+		<string>app/models/event.rb</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{210, 44}, {814, 702}}</string>
+	<string>{{254, 96}, {744, 638}}</string>
 </dict>
 </plist>

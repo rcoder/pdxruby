@@ -65,6 +65,10 @@ class Event < ActiveRecord::Base
     self.participants.map {|p| p.feedbacks }.flatten
   end
   
+  def unclaimed?
+    nil == self.member
+  end
+  
   def Event.find_upcoming(limit=10)
     find(:all, :limit => limit, :order => 'starts_at desc', 
          :conditions => ['starts_at > ? and status = ?', Time.now, EVENT_STATUS[:active]])
