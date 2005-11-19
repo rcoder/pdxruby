@@ -49,6 +49,6 @@ end
 # end
 
 # Include your application configuration below
-require 'lib/r_e'
+require 'r_e'
 
 #config.action_mailer.delivery_method = (ENV['RAILS_ENV'] == 'test' ? 'test' : 'sendmail')
