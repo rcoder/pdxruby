@@ -1,0 +1,50 @@
+How about a disposable database for your development environment?
+
+Here's the quickstart.  Only assumption is the path for postgres
+binaries and that you have xterm.  Oh, and write access to /tmp/.  That
+should do it.
+
+Except for config/database.yml.  Hmm.  That's tricky.  Ok, let's say if
+you don't have one, that you need one.  How's that?
+
+So, just copy and paste all of this into your shell.  If you like it,
+let's put it all in a script.
+
+  rm /tmp/pdxruby_test -rf
+  svk co //local/pdxruby/trunk /tmp/pdxruby_test
+  cd /tmp/pdxruby_test
+
+  test -e config/database.yml || cp config/database.yml.quickstart config/database.yml
+  PATH=$PATH:/usr/lib/postgresql/bin
+  export PGDATA=local_db
+  export PGHOST=/tmp/pdxruby_socket
+  mkdir -p $PGHOST
+  initdb -D $PGDATA
+  xterm -e postmaster -D $PGDATA -k $PGHOST &
+  while ( ! psql -l ); do sleep 1;echo "hi";done
+  createdb pdxruby_test
+  createdb pdxruby_dev
+  rake migrate
+  xterm -e 'script/server' &
+
+(aside:  wish I could use something not in /tmp/, but it has to be an
+absolute path and statically spelled-out in database.yml, so no $PWD.
+sorry.)
+
+Then your database.yml would be roughly:
+
+  login: &login
+    adapter: postgresql
+    host: /tmp/pdxruby_socket
+  
+  development:
+    database: pdxruby_dev
+    <<: *login
+  
+  test:
+    database: pdxruby_test
+    <<: *login
+  
+  production:
+    database: pdxruby_production
+    <<: *login

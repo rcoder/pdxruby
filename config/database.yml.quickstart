@@ -1,0 +1,15 @@
+login: &login
+  adapter: postgresql
+  host: /tmp/pdxruby_socket
+
+development:
+  database: pdxruby_dev
+  <<: *login
+
+test:
+  database: pdxruby_test
+  <<: *login
+
+production:
+  database: pdxruby_production
+  <<: *login
