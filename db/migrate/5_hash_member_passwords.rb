@@ -1,11 +1,11 @@
-require 'digest/md5'
+require 'digest/sha1'
 
 class HashMemberPasswords < ActiveRecord::Migration
   def self.up
     print "Hashing member passwords... "
     Member.find(:all).each { |m|
       print "#{m.name}, "
-      m.password = Digest::MD5.hexdigest(m.password)
+      m.password = Digest::SHA1.hexdigest(m.password)
       m.save_without_validation
     }
     puts "done!"
