@@ -11,6 +11,9 @@ _Spamming_
   
   - All members are notified of new events [lennon]
 
+  - Members can ask to have their password emailed 
+    to them if they provide their email address
+
 _Other_
   - Close security holes (delete/update acces w/o authentication) [lennon]
 
