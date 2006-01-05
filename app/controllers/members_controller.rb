@@ -5,7 +5,7 @@ class MembersController < ApplicationController
   before_filter :member_exists!, :only => [ :show ]
   
   require 'imageops'
-  require 'digest/md5'
+  require 'digest/sha1'
   
   def index
     redirect_to :action => 'login'
@@ -32,7 +32,7 @@ class MembersController < ApplicationController
       return false
     end
     # enhash password before insertion
-    params[:member][:password] = Digest::MD5.hexdigest(params[:member][:password])
+    params[:member][:password] = Digest::SHA1.hexdigest(params[:member][:password])
     # create a new member from given values
     @member = Member.new(params[:member])
     if @member.save
@@ -70,7 +70,7 @@ class MembersController < ApplicationController
     # enhash the password only if it came in as a parameter, and is longer than 0
     # this will avoid enhashing a hash and enhashing ''
     if params[:member][:password].length > 0
-      params[:member][:password] = Digest::MD5.hexdigest(params[:member][:password])
+      params[:member][:password] = Digest::SHA1.hexdigest(params[:member][:password])
     else
       params[:member][:password] = @member.password
     end
@@ -100,7 +100,7 @@ class MembersController < ApplicationController
       end
     elsif request.post?
       email = params[:member][:email]
-      password = Digest::MD5.hexdigest(params[:member][:password])
+      password = Digest::SHA1.hexdigest(params[:member][:password])
       member = Member.find_by_email(email)
       if member.nil?
         flash[:notice] = "That member doesn't exist."
