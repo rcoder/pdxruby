@@ -45,7 +45,7 @@
     <td><%= event.ends_at %></td>
     <td><%= event.status %></td>
     <td><%= event.created_at %></td>
-    <% if (session[:member]) && (session[:member].id == event.member_id) %>
+    <% if session[:member] && event.member && (session[:member].id == event.member_id) %>
       <td><%= link_to 'Edit', :action => 'edit', :id => event %></td>
     <% unless event.cancelled? or event.ended? %>
       <td><%= link_to 'Cancel', {:action => 'cancel', :id => event}, :confirm => 'Are you sure?' %></td>
