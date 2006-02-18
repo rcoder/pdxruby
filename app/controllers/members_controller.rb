@@ -179,3 +179,5 @@ class MembersController < ApplicationController
   end
 
 end
+
+# vi:ts=2:sw=2:et

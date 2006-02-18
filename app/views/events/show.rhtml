@@ -27,7 +27,8 @@
 </p>
 
 <h3>Agenda</h3>
-<p><%= textilize @event.agenda %></p>
+<%# elw: where is the redcloth dep? %>
+<p><%= @event.agenda.methods.include?("textilize") ? (textilize @event.agenda) : @event.agenda %></p>
 
 <% if @event.cancelled? %>
 <h3>This event has been cancelled.</h3>
@@ -122,3 +123,6 @@
 <p>
 <%= link_to 'Browse other events', :action => 'list' %>
 </p>
+
+<%# vi:ts=2:sw=2:et
+%>

@@ -85,3 +85,5 @@ class Event < ActiveRecord::Base
     self.status = EVENT_STATUS[:active]
   end
 end
+
+# vi:ts=2:sw=2:et
