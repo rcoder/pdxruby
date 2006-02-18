@@ -19,7 +19,7 @@ let's put it all in a script.
 # (you may have to adjust the $PATH to taste)
 
   test -e config/database.yml || cp config/database.yml.quickstart config/database.yml
-  PATH=$PATH:/usr/lib/postgresql/bin
+  which postmaster || PATH=$PATH:/usr/lib/postgresql/bin
   export PGDATA=local_db
   export PGHOST=/tmp/pdxruby_socket
   mkdir -p $PGHOST
@@ -35,7 +35,7 @@ let's put it all in a script.
 
 # later...
 
-  PATH=$PATH:/usr/lib/postgresql/bin
+  which postmaster || PATH=$PATH:/usr/lib/postgresql/bin
   export PGDATA=local_db
   export PGHOST=/tmp/pdxruby_socket
   mkdir -p $PGHOST
