@@ -5,11 +5,15 @@ class ApplicationController < ActionController::Base
   # check to see if the current user is logged in as a valid
   # member, if not, log them out
   def authenticate
-    unless session[:member] && Member.find(session[:member].id)
+    unless authenticated?
       reset_session
       redirect_to :controller => 'members', :action => 'login'
       return false
     end
+  end
+
+  def authenticated?
+    session[:member] && Member.find(session[:member].id)
   end
   
   # check to see if the currently authenticated member is

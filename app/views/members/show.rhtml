@@ -14,7 +14,7 @@
  </p>
  <% for column in Member.content_columns %>
  <p>
-   <% if column.name != "password" %>
+   <% if column.name !~ /^password/ %>
      <b><%= column.human_name %>:</b> <%=h @member.send(column.name) %>
    <% end %>
  </p>

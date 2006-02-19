@@ -1,0 +1,28 @@
+<!--[form:member]-->
+
+<%= start_form_tag %>
+
+<% if params[:id] %>
+  <p><label for="member_reset">Password</label><br/>
+  <%= password_field 'member', 'reset' %></p>
+  <!--[eoform:member]-->
+
+  <%= submit_tag "Reset" %>
+<% else %>
+  <p><label for="member_email">Email</label><br/>
+  <%= text_field 'member', 'email'  %></p>
+  <!--[eoform:member]-->
+
+  <%= submit_tag "Request Reset" %>
+
+<% end %>
+
+<p>
+
+<p>
+Or <%= link_to 'register as a new member', :action => 'new' %>.<br>
+<%= link_to 'Login', :action => 'login' %>
+</p>
+
+<%# vi:ts=2:sw=2:et
+%>

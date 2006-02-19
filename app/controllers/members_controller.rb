@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   
-  before_filter :authenticate, :except => [ :login, :new, :create ]
+  before_filter :authenticate, :except => [ :login, :new, :create, :reset ]
   before_filter :member_is_this_member!, :only => [ :edit, :update ]
   before_filter :member_exists!, :only => [ :show ]
   
@@ -108,11 +108,56 @@ class MembersController < ApplicationController
         if password != member.password
           flash[:notice] = "Wrong password."
         else
+          if member.password_reset != nil
+            member.password_reset = nil
+            if member.save
+              flash[:notice] = "Someone has requested a password reset
+                on your account.  If this was you and you received an
+                e-mail, great.  If not, no worries -- you just foiled
+                them.  Make sure your e-mail address is correct."
+            else
+              flash[:notice] = "Someone has requested a password reset
+                on your account and there was an error in the database.
+                This may be a security risk."
+            end
+          end
           session[:member] = member
           redirect_to :action => 'show', :id => member
           return false
         end
       end
+    end
+  end
+
+  def reset
+    if authenticated?
+      flash[:notice] = 'You are logged in.  You may change your password below.'
+      redirect_to :action => 'edit', :id => session[:member].id
+    else
+      if request.get?
+        return true
+      elsif request.post?
+        email = params[:member][:email]
+        member = Member.find_by_email(email)
+        if member.nil?
+          flash[:notice] = "That member doesn't exist."
+          redirect_to :action => 'login'
+          return false
+        end
+        # generate temporary password
+        member.password_reset = Digest::SHA1.hexdigest('foo')
+        unless member.save
+          flash[:notice] = "something isn't working"
+          redirect_to :action => 'login'
+          return false
+        end
+        # fire-off an e-mail
+
+        flash[:notice] = "You should receive an e-mail shortly.  Please
+          follow its instructions."
+        redirect_to :action => 'login'
+      end
+        return false
     end
   end
   
