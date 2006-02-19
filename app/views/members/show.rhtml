@@ -1,5 +1,10 @@
 <h3>Profile</h3>
 <blockquote>
+  <% if (session[:member].id  == params[:id].to_i) %>
+    <div style="float:right">
+      <%= link_to 'Edit', :action => 'edit', :id => @member %>
+    </div>
+  <% end %>
  <p>
   <% if !File.exist?(RAILS_ROOT + '/public/images/members/' + @member.id.to_s + ".jpg") %>
     <%= image_tag '/images/members/default.jpg' %>
@@ -41,6 +46,3 @@
   end
 %>
 </blockquote>
-<%= link_to 'Edit Profile', :action => 'edit', :id => @member %> |
-<a href="/">pdx.rb Home</a> |
-<%= link_to 'Logout', :action => 'logout' %>

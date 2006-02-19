@@ -27,15 +27,28 @@
 
     <div id="sidebar">
       <ul>
-        <li><%= link_to 'Home', :controller => 'index' %>
+        <li><%= link_to 'Home', :controller => 'index' %></li>
+        <li><%= link_to 'Event List', :controller => "events", :action => "list" %></li>
+        <li><%= link_to 'Article List', :controller => "articles", :action => "list" %></li>
         <% if session[:member].nil? %>
-          <li><%= link_to 'Member Login', :controller => "members", :action => "login" %>
+          <li><%= link_to 'Member Login', :controller => "members", :action => "login" %></li>
         <% else %>
-    	    <li><%= link_to 'Logout', :controller => "members", :action => "logout" %>
-    	    <li><%= link_to 'Member Home', :controller => "members", :action => "show", :id => session[:member].id %>
-    	    <li><%= link_to 'Event List', :controller => "events", :action => "list" %>
-    	    <li><%= link_to 'Member List', :controller => "members", :action => "list" %>
-    	    <li><%= link_to 'Article List', :controller => "articles", :action => "list" %>
+          <li><%= link_to 'Member List', :controller => "members", :action => "list" %></li>
+          <li>
+            <dl>
+              <dt><%= session[:member][:name] %></dt>
+              <dd>
+                <ul>
+                  <li><%= link_to 'Settings',
+                    :controller => "members", :action => "show", :id => session[:member].id
+                    %></li>
+                  <li><%= link_to 'Logout',
+                    :controller => "members", :action => "logout"
+                    %></li>
+                </ul>
+              </dd>
+            </dl>
+          </li>
         <% end %>
       </ul>
     </div>
