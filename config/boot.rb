@@ -14,4 +14,9 @@ else
   require 'initializer'
 end
 
+# elw: a better way?
+#require_dependency 'redcloth'
+system('ruby', '-e', 'require "rubygems";require "redcloth"') or
+  raise("no redcloth")
+
 Rails::Initializer.run(:set_load_path)
