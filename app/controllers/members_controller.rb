@@ -109,6 +109,8 @@ class MembersController < ApplicationController
           flash[:notice] = "Wrong password."
         else
           if member.password_reset != nil
+            # either thought you forgot and then remembered or you're
+            # being attacked
             member.password_reset = nil
             if member.save
               flash[:notice] = "Someone has requested a password reset
@@ -160,7 +162,11 @@ class MembersController < ApplicationController
             return false
           end
           # generate temporary password
-          member.password_reset = Digest::SHA1.hexdigest('foo')
+          # XXX do this with /dev/urandom
+          srand
+          chars = (0..9).to_a + ('A'..'Z').to_a + ('a'..'z').to_a
+          tmp_pass = (1..20).map {chars[(rand *chars.length).round]}.join('')
+          member.password_reset = Digest::SHA1.hexdigest(tmp_pass)
           unless member.save
             flash[:notice] = "something isn't working"
             redirect_to :action => 'login'
@@ -169,7 +175,7 @@ class MembersController < ApplicationController
           # fire-off an e-mail
 
           flash[:notice] = "You should receive an e-mail shortly.  Please
-            follow its instructions."
+            follow its instructions." + ' ' + tmp_pass
           redirect_to :action => 'login'
           # if that fails, back out
 
@@ -188,8 +194,10 @@ class MembersController < ApplicationController
           # now check
           password_reset = Digest::SHA1.hexdigest(params[:member][:reset])
           if password_reset == member.password_reset
-            # ok
+            # ok, they know it
+            # set the temp password for now
             member.password = member.password_reset
+            # and clear the field
             member.password_reset = nil
             member.save or raise "db"
             flash[:notice] = "please change your password"
@@ -197,6 +205,7 @@ class MembersController < ApplicationController
             redirect_to :action => 'edit', :id => member
             return true
           else
+            # got it wrong, most likely an attack
             flash[:notice] = "bah"
             member.password_reset = nil
             member.save or raise "db"
