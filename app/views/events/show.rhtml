@@ -28,7 +28,7 @@
 
 <h3>Agenda</h3>
 <%# elw: where is the redcloth dep? %>
-<p><%= @event.agenda.methods.include?("textilize") ? (textilize @event.agenda) : @event.agenda %></p>
+<p><%= @event.agenda.respond_to?(:textilize) ? (textilize @event.agenda) : @event.agenda %></p>
 
 <% if @event.cancelled? %>
 <h3>This event has been cancelled.</h3>
