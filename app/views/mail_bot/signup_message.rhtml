@@ -7,7 +7,7 @@ group events, and even organize events of your own.
 
 You can edit your profile at the following location:
 
-<%= url_for :action => :view, :id => @member.id %>
+  <%= url_for :only_path => false, :action => :show, :id => @member.id %>
 
 Happy hacking,
 
