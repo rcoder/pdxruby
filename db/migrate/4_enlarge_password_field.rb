@@ -1,7 +1,7 @@
 class EnlargePasswordField < ActiveRecord::Migration
   def self.up
      puts "Expanding password field to 40 chars for SHA1"
-     # change_column doesn't work for an unknown reason
+     # change_column doesn't work because it ignores limit
      # this is okay, since changing hash functions is irreversible anyway
      remove_column :members, :password
      add_column :members, :password, :string, :limit => 40
