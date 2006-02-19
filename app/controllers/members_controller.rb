@@ -173,11 +173,18 @@ class MembersController < ApplicationController
             return false
           end
           # fire-off an e-mail
+          unless MailBot::deliver_reset_password(self, member, tmp_pass)
+            # if that fails, back out the change
+            flash[:notice] = "mailbot not working!"
+            redirect_to :action => 'login'
+            member.password_reset = nil
+            member.save or raise "db"
+            return false
+          end
 
           flash[:notice] = "You should receive an e-mail shortly.  Please
-            follow its instructions." + ' ' + tmp_pass
+            follow its instructions."
           redirect_to :action => 'login'
-          # if that fails, back out
 
         else
           # this is the validate-reset stage

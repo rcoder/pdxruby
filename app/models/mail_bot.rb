@@ -9,7 +9,13 @@ class MailBot < ActionMailer::Base
      self.site_headers(member, "Account signup")
      @body = { :controller => ctrl, :member => member }
   end
-  
+
+  # Reset password e-mail
+  def reset_password(ctrl, member, pass)
+    self.site_headers(member, "Password Reset")
+    @body = { :controller => ctrl, :member => member, :password => pass}
+  end
+
   # Notify event owner of new feedback
   def feedback_message(ctrl, event)
      self.site_headers(event.member, "Feedback added for event #{event.name}")
