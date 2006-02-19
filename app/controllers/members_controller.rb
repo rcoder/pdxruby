@@ -135,27 +135,74 @@ class MembersController < ApplicationController
       redirect_to :action => 'edit', :id => session[:member].id
     else
       if request.get?
+        unless params[:id] == nil
+          # XXX need to refactor this anti-fishing stuff into a helper?
+          member = Member.find_by_id(params[:id])
+          if member.nil?
+            flash[:notice] = "double bah!!"
+          elsif member.password_reset == nil
+            flash[:notice] = "bah"
+          else
+            return true
+          end
+          redirect_to :action => 'login'
+          return false
+        end
         return true
       elsif request.post?
-        email = params[:member][:email]
-        member = Member.find_by_email(email)
-        if member.nil?
-          flash[:notice] = "That member doesn't exist."
-          redirect_to :action => 'login'
-          return false
-        end
-        # generate temporary password
-        member.password_reset = Digest::SHA1.hexdigest('foo')
-        unless member.save
-          flash[:notice] = "something isn't working"
-          redirect_to :action => 'login'
-          return false
-        end
-        # fire-off an e-mail
+        if params[:id] == nil
+          # request reset stage
+          email = params[:member][:email]
+          member = Member.find_by_email(email)
+          if member.nil?
+            flash[:notice] = "That member doesn't exist."
+            redirect_to :action => 'login'
+            return false
+          end
+          # generate temporary password
+          member.password_reset = Digest::SHA1.hexdigest('foo')
+          unless member.save
+            flash[:notice] = "something isn't working"
+            redirect_to :action => 'login'
+            return false
+          end
+          # fire-off an e-mail
 
-        flash[:notice] = "You should receive an e-mail shortly.  Please
-          follow its instructions."
-        redirect_to :action => 'login'
+          flash[:notice] = "You should receive an e-mail shortly.  Please
+            follow its instructions."
+          redirect_to :action => 'login'
+          # if that fails, back out
+
+        else
+          # this is the validate-reset stage
+          # XXX need to refactor this anti-fishing stuff into a helper?
+          member = Member.find_by_id(params[:id])
+          if member.nil?
+            flash[:notice] = "double bah!!"
+            redirect_to :action => 'login'
+            return false
+          elsif member.password_reset == nil
+            flash[:notice] = "bah"
+            return false
+          end
+          # now check
+          password_reset = Digest::SHA1.hexdigest(params[:member][:reset])
+          if password_reset == member.password_reset
+            # ok
+            member.password = member.password_reset
+            member.password_reset = nil
+            member.save or raise "db"
+            flash[:notice] = "please change your password"
+            session[:member] = member
+            redirect_to :action => 'edit', :id => member
+            return true
+          else
+            flash[:notice] = "bah"
+            member.password_reset = nil
+            member.save or raise "db"
+            return false
+          end
+        end # id or not
       end
         return false
     end
