@@ -1,5 +1,7 @@
 require 'digest/sha1'
 
+# XXX elw:  does this work if the existing passwords are already md5?
+
 class HashMemberPasswords < ActiveRecord::Migration
   def self.up
     print "Hashing member passwords... "
