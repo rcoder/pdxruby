@@ -15,12 +15,8 @@ _Spamming_
     to them if they provide their email address
 
 _Other_
-  - Close security holes (delete/update acces w/o authentication) [lennon]
 
-  - Make forms prettier (i.e. make input sizes more appropriate)
-  	- on Edit/New Event, when existing location is selected, alternative location
-	  inputs can be greyed-out or dissapeared (via some Javascript magic).
-    - ajaxify visibility of password fields on members/edit page [ewilhelm]
+  - Close security holes (delete/update acces w/o authentication) [lennon]
 
   - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
     This way, we would be able to easily see what revision the dev.pdxruby.org is running.
@@ -34,10 +30,26 @@ _Other_
 
   - User should be able to delete their own account...
 
+
+_Cosmetic_
+
+  - Make forms prettier (i.e. make input sizes more appropriate)
+  	- on Edit/New Event, when existing location is selected, alternative location
+	  inputs can be greyed-out or dissapeared (via some Javascript magic).
+    - ajaxify visibility of password fields on members/edit page [ewilhelm]
+ 
+  - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
+
+  - If there is no RSVP comment, don't try to show it
+
+  - Article list enhancements (sort by author, etc.)
+
 _Input Validation_
+  
   - more??? can you think of any?
 
 _Testing_
+  
   - write functional tests for application.rb
   - write functional tests for articles_controller.rb
   - write functional tests for events_controller.rb
@@ -51,6 +63,7 @@ _Testing_
   - write unit tests for participant.rb [edavis]
 
 _Feeds_
+
   - It would be nice if the feeds could be moderated by people. If one
     person posts a bunch of off-topic entries, then the last 5 isn't very
     Ruby-based. Currently, a user can delete his or her own articles, which is probably
