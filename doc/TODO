@@ -16,6 +16,13 @@ _Spamming_
 
 _Other_
 
+  - Bug in location view code when editing an event. Prevented me from 
+    adding minutes for the April Monthly. The whole location part of the
+    event form really needs some TLC. If nothing else, it is confusing.
+
+  - Recent Events (on the index) doesn't seem to work, or maybe the 
+    time-frame of a recent event should be expanded.
+
   - Close security holes (delete/update acces w/o authentication) [lennon]
 
   - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
