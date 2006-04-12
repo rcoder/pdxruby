@@ -1,5 +1,4 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-member_bob:
+bob:
   id: 1
   name: Bob
   email: bob@bob.com
@@ -7,7 +6,8 @@ member_bob:
   feed_url: http://foo/bar
   about: something
   created_at: <%= Time.now %>
-member_sue:
+
+sue:
   id: 2
   name: Sue
   email: sue@sue.com

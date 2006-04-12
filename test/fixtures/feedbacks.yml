@@ -1,5 +1,11 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first_feedback:
+first:
   id: 1
-another_feedback:
+  created_at: <%= Time.now %>
+  participant_id: 1
+  feedback: Hello world.
+
+another:
   id: 2
+  created_at: <%= Time.now %>
+  participant_id: 2
+  feedback: Goodbye cruel world.

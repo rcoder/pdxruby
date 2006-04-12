@@ -1,17 +1,19 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 peats_baby_shower:
   id: 1
   member_id: 1
   location_id: 1
   name: Peats baby shower
-  starts_at: <%= Time.now %>
-  ends_at: <%= Time.now %>
+  starts_at: <%= Time.now - 2000 %>
+  ends_at: <%= Time.now - 1000 %>
   agenda: Peat will present his fat belly. We will all gather around. We will then rub it. 3 more weeks...and peat jr.
+  status: active
+
 bens_high_school_prom:
   id: 2
   member_id: 2
   location_id: 1
   name: Ben High School Prom
-  starts_at: <%= Time.now %>
-  ends_at: <%= Time.now %>
+  starts_at: <%= Time.now + 1000 %>
+  ends_at: <%= Time.now + 2000 %>
   agenda: Ben is hoping to get some action tonight. He is going to pick me up at 9PM.
+  status: active

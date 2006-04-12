@@ -1,17 +1,18 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-hamster_article:
+hamster:
   id: 1
   member_id: 1
   title: Hamster Dancy 2006
   content: I am a lot of happy content. I am some more happy content.
   link: http//www.robbyonrails.com/
-peatsbooks_article:
+
+peatsbooks:
   id: 2
   member_id: 1
   title: PDX.rb versus Peats Books
   content: meep. meep. moop. 
   link: http//www.peatbooks.com/
-hackfest_article:
+
+hackfest:
   id: 3
   member_id: 2
   title: PDX.rb gets drunk. Ben takes off his clothes
