@@ -8,7 +8,7 @@ class EventsController < ApplicationController
   end
 
   def list
-    @event_pages, @events = paginate :event, :per_page => 10, :order_by => 'starts_at ASC'
+    @event_pages, @events = paginate :event, :per_page => 10, :order_by => 'starts_at DESC'
   end
 
   def show

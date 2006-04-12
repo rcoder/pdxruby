@@ -3,8 +3,10 @@
 	:controller => 'members', 
 	:action => 'show', 
 	:id => rsvp.member
-%> said, 
-"<%= rsvp.comments %>"
+%>
+<% unless rsvp.comments == "" %>
+said, "<%= rsvp.comments %>"
+<% end %>
 <%= if rsvp.member.id == session[:member] and not participation.event.started?
 	link_to '[change]', :controller => 'participants', :action => 'edit', :id => rsvp.id
 end %>

@@ -37,11 +37,8 @@ _Cosmetic_
   - Make forms prettier (i.e. make input sizes more appropriate)
   	- on Edit/New Event, when existing location is selected, alternative location
 	  inputs can be greyed-out or dissapeared (via some Javascript magic).
-    - ajaxify visibility of password fields on members/edit page
  
   - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
-
-  - If there is no RSVP comment, don't try to show it
 
   - Article list enhancements (sort by author, etc.)
 
