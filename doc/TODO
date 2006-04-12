@@ -19,6 +19,7 @@ _Other_
   - Bug in location view code when editing an event. Prevented me from 
     adding minutes for the April Monthly. The whole location part of the
     event form really needs some TLC. If nothing else, it is confusing.
+    (we can't make this happen in the latest code, so it may not be a bug anymore)
 
   - Cache index page. How should this be done? Periodically or when some set of DB modifications
     occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
@@ -34,10 +35,6 @@ _Cosmetic_
   - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
 
   - Article list enhancements (sort by author, etc.)
-
-_Input Validation_
-  
-  - more??? can you think of any?
 
 _Testing_
   
