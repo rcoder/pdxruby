@@ -27,6 +27,11 @@ _Other_
 
   - User should be able to delete their own account...
 
+  - Validation for Article, plus tests to match.
+
+  - Some pseudo-relationships implemented using map can be done with
+    has_many :through instead.
+
 _Cosmetic_
 
   - on Edit/New Event, when existing location is selected, alternative location
@@ -45,10 +50,6 @@ _Testing_
   - write functional tests for index_controller.rb
   - write functional tests for locations_controller.rb
   - write functional tests for participants_controller.rb
-  - write unit tests for article.rb
-  - write unit tests for event.rb
-  - write unit tests for feedback.rb
-  - write unit tests for participant.rb
 
 _Feeds_
 

@@ -4,11 +4,24 @@ class FeedbackTest < Test::Unit::TestCase
   fixtures :feedbacks
 
   def setup
-    @feedback = Feedback.find(1)
+    @feedback = Feedback.new
   end
 
-  # Replace this with your real tests.
-  def test_truth
-    assert_kind_of Feedback,  @feedback
+  def test_create_read_update_delete
+    assert(@feedback.save)
+
+    read_feedback = Feedback.find @feedback.id
+
+    assert_equal(@feedback.id, read_feedback.id)
+
+    @feedback.feedback = 'Testing'
+
+    assert(@feedback.save)
+
+    assert(@feedback.destroy)
+  end
+
+  def test_associations
+    assert_kind_of(Participant, feedbacks(:first).participant)
   end
 end
