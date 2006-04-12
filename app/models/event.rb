@@ -75,8 +75,9 @@ class Event < ActiveRecord::Base
   end
   
   def Event.find_recent(limit=10)
+    find(:all, :limit => limit, :order => 'ends_at desc')
     find(:all, :limit => limit, :order => 'ends_at desc',
-         :conditions => ['ends_at < ? and status = ?', Time.now, EVENT_STATUS[:upcoming]])
+         :conditions => ['ends_at < ? and status != ?', Time.now, EVENT_STATUS[:canceled]])
   end
 
   private
