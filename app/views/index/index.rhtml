@@ -5,7 +5,7 @@
     
       <h2>Join us!</h2>
     
-      <p>We meet the first Tuesday (<i>think Ruby Tuesday!</i>) of every month from 7&ndash;10pm at <a href="http://freegeek.org/" target="_blank">FreeGeek</a> (1731 SE 10th Avenue, Portland, OR [<a href="http://www.google.com/maps?q=1731+SE+10th+Avenue,+Portland,+OR&spn=0.030513,0.046070&hl=en" target="_blank">map</a>]).
+      <p>We meet the first Tuesday (<i>think Ruby Tuesday!</i>) of every month from 7&ndash;10pm at <a href="http://freegeek.org/" target="_blank">FreeGeek</a> (1731 SE 10th Avenue, Portland, OR [<a href="http://www.google.com/maps?q=1731+SE+10th+Avenue,+Portland,+OR&spn=0.030513,0.046070&hl=en" target="_blank">map</a>]). Next meeting: <%= Date.today + (0..31).find{ |i| d = Date.today + i and d.cwday == 2 and d.day < 7 } %>.
     
       <p>We have an online calendar you can <a href="webcal://pdxruby.org/pdx.rb.ics">subscribe to</a> (here&rsquo;s an alternative <a href="http://pdxruby.org/pdx.rb.ics">http: link</a> if you need it).  Email <a href="mailto:events@pdxruby.org">events@pdxruby.org</a> with additions.
 
