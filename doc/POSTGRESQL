@@ -19,6 +19,9 @@ let's put it all in a script.
 # (you may have to adjust the $PATH to taste)
 
   test -e config/database.yml || cp config/database.yml.quickstart config/database.yml
+
+# you may need to add a dummy user and password to database.yml
+
   which postmaster || PATH=$PATH:/usr/lib/postgresql/bin
   export PGDATA=local_db
   export PGHOST=/tmp/pdxruby_socket
@@ -53,6 +56,8 @@ Then your database.yml would be roughly:
   login: &login
     adapter: postgresql
     host: /tmp/pdxruby_socket
+    user: yourusername
+    password: itdoesntmatter
   
   development:
     database: pdxruby_dev

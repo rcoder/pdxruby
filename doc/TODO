@@ -9,7 +9,7 @@ Notes:
 
 _Spamming_
   
-  - All members are notified of new events [lennon]
+  - All members are notified of new events
 
   - Members can ask to have their password emailed 
     to them if they provide their email address
@@ -19,11 +19,6 @@ _Other_
   - Bug in location view code when editing an event. Prevented me from 
     adding minutes for the April Monthly. The whole location part of the
     event form really needs some TLC. If nothing else, it is confusing.
-
-  - Recent Events (on the index) doesn't seem to work, or maybe the 
-    time-frame of a recent event should be expanded.
-
-  - Close security holes (delete/update acces w/o authentication) [lennon]
 
   - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
     This way, we would be able to easily see what revision the dev.pdxruby.org is running.
@@ -37,13 +32,12 @@ _Other_
 
   - User should be able to delete their own account...
 
-
 _Cosmetic_
 
   - Make forms prettier (i.e. make input sizes more appropriate)
   	- on Edit/New Event, when existing location is selected, alternative location
 	  inputs can be greyed-out or dissapeared (via some Javascript magic).
-    - ajaxify visibility of password fields on members/edit page [ewilhelm]
+    - ajaxify visibility of password fields on members/edit page
  
   - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
 
@@ -64,10 +58,10 @@ _Testing_
   - write functional tests for index_controller.rb
   - write functional tests for locations_controller.rb
   - write functional tests for participants_controller.rb
-  - write unit tests for article.rb [edavis]
-  - write unit tests for event.rb [edavis]
-  - write unit tests for feedback.rb [edavis]
-  - write unit tests for participant.rb [edavis]
+  - write unit tests for article.rb
+  - write unit tests for event.rb
+  - write unit tests for feedback.rb
+  - write unit tests for participant.rb
 
 _Feeds_
 
