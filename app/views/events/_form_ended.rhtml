@@ -16,7 +16,7 @@
 <p>Time: <%= @event.starts_at %> - <%= @event.ends_at %></p>
 
 <p><label for="event_agenda">Agenda</label><br/>
-<%= @event.agenda  %></p>
+<%= textilize @event.agenda  %></p>
 
 <p><label for="event_status">Status</label><br/>
 <%= @event.status  %></p>

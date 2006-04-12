@@ -8,7 +8,6 @@
     <th>Starts At</th>
     <th>Ends At</th>
     <th>Status</th>
-    <th>Created At</th>
   </tr>
   
 <% for event in @events %>
@@ -44,7 +43,6 @@
     <td><%= event.starts_at %></td>
     <td><%= event.ends_at %></td>
     <td><%= event.status %></td>
-    <td><%= event.created_at %></td>
     <% if session[:member] && event.member && (session[:member].id == event.member_id) %>
       <td><%= link_to 'Edit', :action => 'edit', :id => event %></td>
     <% unless event.cancelled? or event.ended? %>
