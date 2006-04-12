@@ -3,6 +3,8 @@
 
 require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
+task :default => [ :test_units, :test_functional ]
+
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
