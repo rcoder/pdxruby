@@ -22,6 +22,6 @@ class Participant < ActiveRecord::Base
 
   def self.find_upcoming(member_id)
     return self.find_by_sql("SELECT * FROM events e, participants p " +
-      "WHERE p.event_id=e.id AND p.member_id=#{member_id} AND e.starts_at>now()")
+      "WHERE p.event_id=e.id AND p.member_id=#{member_id} AND e.starts_at>current_date")
   end
 end
