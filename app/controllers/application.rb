@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   def authenticate
     unless authenticated?
       reset_session
+      session[:return_to] = request.request_uri
       redirect_to :controller => 'members', :action => 'login'
       return false
     end

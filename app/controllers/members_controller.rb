@@ -123,8 +123,15 @@ class MembersController < ApplicationController
                 This may be a security risk."
             end
           end
+
+          return_to = session[:return_to] \
+            ? session[:return_to] \
+            : { :action => 'show', :id => member }
+
+          reset_session
           session[:member] = member
-          redirect_to :action => 'show', :id => member
+
+          redirect_to return_to
           return false
         end
       end
