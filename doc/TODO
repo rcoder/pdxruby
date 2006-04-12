@@ -11,8 +11,9 @@ _Spamming_
   
   - All members are notified of new events
 
-  - Members can ask to have their password emailed 
-    to them if they provide their email address
+  - Should be able to check "minor edit" when editing an event
+    to avoid spam going to everyone. Ideally, there would be a
+    preview for textilized fields too.
 
 _Other_
 
