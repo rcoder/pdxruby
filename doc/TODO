@@ -20,12 +20,6 @@ _Other_
     adding minutes for the April Monthly. The whole location part of the
     event form really needs some TLC. If nothing else, it is confusing.
 
-  - Somewhere, it would be nice to have the SVN revision (maybe in the footer for each page).
-    This way, we would be able to easily see what revision the dev.pdxruby.org is running.
-    	- the deploy script may make this unnecessary
-	- a post-commit hook that dumps the revision number into a file in /public/
-	  would be one solution
-
   - Cache index page. How should this be done? Periodically or when some set of DB modifications
     occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
     the index should be able to handle a slashdotting.
@@ -34,9 +28,8 @@ _Other_
 
 _Cosmetic_
 
-  - Make forms prettier (i.e. make input sizes more appropriate)
-  	- on Edit/New Event, when existing location is selected, alternative location
-	  inputs can be greyed-out or dissapeared (via some Javascript magic).
+  - on Edit/New Event, when existing location is selected, alternative location
+    inputs can be greyed-out or dissapeared (via some Javascript magic).
  
   - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
 
