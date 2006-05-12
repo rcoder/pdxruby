@@ -85,4 +85,16 @@ class EventsControllerTest < Test::Unit::TestCase
       Event.find(1)
     }
   end
+
+  def setup_for_mail_tests
+    ActionMailer::Base.delivery_method = :test
+    ActionMailer::Base.perform_deliveries = true
+    ActionMailer::Base.deliveries = []
+  end
+
+  def test_trivial_change
+    setup_for_mail_tests
+    post :update, {"commit"=>"Edit", "event"=>{"minutes"=>"Testing this stupid thing. Dont Send mail."}, "action"=>"update", "id"=>"1", "controller"=>"events", "trivial"=>"1"}
+    assert ActionMailer::Base.deliveries.empty?
+  end
 end

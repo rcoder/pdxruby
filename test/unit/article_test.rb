@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ArticleTest < Test::Unit::TestCase
-  fixtures :articles
+  fixtures :articles, :members
 
   def setup
     @article = Article.new

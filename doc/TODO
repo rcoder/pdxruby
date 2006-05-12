@@ -11,10 +11,6 @@ _Spamming_
   
   - All members are notified of new events
 
-  - Should be able to check "minor edit" when editing an event
-    to avoid spam going to everyone. Ideally, there would be a
-    preview for textilized fields too.
-
 _Other_
 
   - Bug in location view code when editing an event. Prevented me from 
