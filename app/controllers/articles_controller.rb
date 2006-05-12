@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_filter :member_is_author, :only => [ :edit, :create, :destroy, :update ]
+  before_filter :member_is_author, :only => [ :edit, :destroy, :update ]
   before_filter :authenticate, :only => [ :new ]
   
   def index
@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
 
   def create
     @article = Article.new(params[:article])
+    @article.member = session[:member]
     if @article.save
       flash[:notice] = 'Article was successfully created.'
       redirect_to :action => 'list'
