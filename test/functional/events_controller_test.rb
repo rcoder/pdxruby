@@ -94,7 +94,9 @@ class EventsControllerTest < Test::Unit::TestCase
 
   def test_trivial_change
     setup_for_mail_tests
+    @request.session[:member] = 1
     post :update, {"commit"=>"Edit", "event"=>{"minutes"=>"Testing this stupid thing. Dont Send mail."}, "action"=>"update", "id"=>"1", "controller"=>"events", "trivial"=>"1"}
     assert ActionMailer::Base.deliveries.empty?
   end
+
 end

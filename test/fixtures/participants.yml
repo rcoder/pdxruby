@@ -9,3 +9,9 @@ another:
   member_id: 2
   event_id: 2
   attending: no
+
+one_more:
+  id: 3
+  member_id: 3
+  event_id: 2
+  attending: yes

@@ -2,7 +2,7 @@ bob:
   id: 1
   name: Bob
   email: bob@bob.com
-  password: <%= Digest::MD5.hexdigest('abc') %>
+  password: <%= Digest::SHA1.hexdigest('abc') %>
   feed_url: http://foo/bar
   about: something
   created_at: <%= Time.now %>
@@ -11,7 +11,16 @@ sue:
   id: 2
   name: Sue
   email: sue@sue.com
-  password: <%= Digest::MD5.hexdigest('abc') %>
+  password: <%= Digest::SHA1.hexdigest('abc') %>
   feed_url: http://foo/bar
   about: something
   created_at: <%= Time.now %>
+
+aaron:
+  id: 3
+  name: Aaron
+  email: aaron@corn.com
+  password: <%= Digest::SHA1.hexdigest('abc') %>
+  feed_url: http://foo/bar
+  about: something
+  created_at: <%= Time.now - 5000  %>

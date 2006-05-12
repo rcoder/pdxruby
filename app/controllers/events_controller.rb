@@ -84,7 +84,7 @@ class EventsController < ApplicationController
     end
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
-      MailBot::deliver_change_message(self, @event) unless params[:trivial]
+      MailBot::deliver_change_message(self, @event) if params[:trivial].nil?
       redirect_to :action => 'show', :id => @event
     else
       render :action => 'edit'
