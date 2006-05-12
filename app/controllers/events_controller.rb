@@ -7,6 +7,10 @@ class EventsController < ApplicationController
     render :action => 'list'
   end
 
+  def add_location
+    render :layout => false
+  end
+
   def list
     @event_pages, @events = paginate :event, :per_page => 10, :order_by => 'starts_at DESC'
   end
@@ -36,7 +40,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(params[:event])
     @event.member = session[:member]
-    if params[:event][:location_id] == ""
+    if params[:event][:location_id].nil?
       location = Location.find_by_name(params[:location][:name])
       if location.nil?
         location = Location.new(params[:location]) 
@@ -82,6 +86,23 @@ class EventsController < ApplicationController
 	redirect_to :action => 'list'
 	return
     end
+
+    # deal with updates to location
+    if params[:event][:location_id].nil?
+      location = Location.find_by_name(params[:location][:name])
+      if location.nil?
+        location = Location.new(params[:location]) 
+        unless location.save
+          @location = location
+          render :action => 'new' and return
+        end
+      end
+      @location = location
+    else
+      @location = Location.find(params[:event][:location_id].to_i)
+    end
+    @event.location = @location
+
     if @event.update_attributes(params[:event])
       flash[:notice] = 'Event was successfully updated.'
       MailBot::deliver_change_message(self, @event) if params[:trivial].nil?

@@ -13,15 +13,6 @@ _Spamming_
 
 _Other_
 
-  - Bug in location view code when editing an event. Prevented me from 
-    adding minutes for the April Monthly. The whole location part of the
-    event form really needs some TLC. If nothing else, it is confusing.
-    (we can't make this happen in the latest code, so it may not be a bug anymore)
-
-  - Cache index page. How should this be done? Periodically or when some set of DB modifications
-    occurs (i.e. when scripts/feeder runs, and when an event is added or deleted or modified). Ideally
-    the index should be able to handle a slashdotting.
-
   - User should be able to delete their own account...
 
   - Validation for Article, plus tests to match.
@@ -31,9 +22,6 @@ _Other_
 
 _Cosmetic_
 
-  - on Edit/New Event, when existing location is selected, alternative location
-    inputs can be greyed-out or dissapeared (via some Javascript magic).
- 
   - Make timestamps prettier (this and following 2 items suggested by bleything on dev-list)
 
   - Article list enhancements (sort by author, etc.)
@@ -47,14 +35,3 @@ _Testing_
   - write functional tests for index_controller.rb
   - write functional tests for locations_controller.rb
   - write functional tests for participants_controller.rb
-
-_Feeds_
-
-  - It would be nice if the feeds could be moderated by people. If one
-    person posts a bunch of off-topic entries, then the last 5 isn't very
-    Ruby-based. Currently, a user can delete his or her own articles, which is probably
-    good-enough for a little while.
-    	- Perhaps a field should be added to the articles relation
-	  that contains the number of 'nay' votes. When some threshold
-	  is reached, the article is not shown (but not deleted - if
-	  it were, the feeder would just grab it again next run)

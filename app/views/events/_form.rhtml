@@ -1,13 +1,15 @@
 <%= error_messages_for 'event' %>
+<%= error_messages_for 'location' %>
 
 <!--[form:event]-->
 <p><label for="event_name">Name</label><br/>
 <%= text_field 'event', 'name'  %></p>
 
-<p><label for="location_id">Location (leave blank for other)</label><br/>
-<%= collection_select 'event', 'location_id', Location.find(:all), :id, :name, {:include_blank => true }  %>
-
-<%= render :partial => "locations/form" %>
+<div id="location_select">
+<p><label for="location_id">Location (leave blank for other)</label><br />
+<%= collection_select 'event', 'location_id', Location.find(:all), :id, :name  %>
+<%= link_to_remote "Add New", :update => 'location_select', :url => { :action => "add_location" } %>
+</div>
 
 <p><label for="event_starts_at">Starts at</label><br/>
 <%= datetime_select 'event', 'starts_at'  %></p>
