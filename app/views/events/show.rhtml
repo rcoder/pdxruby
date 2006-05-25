@@ -76,10 +76,10 @@
 
 <% if @event.ended? %>
 
-<% unless @event.minutes.nil? %>
-<h3>Minutes</h3>
-<p><%= textilize @event.minutes %></p>
-<% end %>
+<% unless @event.minutes.empty? -%>
+  <h3>Minutes</h3>
+  <%= textilize @event.minutes %>
+<% end -%>
 
 
 <h3>Feedback</h3>
