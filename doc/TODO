@@ -11,7 +11,11 @@ _Spamming_
   
   - All members are notified of new events
 
+  - Event organizer isn't notified when they sign up for the event
+
 _Other_
+
+  - Agenda should be editable by any (status: yes) participant
 
   - User should be able to delete their own account...
 
