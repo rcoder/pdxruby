@@ -24,6 +24,8 @@ _Other_
   - Some pseudo-relationships implemented using map can be done with
     has_many :through instead.
 
+  - User accounts should include "IRC nick" field
+
 _Cosmetic_
 
   - Make timestamps prettier (this and following 2 items 
