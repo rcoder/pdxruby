@@ -1,5 +1,6 @@
 hamster:
   id: 1
+  modified_at: now
   member_id: 1
   title: Hamster Dancy 2006
   content: I am a lot of happy content. I am some more happy content.
@@ -7,6 +8,7 @@ hamster:
 
 peatsbooks:
   id: 2
+  modified_at: now
   member_id: 1
   title: PDX.rb versus Peats Books
   content: meep. meep. moop. 
@@ -14,6 +16,7 @@ peatsbooks:
 
 hackfest:
   id: 3
+  modified_at: now
   member_id: 2
   title: PDX.rb gets drunk. Ben takes off his clothes
   content: Seriously... he took his clothes off and sat on PeatsBooks.com. 
