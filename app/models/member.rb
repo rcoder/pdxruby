@@ -28,5 +28,4 @@ class Member < ActiveRecord::Base
       rec.errors.add attr, "looks awry. A URL should look something like http://som/ewh/ere."
     end
   end
-
 end
