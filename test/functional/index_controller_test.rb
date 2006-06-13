@@ -11,8 +11,10 @@ class IndexControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_index
+    assert_routing '', { :controller => 'index', :action => 'index' }
+
+    get :index
+    assert_template 'index'
   end
 end
