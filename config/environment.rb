@@ -52,3 +52,9 @@ end
 require 'r_e'
 
 #config.action_mailer.delivery_method = (ENV['RAILS_ENV'] == 'test' ? 'test' : 'sendmail')
+
+# Home page configuration settings.
+RECENT_ARTICLE_LIMIT = 5
+UPCOMING_EVENT_LIMIT = 5
+RECENT_EVENT_LIMIT   = 5
+
