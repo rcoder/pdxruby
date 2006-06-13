@@ -12,7 +12,7 @@ class Member < ActiveRecord::Base
   validates_length_of :name, :maximum => 128
   validates_length_of :email, :maximum => 128
   validates_length_of :feed_url, :maximum => 256
-  validates_length_of :irc_nick, :maximum => 128
+  validates_length_of :irc_nick, :maximum => 128, :allow_nil => true
 
   validates_each :email do |rec, attr|
     re = Regexp.new(RE::EMAIL)
