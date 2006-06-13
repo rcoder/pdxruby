@@ -6,6 +6,7 @@ bob:
   feed_url: http://foo/bar
   about: something
   created_at: <%= Time.now %>
+  irc_nick: bob
 
 sue:
   id: 2

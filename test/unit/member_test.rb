@@ -57,6 +57,12 @@ class MemberTest < Test::Unit::TestCase
     assert_equal(false, @member.save)
   end
 
+  def test_validates_uniqueness_of_irc_nick
+    @member.irc_nick = "bob"
+
+    assert_equal(false, @member.save)
+  end
+
   def test_validates_length_of_name
     @member.name = "This is a very long name that is passed in to try to " +
       "overflow a buffer or maybe with a bit of SQL injection sent in to " +
@@ -75,6 +81,12 @@ class MemberTest < Test::Unit::TestCase
 
   def test_validates_length_of_feed_url
     @member.feed_url = "http://" + "feed" * 100 + "google.com/atom"
+
+    assert_equal(false, @member.save)
+  end
+
+  def test_validates_length_of_irc_nick
+    @member.irc_nick = 'irc' * 100 + 'nick'
 
     assert_equal(false, @member.save)
   end
