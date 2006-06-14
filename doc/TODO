@@ -24,9 +24,13 @@ _Other_
   - Some pseudo-relationships implemented using map can be done with
     has_many :through instead.
 
-  - User accounts should include "IRC nick" field
+_Infrastructure_
+
+  - Switch to acts_as_authenticated for authentication
 
 _Cosmetic_
+
+  - Upcoming events should be ordered ASC (i.e. more soon things on top)
 
   - Make timestamps prettier (this and following 2 items 
     suggested by bleything on dev-list)
