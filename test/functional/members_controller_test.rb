@@ -20,7 +20,7 @@ class MembersControllerTest < Test::Unit::TestCase
   end
 
   def test_list
-    login(@member_bob.email, 'abc') # in test_helper
+    login(members(:bob).email,'abc')
     get :list
 
     assert_response :success
@@ -28,17 +28,17 @@ class MembersControllerTest < Test::Unit::TestCase
 
     assert_not_nil assigns(:members)
   end
-
+  
   def test_show
-    login(@member_bob.email, 'abc') # in test_helper
+    login(members(:bob).email, 'abc') # in test_helper
     get :show, :id => 1
 
     assert_response :success
     assert_template 'show'
   end
-
+  
   def test_edit
-    login(@member_bob.email, 'abc') # in test_helper
+    login(members(:bob).email, 'abc') # in test_helper
     get :edit, :id => 1
 
     assert_response :success
@@ -46,10 +46,10 @@ class MembersControllerTest < Test::Unit::TestCase
   end
 
   def test_update
-    login(@member_bob.email, 'abc') # in test_helper
-    changed_member = @member_bob.dup
+    login(members(:bob).email, 'abc') # in test_helper
+    changed_member = members(:bob).dup
     changed_member.name = 'Bob Jr.'
-    post :update, :id => @member_bob.id, :commit => 'Edit', :member => changed_member.attributes, :password => 'abc', :verify_password => 'abc'
+    post :update, :id => members(:bob).id, :commit => 'Edit', :member => changed_member.attributes, :password => 'abc', :verify_password => 'abc'
     assert_equal "Member was successfully updated.", flash[:notice]
     assert_response :redirect
     assert_redirected_to :action => 'show'
@@ -64,7 +64,7 @@ class MembersControllerTest < Test::Unit::TestCase
   end
   
   def test_member_cannot_register_again
-    post :create, :member => @member_bob.attributes, :password => 'abc', :verify_password => 'abc'
+    post :create, :member => members(:bob).attributes, :password => 'abc', :verify_password => 'abc'
     assert_response :success
     # FIXME: A bit of a hack, but it's hard to get to the "errors" array from the functional tests.  That's
     # actually where the details of the error would be.
@@ -72,7 +72,7 @@ class MembersControllerTest < Test::Unit::TestCase
   end
 
   def test_valid_login
-    login(@member_bob.email, 'abc')
+    login(members(:bob).email, 'abc')
   end
   
   def test_invalid_login_with_unregistered_member
@@ -84,7 +84,7 @@ class MembersControllerTest < Test::Unit::TestCase
   end
     
   def test_invalid_login_with_wrong_password
-    post :login, :member => { :email => @member_bob.email, :password => 'bad' }
+    post :login, :member => { :email => members(:bob).email, :password => 'bad' }
     assert_response :success
     assert_template 'members/login'
     assert_equal "Wrong password.", flash[:notice]
@@ -95,7 +95,6 @@ class MembersControllerTest < Test::Unit::TestCase
     get :logout
     assert_response :redirect
     assert_redirected_to :action => 'login'
-    assert session.empty?
   end
   
 end

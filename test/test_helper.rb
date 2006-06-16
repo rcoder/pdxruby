@@ -10,4 +10,7 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = false
 
   # Add more helper methods to be used by all tests here...
+  def login(email,password)
+    post :login, :member => { :email => email, :password => password }
+  end
 end
