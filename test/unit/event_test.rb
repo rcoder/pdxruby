@@ -29,9 +29,9 @@ class EventTest < Test::Unit::TestCase
   end
 
   def test_associations
-    assert_kind_of(Member, events(:peats_baby_shower).member)
-    assert_kind_of(Location, events(:peats_baby_shower).location)
-    assert_kind_of(Array, events(:peats_baby_shower).participants)
+    assert_kind_of(Member, events(:babyshower).member)
+    assert_kind_of(Location, events(:babyshower).location)
+    assert_kind_of(Array, events(:babyshower).participants)
   end
 
   def test_validates_presence_of_name
@@ -115,10 +115,10 @@ class EventTest < Test::Unit::TestCase
 
   def test_has_participant
     assert_equal(false,
-                 events(:peats_baby_shower).has_participant(members(:sue)))
+                 events(:babyshower).has_participant(members(:sue)))
 
     assert_equal(true,
-                 events(:peats_baby_shower).has_participant(members(:bob)))
+                 events(:babyshower).has_participant(members(:bob)))
   end
 
   def test_started?
@@ -136,7 +136,7 @@ class EventTest < Test::Unit::TestCase
   end
 
   def test_feedbacks
-    assert_equal([ feedbacks(:first) ], events(:peats_baby_shower).feedbacks)
+    assert_equal([ feedbacks(:first) ], events(:babyshower).feedbacks)
   end
 
   def test_unclaimed?
@@ -144,10 +144,10 @@ class EventTest < Test::Unit::TestCase
   end
 
   def test_find_upcoming
-    assert_equal([ events(:bens_high_school_prom) ], Event.find_upcoming)
+    assert_equal([ events(:prom) ], Event.find_upcoming)
   end
 
   def test_find_recent
-    assert_equal([ events(:peats_baby_shower) ], Event.find_recent)
+    assert_equal([ events(:babyshower) ], Event.find_recent)
   end
 end

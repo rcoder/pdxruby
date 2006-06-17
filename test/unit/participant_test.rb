@@ -6,7 +6,7 @@ class ParticipantTest < Test::Unit::TestCase
   def setup
     @participant = Participant.new
 
-    @participant.event = events(:bens_high_school_prom)
+    @participant.event = events(:prom)
     @participant.member = members(:bob)
     @participant.attending = 'maybe'
   end
