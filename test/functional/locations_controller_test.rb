@@ -5,7 +5,7 @@ require 'locations_controller'
 class LocationsController; def rescue_action(e) raise e end; end
 
 class LocationsControllerTest < Test::Unit::TestCase
-  fixtures :locations
+  fixtures :locations, :members
 
   def setup
     @controller = LocationsController.new
@@ -29,7 +29,7 @@ class LocationsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => locations(:first).id
 
     assert_response :success
     assert_template 'show'
@@ -39,50 +39,63 @@ class LocationsControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    assert_requires_login { get :new }
 
-    assert_response :success
-    assert_template 'new'
+    assert_accepts_login(:bob) {
+      get :new
 
-    assert_not_nil assigns(:location)
+      assert_template 'new'
+      assert_not_nil assigns(:location)
+    }
   end
 
   def test_create
+    assert_requires_login { post :create }
+
     num_locations = Location.count
 
-    post :create, :location => {}
+    assert_accepts_login(:bob) {
+      post :create, :location => {
+        :name => 'Functional test',
+        :address => 'That one place'
+      }
 
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+      assert_redirected_to :action => 'list'
+    }
 
     assert_equal num_locations + 1, Location.count
   end
 
   def test_edit
-    get :edit, :id => 1
+    assert_requires_login { get :edit, :id => locations(:first).id }
 
-    assert_response :success
-    assert_template 'edit'
+    assert_accepts_login(:bob) {
+      get :edit, :id => locations(:first).id
 
-    assert_not_nil assigns(:location)
-    assert assigns(:location).valid?
+      assert_template 'edit'
+      assert_not_nil assigns(:location)
+      assert assigns(:location).valid?
+    }
   end
 
   def test_update
-    post :update, :id => 1
+    post :update, :id => locations(:first).id
     assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    assert_redirected_to :action => 'show', :id => locations(:first).id
   end
 
   def test_destroy
-    assert_not_nil Location.find(1)
+    assert_requires_login { post :destroy, :id => locations(:first).id }
 
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_not_nil Location.find(locations(:first).id)
+
+    assert_accepts_login(:bob) {
+      post :destroy, :id => locations(:first).id
+      assert_redirected_to :action => 'list'
+    }
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Location.find(1)
+      Location.find(locations(:first).id)
     }
   end
 end

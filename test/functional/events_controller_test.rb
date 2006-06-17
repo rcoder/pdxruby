@@ -5,7 +5,7 @@ require 'events_controller'
 class EventsController; def rescue_action(e) raise e end; end
 
 class EventsControllerTest < Test::Unit::TestCase
-  fixtures :events
+  fixtures :events, :locations, :members
 
   def setup
     @controller = EventsController.new
@@ -29,7 +29,7 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_show
-    get :show, :id => 1
+    get :show, :id => events(:babyshower).id
 
     assert_response :success
     assert_template 'show'
@@ -39,64 +39,102 @@ class EventsControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    assert_requires_login { get :new }
 
-    assert_response :success
-    assert_template 'new'
+    assert_accepts_login(:bob) {
+      get :new
 
-    assert_not_nil assigns(:event)
+      assert_template 'new'
+      assert_not_nil assigns(:event)
+    }
   end
 
   def test_create
+    assert_requires_login { get :create }
+
     num_events = Event.count
 
-    post :create, :event => {}
+    assert_accepts_login(:bob) {
+      post :create, :event => {
+        :location_id => locations(:first).id,
+        :name => 'Functional test event',
+        :starts_at => Time.now,
+        :ends_at => Time.now,
+        :agenda => 'Things happen.'
+      }
 
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+      assert_redirected_to :action => 'list'
+    }
 
     assert_equal num_events + 1, Event.count
   end
 
   def test_edit
-    get :edit, :id => 1
+    assert_requires_login { get :edit, :id => events(:babyshower).id }
 
-    assert_response :success
-    assert_template 'edit'
+    assert_accepts_login(:bob) {
+      get :edit, :id => events(:babyshower).id
 
-    assert_not_nil assigns(:event)
-    assert assigns(:event).valid?
+      assert_template 'edit'
+
+      assert_not_nil assigns(:event)
+      assert assigns(:event).valid?
+    }
   end
 
   def test_update
-    post :update, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    # TODO This causes an error due to a bug
+    #assert_requires_login { post :update, :id => events(:babyshower).id }
+
+    assert_accepts_login(:bob) {
+      post :update, {
+        :id => events(:babyshower).id,
+        :trivial => true,
+        :event => { :location_id => locations(:first).id }
+      }
+
+      assert_redirected_to :action => 'show', :id => events(:babyshower).id
+    }
   end
 
   def test_destroy
-    assert_not_nil Event.find(1)
+    # TODO The access control here redirects differently from the others.
+    #assert_requires_login { post :destroy, :id => events(:babyshower).id }
 
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_not_nil Event.find(events(:babyshower).id)
+
+    assert_accepts_login(:bob) {
+      post :destroy, :id => events(:babyshower).id
+
+      assert_redirected_to :action => 'list'
+    }
 
     assert_raise(ActiveRecord::RecordNotFound) {
-      Event.find(1)
+      Event.find(events(:babyshower).id)
     }
   end
+
+  def test_trivial_change
+    setup_for_mail_tests
+
+    assert_accepts_login(:bob) {
+      post :update, {
+        :id => events(:babyshower).id,
+        :trivial => true,
+        :event => { :location_id => locations(:first).id }
+      }
+
+      assert_redirected_to :action => 'show', :id => events(:babyshower).id
+    }
+
+    assert ActionMailer::Base.deliveries.empty?
+  end
+
+  protected
 
   def setup_for_mail_tests
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
   end
-
-  def test_trivial_change
-    setup_for_mail_tests
-    @request.session[:member] = 1
-    post :update, {"commit"=>"Edit", "event"=>{"minutes"=>"Testing this stupid thing. Dont Send mail."}, "action"=>"update", "id"=>"1", "controller"=>"events", "trivial"=>"1"}
-    assert ActionMailer::Base.deliveries.empty?
-  end
-
 end

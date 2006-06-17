@@ -5,7 +5,7 @@ require 'feedbacks_controller'
 class FeedbacksController; def rescue_action(e) raise e end; end
 
 class FeedbacksControllerTest < Test::Unit::TestCase
-  fixtures :feedbacks
+  fixtures :feedbacks, :members, :participants
 
   def setup
     @controller = FeedbacksController.new
@@ -39,21 +39,29 @@ class FeedbacksControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    # TODO This causes an error due to a bug
+    #assert_requires_login { get :new }
 
-    assert_response :success
-    assert_template 'new'
+    assert_accepts_login(:bob) {
+      get :new
 
-    assert_not_nil assigns(:feedback)
+      assert_template 'new'
+      assert_not_nil assigns(:feedback)
+    }
   end
 
   def test_create
+    # TODO This causes an error due to a bug
+    #assert_requires_login { post :create }
+
     num_feedbacks = Feedback.count
 
-    post :create, :feedback => {}
-
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_accepts_login(:bob) {
+      post :create, :participant => { :id => participants(:first).id }
+      assert_redirected_to(:controller => 'events',
+                           :action => 'show',
+                           :id => participants(:first).event.id)
+    }
 
     assert_equal num_feedbacks + 1, Feedback.count
   end

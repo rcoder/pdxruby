@@ -1,6 +1,7 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
+require 'authenticated_test_helper'
 
 class Test::Unit::TestCase
   # Turn off transactional fixtures if you're working with MyISAM tables in MySQL
@@ -10,7 +11,5 @@ class Test::Unit::TestCase
   self.use_instantiated_fixtures  = false
 
   # Add more helper methods to be used by all tests here...
-  def login(email,password)
-    post :login, :member => { :email => email, :password => password }
-  end
+  include AuthenticatedTestHelper
 end

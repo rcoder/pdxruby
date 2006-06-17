@@ -5,7 +5,7 @@ require 'participants_controller'
 class ParticipantsController; def rescue_action(e) raise e end; end
 
 class ParticipantsControllerTest < Test::Unit::TestCase
-  fixtures :participants
+  fixtures :events, :members, :participants
 
   def setup
     @controller = ParticipantsController.new
@@ -15,14 +15,13 @@ class ParticipantsControllerTest < Test::Unit::TestCase
 
   def test_index
     get :index
-    assert_response :success
+
     assert_template 'list'
   end
 
   def test_list
     get :list
 
-    assert_response :success
     assert_template 'list'
 
     assert_not_nil assigns(:participants)
@@ -31,7 +30,6 @@ class ParticipantsControllerTest < Test::Unit::TestCase
   def test_show
     get :show, :id => 1
 
-    assert_response :success
     assert_template 'show'
 
     assert_not_nil assigns(:participant)
@@ -39,46 +37,60 @@ class ParticipantsControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    get :new, :event => events(:babyshower).id
 
-    assert_response :success
     assert_template 'new'
 
     assert_not_nil assigns(:participant)
   end
 
   def test_create
+    # TODO Currently this action will display a form even without a login
+    #assert_requires_login { post :create }
+
     num_participants = Participant.count
 
-    post :create, :participant => {}
+    assert_accepts_login(:bob) {
+      post :create, {
+        :event => { :id => events(:babyshower).id },
+        :participant => { :attending => 'maybe' }
+      }
 
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+      assert_redirected_to(:controller => 'events',
+                           :action => 'show',
+                           :id => events(:babyshower).id)
+    }
 
     assert_equal num_participants + 1, Participant.count
   end
 
   def test_edit
-    get :edit, :id => 1
+    # TODO This causes an error due to a bug
+    #assert_requires_login { get :edit, :id => 1 }
 
-    assert_response :success
-    assert_template 'edit'
+    assert_accepts_login(:bob) {
+      get :edit, :id => 1
 
-    assert_not_nil assigns(:participant)
-    assert assigns(:participant).valid?
+      assert_template 'edit'
+      assert_not_nil assigns(:participant)
+      assert assigns(:participant).valid?
+    }
   end
 
   def test_update
-    post :update, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    # TODO This causes an error due to a bug
+    #assert_requires_login { post :update, :id => 1 }
+
+    assert_accepts_login(:bob) {
+      post :update, :id => 1
+      assert_redirected_to :action => 'show', :id => 1
+    }
   end
 
   def test_destroy
     assert_not_nil Participant.find(1)
 
     post :destroy, :id => 1
-    assert_response :redirect
     assert_redirected_to :action => 'list'
 
     assert_raise(ActiveRecord::RecordNotFound) {

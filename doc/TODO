@@ -27,6 +27,7 @@ _Other_
 _Infrastructure_
 
   - Switch to acts_as_authenticated for authentication
+    - We have AuthenticatedTestHelper already.  This isn't far off.
 
 _Cosmetic_
 
@@ -40,8 +41,3 @@ _Cosmetic_
 _Testing_
   
   - write functional tests for application.rb
-  - write functional tests for articles_controller.rb
-  - write functional tests for events_controller.rb
-  - write functional tests for feedbacks_controller.rb
-  - write functional tests for locations_controller.rb
-  - write functional tests for participants_controller.rb

@@ -5,7 +5,7 @@ require 'articles_controller'
 class ArticlesController; def rescue_action(e) raise e end; end
 
 class ArticlesControllerTest < Test::Unit::TestCase
-  fixtures :articles
+  fixtures :articles, :members
 
   def setup
     @controller = ArticlesController.new
@@ -39,12 +39,14 @@ class ArticlesControllerTest < Test::Unit::TestCase
   end
 
   def test_new
-    get :new
+    assert_requires_login { get :new }
 
-    assert_response :success
-    assert_template 'new'
+    assert_accepts_login(:bob) {
+      get :new
 
-    assert_not_nil assigns(:article)
+      assert_template 'new'
+      assert_not_nil assigns(:article)
+    }
   end
 
   def test_create
@@ -59,27 +61,40 @@ class ArticlesControllerTest < Test::Unit::TestCase
   end
 
   def test_edit
-    get :edit, :id => 1
+    # TODO The access control here redirects differently from the others.
+    #assert_requires_login { get :edit, :id => 1 }
 
-    assert_response :success
-    assert_template 'edit'
+    assert_accepts_login(:bob) {
+      get :edit, :id => 1
 
-    assert_not_nil assigns(:article)
-    assert assigns(:article).valid?
+      assert_template 'edit'
+      assert_not_nil assigns(:article)
+      assert assigns(:article).valid?
+    }
   end
 
   def test_update
-    post :update, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+    # TODO The access control here redirects differently from the others.
+    #assert_requires_login { post :update, :id => 1 }
+
+    assert_accepts_login(:bob) {
+      post :update, :id => 1
+
+      assert_redirected_to :action => 'show', :id => 1
+    }
   end
 
   def test_destroy
+    # TODO The access control here redirects differently from the others.
+    #assert_requires_login { post :destroy, :id => 1 }
+
     assert_not_nil Article.find(1)
 
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
+    assert_accepts_login(:bob) {
+      post :destroy, :id => 1
+
+      assert_redirected_to :action => 'list'
+    }
 
     assert_raise(ActiveRecord::RecordNotFound) {
       Article.find(1)
