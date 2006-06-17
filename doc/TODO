@@ -43,6 +43,5 @@ _Testing_
   - write functional tests for articles_controller.rb
   - write functional tests for events_controller.rb
   - write functional tests for feedbacks_controller.rb
-  - write functional tests for index_controller.rb
   - write functional tests for locations_controller.rb
   - write functional tests for participants_controller.rb
