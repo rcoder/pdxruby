@@ -2,16 +2,16 @@ first:
   id: 1
   member_id: 1
   event_id: 1
-  attending: yes
+  attending: "yes"
 
 another:
   id: 2
   member_id: 2
   event_id: 2
-  attending: no
+  attending: "no"
 
 one_more:
   id: 3
   member_id: 3
   event_id: 2
-  attending: yes
+  attending: "yes"
