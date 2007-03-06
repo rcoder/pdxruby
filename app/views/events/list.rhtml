@@ -40,8 +40,8 @@
         %>
         </td>
     <% end %>
-    <td><%= event.starts_at %></td>
-    <td><%= event.ends_at %></td>
+    <td><%= event.starts_at.strftime('%a %b %d %Y at %I:%M%p') %></td>
+    <td><%= event.ends_at.strftime('%a %b %d %Y at %I:%M%p') %></td>
     <td><%= event.status %></td>
     <% if session[:member] && event.member && (session[:member].id == event.member_id) %>
       <td><%= link_to 'Edit', :action => 'edit', :id => event %></td>

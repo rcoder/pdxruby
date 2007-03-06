@@ -16,7 +16,8 @@
   %>
   <% end %>
 </p>
-<p>Time: <%= @event.starts_at %> - <%= @event.ends_at %></p>
+<p>Time: <%= @event.starts_at.strftime('%a %b %d %Y at %I:%M%p') %> 
+  - <%= @event.ends_at.strftime('%a %b %d %Y at %I:%M%p') %></p>
 <p>Location: 
   <%= link_to @event.location.name, 
       :controller => 'locations', 
