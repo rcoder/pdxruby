@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
   
-  before_filter :authenticate, :except => [ :login, :reset, :update ]
+  before_filter :authenticate, :except => [ :login, :reset, :update, :register ]
   #  before_filter :member_is_this_member!, :only => [ :edit ]
   #  before_filter :member_exists!, :only => [ :show ]
   

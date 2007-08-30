@@ -2,7 +2,7 @@
 <blockquote>
   <% if (session[:member].id  == params[:id].to_i) %>
     <div style="float:right">
-      <%= link_to 'Edit', :action => 'edit', :id => @member %>
+      <%= link_to 'Edit', :action => 'update', :id => @member %>
     </div>
   <% end %>
  <p>
