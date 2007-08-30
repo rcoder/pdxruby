@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
+require 'digest/sha1'
 
 class MemberTest < Test::Unit::TestCase
   fixtures :members
@@ -8,7 +9,8 @@ class MemberTest < Test::Unit::TestCase
 
     @member.name = "Joe"
     @member.email = "joe@joes.diner.com"
-    @member.password = Digest::MD5.hexdigest('joe')
+    @member.password = 'joe'
+    @member.password_confirmation = 'joe'
     @member.feed_url = "http://feed.joes.diner.com/feed"
     @member.about = "Joe is a young lad who likes to cook food"
   end

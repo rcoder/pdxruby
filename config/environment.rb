@@ -50,6 +50,7 @@ end
 
 # Include your application configuration below
 require 'r_e'
+require 'digest/sha1'
 
 #config.action_mailer.delivery_method = (ENV['RAILS_ENV'] == 'test' ? 'test' : 'sendmail')
 
@@ -57,4 +58,11 @@ require 'r_e'
 RECENT_ARTICLE_LIMIT = 5
 UPCOMING_EVENT_LIMIT = 5
 RECENT_EVENT_LIMIT   = 5
+
+class Logger
+  def format_message(severity, timestamp, progname, msg)
+    "[#{timestamp.strftime("%Y-%m-%d %H:%M:%S")}] #{severity} #{msg}\n  "
+  end
+end
+
 

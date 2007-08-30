@@ -1,0 +1,15 @@
+<% form_for :member, @member, 
+	:html => { :multipart => true } do |f| %>
+  <% f.fieldset :legend => 'Profile' do |s| %>
+    <%= error_messages_for 'member' %>
+    <p><%= f.text_field :name  %></p>
+    <p><%= f.text_field :email  %></p>
+    <p><%= f.password_field :password %></p>
+    <p><%= f.password_field :password_confirmation %></p>
+    <p><%= f.file_field :image_file %></p>
+    <p><%= f.text_field :feed_url  %></p>
+    <p><%= f.text_field :irc_nick %></p>
+    <p><%= f.text_area :about  %></p>
+    <%= submit_tag 'Submit' %>
+  <% end %>
+<% end %>

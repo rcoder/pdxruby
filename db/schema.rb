@@ -5,57 +5,57 @@
 ActiveRecord::Schema.define(:version => 7) do
 
   create_table "articles", :force => true do |t|
-    t.column "member_id", :integer
-    t.column "modified_at", :datetime
-    t.column "title", :string, :limit => 256
-    t.column "content", :text
-    t.column "link", :string, :limit => 256
-    t.column "content_hash", :string, :limit => 32
+    t.column "member_id",    :integer
+    t.column "modified_at",  :datetime
+    t.column "title",        :string,   :limit => 256
+    t.column "content",      :text
+    t.column "link",         :string,   :limit => 256
+    t.column "content_hash", :string,   :limit => 32
   end
 
-  add_index "articles", ["link"], :name => "articles_link_index"
+  add_index "articles", ["link"], :name => "index_articles_on_link"
 
   create_table "events", :force => true do |t|
-    t.column "member_id", :integer
+    t.column "member_id",   :integer
     t.column "location_id", :integer
-    t.column "name", :string, :limit => 64
-    t.column "starts_at", :datetime
-    t.column "ends_at", :datetime
-    t.column "agenda", :text
-    t.column "status", :string, :limit => 32
-    t.column "minutes", :text
-    t.column "created_at", :datetime
+    t.column "name",        :string,   :limit => 64
+    t.column "starts_at",   :datetime
+    t.column "ends_at",     :datetime
+    t.column "agenda",      :text
+    t.column "status",      :string,   :limit => 32
+    t.column "minutes",     :text
+    t.column "created_at",  :datetime
   end
 
   create_table "feedbacks", :force => true do |t|
     t.column "participant_id", :integer
-    t.column "feedback", :text
-    t.column "created_at", :datetime
+    t.column "feedback",       :text
+    t.column "created_at",     :datetime
   end
 
   create_table "locations", :force => true do |t|
-    t.column "name", :string, :limit => 64
-    t.column "address", :text
-    t.column "homepage", :string, :limit => 256
+    t.column "name",       :string,   :limit => 64
+    t.column "address",    :text
+    t.column "homepage",   :string,   :limit => 256
     t.column "created_at", :datetime
   end
 
   create_table "members", :force => true do |t|
-    t.column "name", :string, :limit => 128
-    t.column "email", :string, :limit => 128
-    t.column "feed_url", :string, :limit => 256
-    t.column "about", :text
-    t.column "created_at", :datetime
-    t.column "password", :string, :limit => 40
-    t.column "password_reset", :string, :limit => 40
-    t.column "irc_nick", :string, :limit => 128
+    t.column "name",           :string,   :limit => 128
+    t.column "email",          :string,   :limit => 128
+    t.column "feed_url",       :string,   :limit => 256
+    t.column "about",          :text
+    t.column "created_at",     :datetime
+    t.column "password",       :string,   :limit => 40
+    t.column "password_reset", :string,   :limit => 40
+    t.column "irc_nick",       :string,   :limit => 128
   end
 
   create_table "participants", :force => true do |t|
-    t.column "member_id", :integer
-    t.column "event_id", :integer
-    t.column "attending", :string, :limit => 32
-    t.column "comments", :text
+    t.column "member_id",  :integer
+    t.column "event_id",   :integer
+    t.column "attending",  :string,   :limit => 32
+    t.column "comments",   :text
     t.column "created_at", :datetime
   end
 

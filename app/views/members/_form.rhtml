@@ -1,28 +1,32 @@
 <%= error_messages_for 'member' %>
 
 <!--[form:member]-->
-<p><label for="member_name">Name</label><br/>
-<%= text_field 'member', 'name'  %></p>
+<p>
+<label for="member_name">Name</label>
+<%= text_field 'member', 'name'  %>
+</p>
 
-<p><label for="member_email">Email</label><br/>
-<%= text_field 'member', 'email'  %></p>
+<p>
+<label for="member_email">Email</label>
+<%= text_field 'member', 'email'  %>
+</p>
 
-<p><label for="member_password">Password</label><br/>
+<p><label for="member_password">Password</label>
 <%= password_field_tag 'password', "" %></p>
 
-<p><label for="member_verify_password">Verify Password</label><br/>
+<p><label for="member_verify_password">Verify Password</label>
 <%= password_field_tag 'verify_password', "" %></p>
 
-<p><label for="member_image_file">Mugshot</label><br/>
+<p><label for="member_image_file">Mugshot</label>
 <%= file_field_tag 'image_file' %></p>
 
-<p><label for="member_feed_url">Feed url</label><br/>
+<p><label for="member_feed_url">Feed url</label>
 <%= text_field 'member', 'feed_url'  %></p>
 
-<p><label for="member_irc_nick">IRC nick</label><br/>
+<p><label for="member_irc_nick">IRC nick</label>
 <%= text_field 'member', 'irc_nick' %></p>
 
-<p><label for="member_about">About</label><br/>
+<p><label for="member_about">About</label>
 <%= text_area 'member', 'about'  %></p>
 
 <!--[eoform:member]-->

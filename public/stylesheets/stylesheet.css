@@ -1,126 +1,147 @@
-body {
+body{
   margin: 0;
   padding: 0;
-  font-family: Georgia, serif;
-}
-
-A:link {
-  color: #00c;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-A:visited {
-  color: #009;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-A:hover {
-  color: #00f;
-  font-weight: bold;
-}
-
-/*
- * banner
- */
- 
-#banner {
-  height: 8em;
-}
-
-#banner-left {
-  color: red;
-  padding: 1em;
-  float: left;
-}
-
-#banner-right {
-  margin-left: 10em;
-  padding: 1em;
-}
-
-#banner h1 {
-  font-size: 36px;
-  font-weight: normal;
-}
-
-/*
- * sidebar
- */
- 
-#sidebar {
-  position: absolute
-  top: 8em;
-  width: 8em;
-  padding: 0 1em 0;
-}
-
-#sidebar ul {
-  padding: 0;
-  margin: 0;
-}
-
-#sidebar li {
-  padding-bottom: 0.5em;
-  list-style: none;
-  font-style: italic;
-}
-
-/*
- * content
- */
- 
-#content {
-  position: absolute;
-  top: 8em;
-  margin-left: 11em;
-  margin-right: 11em;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-p.flash {
-  color: green;
-  border: 2px dashed green;
-  padding: 1em;
-}
-
-#content h2 {
-  margin: 0;
-  padding: 1em 0 0 0;
-  text-transform: uppercase;
+  background: #FFFFFF;
+  color: #555555;
+  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 12px;
-  line-height: 12px;
-  letter-spacing: 0.3em;
+  line-height: 1.5;
 }
 
-#content h2:first-child {
+#header{
+  margin-bottom: 10px;
+  padding: 40px;
+  padding-bottom: 0;
+  background: url(/images/header_bg.gif) #FFFFFF repeat-x;
+  height: 185px;
+}
+
+#content{
+  padding: 40px;
+  padding-top: 2px;
+  float: left;
+  margin-left: 1px;
+  width: 70%; /*  border: 1px solid black;*/
+  font-size: 13px;
+}
+
+#sidebar{
+  float: left;
+  padding: 40px;
+  padding-top: 0;
+  width: 12%;
+  font-size: 11px; /*background:transparent url(/images/sidebar_bg.gif) repeat-y;*/
+}
+
+#footer{
+  float: right;
+  clear: both;
+  padding-right: 70px;
+  padding-bottom: 5px;
+  color: #888888;
+  font-size: 9px;
+  text-align: right;
+}
+
+.infobox{
+  padding: 8px;
+  background: #7CC523;
+  color: #FFFFFF;
+  font-size: 11px;
+}
+
+/*************************************
+ +Hn and p
+ *************************************/
+h1, h2, h3{
+  margin: 0;
+  padding-bottom: 5px;
+  padding-top: 7px;
+  font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  letter-spacing: 0px;
+	color: #7CC523;
+}
+
+#sidebar h1, #sidebar h2, #sidebar h3 { color: #555555; }
+
+#header h1{
+  margin: 0;
   padding: 0;
+  color: #7CC523;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 28px;
 }
 
-#content p {
-  padding-left: 2em;
+#header h1 a{ color: #7CC523; }
+
+#header h1 a:hover{ color: #B50443; }
+
+#header p{
+  margin: 0;
+  padding-left: 1px;
+  margin-top: -2px;
+  color: #AAAAAA;
+  font-size: 11px;
 }
 
-/* /members/list */
-table#memberlist{
-}
-table#memberlist td{
+h2{ font-size: 17px; line-height: 1.0em; }
+
+h2 a:hover{ color: #58BBEB; }
+
+h3{ color: #6F6F6F; font-size: 11px; }
+
+#sidebar h2{ margin-bottom: 5px; color: #555555; font-size: 15px; }
+
+/*************************************
+ +Entry
+ *************************************/
+.entry{ margin-bottom: 3em; }
+
+.entrybody{ font-size: 12px; }
+
+.entrymeta{ padding-top: 5px; font-size: 11px; }
+
+.postedby{
   padding: 3px;
-}
-/* /events/list */
-table#eventlist{
-}
-table#eventlist td{
-  padding: 3px;
-}
-table#eventlist tr.cancelled_event {
-  background: #ecb;
-  color: #444;
+  padding-left: 20px;
+  background: url(images/user.gif) #FFFFFF no-repeat;
 }
 
-.attention {
-  font-weight: bold;
-  background: #ff9;
+.filedto{
+  padding: 3px;
+  padding-left: 20px;
+  background: url(images/post.gif) #FFFFFF no-repeat;
+}
+
+.commentslink{
+  padding: 3px;
+  padding-left: 20px;
+  background: url(images/packaged.gif) #FFFFFF no-repeat;
+}
+
+/*************************************
+ +Sidebar
+ *************************************/
+#sidebar ul{ margin: 0; padding: 0; list-style-type: none; }
+
+#sidebar ul li{
+  border-bottom: 1px dotted #DDDDDD;
+  margin-bottom: 0.3em;
+  padding: 0.3em;
+}
+
+/*************************************
+ +Misc
+ *************************************/
+a{ color: #557799; text-decoration: none; }
+
+a:hover{ color: #CC0000; }
+
+label {
+	display: block;
+	float: left;
+	width: 25ex;
+	text-align: right;
+	padding-right: 1ex;
 }

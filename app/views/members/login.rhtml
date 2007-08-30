@@ -1,20 +1,11 @@
-<!--[form:member]-->
-
-<%= start_form_tag %>
-
-<p><label for="member_email">Email</label><br/>
-<%= text_field 'member', 'email'  %></p>
-
-<p><label for="member_password">Password</label><br/>
-<%= password_field 'member', 'password'  %></p>
-
-<!--[eoform:member]-->
-
-<%= submit_tag "Login" %>
-
-<p>
-
-<p>
-Or <%= link_to 'register as a new member', :action => 'new' %>.<br>
-<%= link_to 'Forgot your password?', :action => 'reset' %>
-</p>
+<% form_for :member, @member, :url => "/login" do |f| %>
+  <p><%= f.text_field :email %></p>
+  <p><%= f.password_field :password %></p>
+  <p>
+    <%= submit_tag "Login"  %>
+    <%= submit_tag "Reset Password", :name => "request_reset" %>
+  </p>
+<% end %>
+<% form_for :member, @member, :url => "/reset" do |f| %>
+  
+<% end %>

@@ -1,6 +1,6 @@
 <p><b><%= link_to h(@article.title), @article.link %></b></p>
 <p><%= @article.filtered_content %></p>
-<p>Posted at <%= @article.modified_at.to_formatted_s("%A %b %d at %I:%M %p") %>
+<p>Posted at <%= @article.modified_at %>
 by <%= link_to @article.member.name,
     :controller => 'members',
     :action => 'show',

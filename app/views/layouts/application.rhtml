@@ -1,57 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
-  
+
   <head>
   	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   	<meta http-equiv="Content-Language" content="en-us">
-  	<meta name="copyright" content="(c) Copyright 2005 John Labovitz">
         <%= stylesheet_link_tag 'stylesheet' %>
-        <%= stylesheet_link_tag 'scaffold' %>
         <%= javascript_include_tag 'prototype' %>
   	<title>The Portland Ruby Brigade (PDX.rb)</title>
   </head>
-  
+
   <body>
 
-    <div id="banner">
-
-      <div id="banner-left">
-        <h1>pdx.rb</h1>
-      </div>
-    
-      <div id="banner-right">
-        <h1>The Portland Ruby Brigade</h1>
-      </div>
-    
+    <div id="header">
+    	<a href="/"><h1>pdx.rb</h1></>
+			<p class="description">The Portland Ruby Brigade</p>
     </div>
 
     <div id="sidebar">
+    	<h2>Navigation</h2>
       <ul>
-        <li><%= link_to 'Home', :controller => 'index' %></li>
         <li><%= link_to 'Event List', :controller => "events", :action => "list" %></li>
         <li><%= link_to 'Article List', :controller => "articles", :action => "list" %></li>
-        <% if session[:member].nil? %>
-          <li><%= link_to 'Member Login', :controller => "members", :action => "login" %></li>
-        <% else %>
-          <li><%= link_to 'Member List', :controller => "members", :action => "list" %></li>
-          <li>
-            <dl>
-              <dt><%= session[:member][:name] %></dt>
-              <dd>
-                <ul>
-                  <li><%= link_to 'Settings',
-                    :controller => "members", :action => "show", :id => session[:member].id
-                    %></li>
-                  <li><%= link_to 'Logout',
-                    :controller => "members", :action => "logout"
-                    %></li>
-                </ul>
-              </dd>
-            </dl>
-          </li>
-        <% end %>
       </ul>
+      <% if session[:member].nil? %>
+        <h2><%= link_to "Login", :login_url %></h2>
+				<h2><%= link_to "Register", :controller => "members", :action => "update" %></h2>
+      <% else %>
+        <h2><%= link_to 'Profile', :controller => "members", :action => "show", :id => session[:member].id %></h2>
+        <h2><%= link_to 'Logout', :logout_url %></h2>
+      <% end %>
     </div>
     
     <div id="content">

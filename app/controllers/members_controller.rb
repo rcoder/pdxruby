@@ -1,8 +1,8 @@
 class MembersController < ApplicationController
   
-  before_filter :authenticate, :except => [ :login, :new, :create, :reset ]
-  before_filter :member_is_this_member!, :only => [ :edit, :update ]
-  before_filter :member_exists!, :only => [ :show ]
+  before_filter :authenticate, :except => [ :login, :reset, :update ]
+  #  before_filter :member_is_this_member!, :only => [ :edit ]
+  #  before_filter :member_exists!, :only => [ :show ]
   
   require 'imageops'
   require 'digest/sha1'
@@ -10,242 +10,78 @@ class MembersController < ApplicationController
   def index
     redirect_to :action => 'login'
   end
-
+  
   def show
     @member = Member.find(params[:id])
     @participations = Participant.find_upcoming(params[:id])
   end
-
+  
   def list
     @members = Member.find :all, :order => "name"
   end
-
-  def new
-    @member = Member.new
-  end
-
-  def create
-    params[:member][:password] = params[:password]
-    if !check_passwords_match
-      flash[:notice] = 'Passwords do not match'
-      render :action => 'new'
-      return false
-    end
-    # enhash password before insertion
-    params[:member][:password] = Digest::SHA1.hexdigest(params[:member][:password])
-    # create a new member from given values
-    @member = Member.new(params[:member])
-    if @member.save
-      begin
-        save_mugshot params[:image_file]
-      rescue StandardError => message
-        flash[:notice] = message
-        redirect_to :action => 'edit', :id => @member
-        return false
+  
+  def update 
+    @member = Member.find_by_id(params[:id]) || Member.new(params[:member])
+    if request.post?
+      @member.attributes = params[:member]
+      if @member.save
+        begin
+          save_mugshot params[:image_file]
+        rescue StandardError => message
+          flash[:notice] = message
+        end
+        flash[:notice] = "Successfully updated."
+        session[:member] = @member
+        redirect_to home_url
+      else 
+        flash[:notice] = "Sorry, but the account could not be updated/created for some reason."
       end
-      flash[:notice] = 'Member was successfully created.'
-      MailBot::deliver_signup_message(self, @member)
-      session[:member] = @member
-      redirect_to :action => 'show', :id => @member.id
-      return false
-    else
-      flash[:notice] = "Sorry, but the member couldn't be created for some reason."
-      render :action => 'new'
-      return false
-    end
-  end
-
-  def edit
-    @member = Member.find(params[:id])
-  end
-
-  def update
-    params[:member][:password] = params[:password]
-    @member = Member.find(params[:id])
-    if !check_passwords_match
-      flash[:notice] = 'Passwords do not match'
-      render :action => 'edit'
-      return false
-    end
-    # enhash the password only if it came in as a parameter, and is longer than 0
-    # this will avoid enhashing a hash and enhashing ''
-    if params[:member][:password].length > 0
-      params[:member][:password] = Digest::SHA1.hexdigest(params[:member][:password])
-    else
-      params[:member][:password] = @member.password
-    end
-    if @member.update_attributes(params[:member])
-      begin
-        save_mugshot params[:image_file]
-      rescue StandardError => message
-        flash[:notice] = message
-        redirect_to :action => 'edit', :id => @member
-        return false
-      end
-      flash[:notice] = 'Member was successfully updated.'
-      redirect_to :action => 'show', :id => @member
-      return false
-    else
-      flash[:notice] = "Sorry, but the member profile couldn't be updated for some reason."
-      render :action => 'edit'
-      return false
     end
   end
   
   def login
-    if request.get?
-      if session[:member]
-        redirect_to :action => 'show', :id => session[:member]
-        return false
-      end
-    elsif request.post?
-      email = params[:member][:email]
-      password = Digest::SHA1.hexdigest(params[:member][:password])
-      member = Member.find_by_email(email)
-      if member.nil?
-        flash[:notice] = "That member doesn't exist."
+    unless request.post?
+      render "members/login"
+      return false
+    end
+    
+    member = Member.find_by_email(params[:member][:email])
+    
+    if member.nil?
+      flash[:notice] = "That member doesn't exist."
+      return false
+    elsif params[:request_reset] != nil
+      tmp_pass = member.reset_password
+      if (send_password_reset_email(member, tmp_pass) and member.save)
+        flash[:notice] = "Your new password has been emailed to you. Please check your email."
       else
-        if password != member.password
-          flash[:notice] = "Wrong password."
-        else
-          if member.password_reset != nil
-            # either thought you forgot and then remembered or you're
-            # being attacked
-            member.password_reset = nil
-            if member.save
-              flash[:notice] = "Someone has requested a password reset
-                on your account.  If this was you and you received an
-                e-mail, great.  If not, no worries -- you just foiled
-                them.  Make sure your e-mail address is correct."
-            else
-              flash[:notice] = "Someone has requested a password reset
-                on your account and there was an error in the database.
-                This may be a security risk."
-            end
-          end
-
-          return_to = session[:return_to] \
-            ? session[:return_to] \
-            : { :action => 'show', :id => member }
-
-          reset_session
-          session[:member] = member
-
-          redirect_to return_to
-          return false
-        end
+        flash[:notice] = "Could not reset your password. Try again later."
       end
-    end
-  end
-
-  def reset
-    if authenticated?
-      flash[:notice] = 'You are logged in.  You may change your password below.'
-      redirect_to :action => 'edit', :id => session[:member].id
+      return false
     else
-      if request.get?
-        unless params[:id] == nil
-          # XXX need to refactor this anti-fishing stuff into a helper?
-          member = Member.find_by_id(params[:id])
-          if member.nil?
-            flash[:notice] = "double bah!!"
-          elsif member.password_reset == nil
-            flash[:notice] = "bah"
-          else
-            return true
-          end
-          redirect_to :action => 'login'
-          return false
-        end
-        return true
-      elsif request.post?
-        if params[:id] == nil
-          # request reset stage
-          email = params[:member][:email]
-          member = Member.find_by_email(email)
-          if member.nil?
-            flash[:notice] = "That member doesn't exist."
-            redirect_to :action => 'login'
-            return false
-          end
-          # generate temporary password
-          # XXX do this with /dev/urandom
-          srand
-          chars = (0..9).to_a + ('A'..'Z').to_a + ('a'..'z').to_a
-          tmp_pass = (1..20).map {chars[(rand *chars.length).round]}.join('')
-          member.password_reset = Digest::SHA1.hexdigest(tmp_pass)
-          unless member.save
-            flash[:notice] = "something isn't working"
-            redirect_to :action => 'login'
-            return false
-          end
-          # fire-off an e-mail
-          unless MailBot::deliver_reset_password(self, member, tmp_pass)
-            # if that fails, back out the change
-            flash[:notice] = "mailbot not working!"
-            redirect_to :action => 'login'
-            member.password_reset = nil
-            member.save or raise "db"
-            return false
-          end
-
-          flash[:notice] = "You should receive an e-mail shortly.  Please
-            follow its instructions."
-          redirect_to :action => 'login'
-
-        else
-          # this is the validate-reset stage
-          # XXX need to refactor this anti-fishing stuff into a helper?
-          member = Member.find_by_id(params[:id])
-          if member.nil?
-            flash[:notice] = "double bah!!"
-            redirect_to :action => 'login'
-            return false
-          elsif member.password_reset == nil
-            flash[:notice] = "bah"
-            return false
-          end
-          # now check
-          password_reset = Digest::SHA1.hexdigest(params[:member][:reset])
-          if password_reset == member.password_reset
-            # ok, they know it
-            # set the temp password for now
-            member.password = member.password_reset
-            # and clear the field
-            member.password_reset = nil
-            member.save or raise "db"
-            flash[:notice] = "please change your password"
-            session[:member] = member
-            redirect_to :action => 'edit', :id => member
-            return true
-          else
-            # got it wrong, most likely an attack
-            flash[:notice] = "bah"
-            member.password_reset = nil
-            member.save or raise "db"
-            return false
-          end
-        end # id or not
-      end
+      logger.debug "comparing passwords"
+      if member.compare_password(params[:member][:password])
+        logger.debug "passwords don't match!"
+        flash[:notice] = "Incorrect login."
         return false
+      end
     end
+    logger.debug "successful login for #{member[:name]}"
+    session[:member] = member
+    redirect_to session[:return_to] ? session[:return_to] : home_url
   end
   
   def logout
     reset_session
-    flash[:notice] = "You are logged out."
-    redirect_to :action => 'login'
+    redirect_to home_url
   end
   
   private
   
-  def check_passwords_match
-    if params[:member][:password] != params[:verify_password]
-      return false
-    end
-    return true
+  def send_password_reset_email(member, new_password)
+    return MailBot::deliver_reset_password(self, member, new_password)
   end
-
+  
   def member_exists!
     requested_member = member_exists? params[:id]
     if requested_member.nil?
@@ -292,7 +128,7 @@ class MembersController < ApplicationController
     # you can comment out these three lines if you don't want to do dynamic resizing
     ImageOps.resize(filename, "64x64")
   end
-
+  
 end
 
 # vi:ts=2:sw=2:et

@@ -66,7 +66,7 @@ class MembersControllerTest < Test::Unit::TestCase
       }
 
       assert_equal "Member was successfully updated.", flash[:notice]
-      assert_redirected_to :action => 'show'
+      assert_redirected_to home_url
     }
   end
 
@@ -82,8 +82,7 @@ class MembersControllerTest < Test::Unit::TestCase
       :verify_password => 'abc'
     }
 
-    assert_redirected_to :action => 'show'
-    assert_not_nil Member.find_by_email('anyone@anywhere.com')
+    assert_redirected_to home_url
   end
 
   def test_member_cannot_register_again

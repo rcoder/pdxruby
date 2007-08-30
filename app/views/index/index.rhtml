@@ -1,33 +1,33 @@
-      <h2>Who are we?</h2>
+<h2>Who are we?</h2>
       
-      <p>pdx.rb is a gathering of Ruby programmers in the Portland, Oregon, area.
+<p>pdx.rb is a gathering of Ruby programmers in the Portland, Oregon, area.
     
     
-      <h2>Join us!</h2>
+<h2>Join us! We don't bite!</h2>
     
-      <p>We meet the first Tuesday (<i>think Ruby Tuesday!</i>) of every month from 7&ndash;10pm at <a href="http://freegeek.org/" target="_blank">FreeGeek</a> (1731 SE 10th Avenue, Portland, OR [<a href="http://www.google.com/maps?q=1731+SE+10th+Avenue,+Portland,+OR&spn=0.030513,0.046070&hl=en" target="_blank">map</a>]). Our next monthly meeting is on <%= Date.today + (0..34).find{ |i| d = Date.today + i and d.cwday == 2 and d.day <= 7 } %>.
-    
-      <p>This website is a small <a href="http://www.rubyonrails.com">Ruby on Rails</a> application that we have developed to keep track of events. You might start by <a href="/members/new">creating an account</a>. We have an online calendar you can <a href="webcal://pdxruby.org/events/ical">subscribe to</a> (here&rsquo;s an alternative <a href="http://pdxruby.org/events/ical">http: link</a> if you need it). If you want to add an event, <a href="/members/login">log in</a> and <a href="/events/new">add one</a>.
+<p>We meet the first Tuesday (<i>think Ruby Tuesday!</i>) of every month from 7&ndash;10pm at <a href="http://freegeek.org/" target="_blank">FreeGeek</a> (1731 SE 10th Avenue, Portland, OR [<a href="http://www.google.com/maps?q=1731+SE+10th+Avenue,+Portland,+OR&spn=0.030513,0.046070&hl=en" target="_blank">map</a>]). Our next monthly meeting is on <%= Date.today + (0..34).find{ |i| d = Date.today + i and d.cwday == 2 and d.day <= 7 } %>.
+  
+<p>This website is a small <a href="http://www.rubyonrails.com">Ruby on Rails</a> application that we have developed to keep track of events. You might start by <a href="/members/new">creating an account</a>. We have an online calendar you can <a href="webcal://pdxruby.org/events/ical">subscribe to</a> (here&rsquo;s an alternative <a href="http://pdxruby.org/events/ical">http: link</a> if you need it). If you want to add an event, <a href="/members/login">log in</a> and <a href="/events/new">add one</a>.
 
-      <p>You can join the <a href="http://lists.pdxruby.org/mailman/listinfo/pdxruby">mailing list</a>. You can see the <a href="http://gmane.org">gmane</a> archives <a href="http://dir.gmane.org/gmane.comp.lang.ruby.region.portland">here</a>.
+<p>You can join the <a href="http://lists.pdxruby.org/mailman/listinfo/pdxruby">mailing list</a>. You can see the <a href="http://gmane.org">gmane</a> archives <a href="http://dir.gmane.org/gmane.comp.lang.ruby.region.portland">here</a>.
       
-      <p>You can also find some of us on our IRC channel at <a href="irc://irc.freenode.net/#pdx.rb">#pdx.rb</a> on <a href="irc://irc.freenode.net">irc.freenode.net</a>, read <a href="http://blog.pdxruby.org">our blog</a>, or edit <a href="http://pdxrb.infogami.com">our temporary wiki</a>.
+<p>You can also find some of us on our IRC channel at <a href="irc://irc.freenode.net/#pdx.rb">#pdx.rb</a> on <a href="irc://irc.freenode.net">irc.freenode.net</a>, read <a href="http://blog.pdxruby.org">our blog</a>, or edit <a href="http://pdxrb.infogami.com">our temporary wiki</a>.
       
-      <h2>Upcoming events</h2>
-        <ul>
-	        <%= render :partial => 'event', :collection => @upcoming_events %>
-        </ul>
+<h2>Upcoming events</h2>
+<ul>
+  <%= render :partial => 'event', :collection => @upcoming_events %>
+</ul>
 
-      <h2>Recent events</h2>
-        <ul>
-          <%= render :partial => 'event', :collection => @recent_events %>
-        </ul>
+<h2>Recent events</h2>
+<ul>
+  <%= render :partial => 'event', :collection => @recent_events %>
+</ul>
         
-      <h2>Recent articles</h2>
-      <ul>
-        <%= render :partial => 'article', :collection => @member_articles %>
-      </ul>
+<h2>Recent articles</h2>
+<ul>
+  <%= render :partial => 'article', :collection => @member_articles %>
+</ul>
 
-      <h2>Thanks to...</h2>
+<h2>Thanks to...</h2>
       
-      <p><a href="http://www.robbyonrails.com/">Robby Russell</a> at <a href="http://www.planetargon.com/" target="_blank">Planet Argon</a> for kindly serving up this site.
+<p><a href="http://www.robbyonrails.com/">Robby Russell</a> and <a href="http://www.planetargon.com/" target="_blank">Planet Argon</a> for kindly serving up this site.
