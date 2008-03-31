@@ -58,6 +58,7 @@ require 'digest/sha1'
 RECENT_ARTICLE_LIMIT = 5
 UPCOMING_EVENT_LIMIT = 5
 RECENT_EVENT_LIMIT   = 5
+ICAL_EVENT_LIMIT = 30
 
 class Logger
   def format_message(severity, timestamp, progname, msg)

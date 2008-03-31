@@ -80,6 +80,13 @@ class Event < ActiveRecord::Base
          :conditions => ['ends_at < ? and status != ?', Time.now, EVENT_STATUS[:canceled]])
   end
 
+  def Event.find_within_range(start, finish)
+    find(
+      :all, :order => 'ends_at desc',
+      :conditions => ['ends_at >= ? and ends_at <= ? and status != ?', start, finish, EVENT_STATUS[:canceled]]
+    )
+  end
+
   private
 
   def status_active

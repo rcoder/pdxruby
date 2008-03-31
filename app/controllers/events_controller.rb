@@ -175,7 +175,9 @@ class EventsController < ApplicationController
   ICAL_EVENT_LIMIT = 100
   def ical
      @headers['content-type'] = 'text/plain'
-     @events = Event.find_upcoming(ICAL_EVENT_LIMIT)
+     #@events = Event.find_upcoming(ICAL_EVENT_LIMIT)
+     now = Time.now
+     @events = Event.find_within_range(now - 30.days, now + 30.days)
      render_without_layout
   end
   

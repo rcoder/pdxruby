@@ -11,6 +11,8 @@
 #  * http://simple-rss.rubyforge.org/
 #  * http://blogs.law.harvard.edu/tech/rss
 
+$: << File.join(File.dirname(__FILE__), '../lib')
+
 require 'optparse'
 require 'rubygems'
 require 'net/http'
@@ -19,7 +21,7 @@ require 'rexml/text'
 require 'digest/md5'
 
 OPTIONS = {
-  :environment => "development",
+  :environment => "production",
   # set this to 0 if you only want it to run once
   # otherwise, set it to the number of seconds between polls
   :wait_time => 0,
