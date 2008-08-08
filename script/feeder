@@ -21,7 +21,7 @@ require 'rexml/text'
 require 'digest/md5'
 
 OPTIONS = {
-  :environment => "production",
+  :environment => "development",
   # set this to 0 if you only want it to run once
   # otherwise, set it to the number of seconds between polls
   :wait_time => 0,
@@ -31,13 +31,13 @@ OPTIONS = {
 
 ARGV.options do |opts|
   opts.banner = "Usage: ruby #{File.basename($0)} [options]"
-  
+
   opts.separator ''
-  
+
   opts.on('-e', '--environment=name', String,
     'Specifies the environment to run this server under (test/development/production).',
     'Default: development') { |OPTIONS[:environment]| }
-    
+
   opts.on('-w', '--wait-time=seconds', Integer,
     'Specifies the number of seconds to wait between feed refreshes',
     'Default: 300') { |OPTIONS[:wait_time]| }
@@ -54,62 +54,62 @@ quiet = OPTIONS[:quiet]
 while (true)
   members = Member.find(:all, "feed_url <> '' and feed_url is not null")
   STDOUT.puts "Beginning feed refresh for #{members.size} Members..." unless quiet
-  
+
   members.each do |member|
     begin
       next unless member.feed_url =~ /\w+/
-      
+
       uri = URI.parse(member.feed_url)
       data = Net::HTTP.get(uri)
       rss = SimpleRSS.parse(data)
-      
+
       puts "Inspecting #{rss.items.size} items for member #{member.email}..." unless quiet
-      
+
       update_count = 0
       new_count = 0
-      
+
       seen = Hash.new
-      
+
       rss.items.each do |item|
         # we care enough about the pubdate to skip items
         # that dont have it
         next if item.pubDate.nil?
-				      
+
         content = unescape(item.summary || item.content || item.description)
-	hash = Digest::MD5.hexdigest(content)
-	
-	# only look at the first one found (there should only be one)
-	# since we "index" on the link, if a post is deleted, we would never know...
+        hash = Digest::MD5.hexdigest(content)
+
+        # only look at the first one found (there should only be one)
+        # since we "index" on the link, if a post is deleted, we would never know...
         found = Article.find(:all, :conditions => ['member_id = ? and link = ?',member.id,item.link]).shift
 
-	# note that we saw this item
-	seen[item.link] = 1
+        # note that we saw this item
+        seen[item.link] = 1
 
-	if !found.nil?
-	  # no change, nothing to see here
-	  next if found.content_hash == hash
+        if !found.nil?
+          # no change, nothing to see here
+          next if found.content_hash == hash
 
-	  # update exisiting article
-	  found.title = unescape(item.title)
-	  found.modified_at = item.pubDate
-	  found.content = content
-	  found.content_hash = hash
-	  found.save
-	  
-	  update_count += 1
-	else
-	  # create a new article
-	  article = Article.new
+          # update exisiting article
+          found.title = unescape(item.title)
+          found.modified_at = item.pubDate
+          found.content = content
+          found.content_hash = hash
+          found.save
+
+          update_count += 1
+        else
+          # create a new article
+          article = Article.new
           article.member = member
           article.modified_at = (item.pubDate)
           article.title = unescape(item.title)
           article.link = item.link
-	  article.content = content
-	  article.content_hash = hash.to_s
+          article.content = content
+          article.content_hash = hash.to_s
           article.save
 
-	  new_count += 1
-	end
+          new_count += 1
+        end
 
       end
 
@@ -119,9 +119,9 @@ while (true)
       delete_count = 0
       Article.find(:all, :conditions => ['member_id = ?',member.id]).each{ |a|
         unless seen.has_key? a.link
-	  a.destroy
-	  delete_count += 1
-	end
+          a.destroy
+          delete_count += 1
+        end
       }
 
       puts "Updated #{update_count} items, created #{new_count} new items, " +
@@ -131,7 +131,7 @@ while (true)
       next
     end
   end
-  
+
   wait = OPTIONS[:wait_time]
   if wait == 0
     puts "Done." unless quiet
