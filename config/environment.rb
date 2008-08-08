@@ -14,7 +14,7 @@ Rails::Initializer.run do |config|
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/app/services )
 
-  # Force all environments to use the same logger level 
+  # Force all environments to use the same logger level
   # (by default production uses :info, the others :debug)
   # config.log_level = :debug
 
@@ -31,15 +31,19 @@ Rails::Initializer.run do |config|
 
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
-  
+
   # Use Active Record's schema dumper instead of SQL when creating the test database
   # (enables use of different database adapters for development and test environments)
   # config.active_record.schema_format = :ruby
+  config.action_controller.session = {
+    :session_key => '_pdx.rb_session',
+    :secret      => '8d4d000b679455094f41c88c56d17d755516de8342b1639a63a0c013d632f85c375e7cc254f6910b71acd960fb9ae313a9b74dc327695014c141ef2fbf5fcc15'
+  }
 
   # See Rails::Configuration for more options
 end
 
-# Add new inflection rules using the following format 
+# Add new inflection rules using the following format
 # (all these examples are active by default):
 # Inflector.inflections do |inflect|
 #   inflect.plural /^(ox)$/i, '\1en'
@@ -66,4 +70,5 @@ class Logger
   end
 end
 
+require 'will_paginate'
 

@@ -1,14 +1,14 @@
 class ArticlesController < ApplicationController
   before_filter :member_is_author, :only => [ :edit, :destroy, :update ]
   before_filter :authenticate, :only => [ :new ]
-  
+
   def index
     list
     render :action => 'list'
   end
 
   def list
-    @article_pages, @articles = paginate :article, :per_page => 10, :order_by => 'modified_at'
+    @articles = Article.paginate(:page => params[:page], :order => 'modified_at')
   end
 
   def show
@@ -49,9 +49,9 @@ class ArticlesController < ApplicationController
     flash[:notice] = 'Article deleted.'
     redirect_to :action => 'list'
   end
-  
-  private 
-  
+
+  private
+
   def member_is_author
     if !member_is_this_member? Article.find(params[:id]).member.id
       flash[:notice] = "Only the author can edit or remove articles."

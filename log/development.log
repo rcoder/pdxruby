@@ -1,0 +1,226 @@
+  [4;36;1mSQL (0.000576)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.006866)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.015008)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.000423)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000500)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000401)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000386)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000382)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000384)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000382)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000630)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.000450)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to InitialSchema (1)
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: articles: DROP TABLE articles[0m
+  [4;35;1mSQL (0.003091)[0m   [0mCREATE TABLE articles ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "modified_at" datetime DEFAULT NULL, "title" varchar(256) DEFAULT NULL, "content" text DEFAULT NULL, "link" varchar(256) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: events: DROP TABLE events[0m
+  [4;35;1mSQL (0.016060)[0m   [0mCREATE TABLE events ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "location_id" integer DEFAULT NULL, "name" varchar(64) DEFAULT NULL, "starts_at" datetime DEFAULT NULL, "ends_at" datetime DEFAULT NULL, "agenda" text DEFAULT NULL, "status" varchar(32) DEFAULT NULL, "minutes" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: feedbacks: DROP TABLE feedbacks[0m
+  [4;35;1mSQL (0.002247)[0m   [0mCREATE TABLE feedbacks ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "participant_id" integer DEFAULT NULL, "feedback" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;35;1mSQL (0.003003)[0m   [0mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(64) DEFAULT NULL, "address" text DEFAULT NULL, "homepage" varchar(256) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: members: DROP TABLE members[0m
+  [4;35;1mSQL (0.004543)[0m   [0mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "password" varchar(32) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: participants: DROP TABLE participants[0m
+  [4;35;1mSQL (0.002698)[0m   [0mCREATE TABLE participants ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "event_id" integer DEFAULT NULL, "attending" varchar(32) DEFAULT NULL, "comments" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.001752)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000415)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddFeedContentHash (2)
+  [4;36;1mSQL (0.001976)[0m   [0;1mALTER TABLE articles ADD "content_hash" varchar(32)[0m
+  [4;35;1mSQL (0.005614)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.002220)[0m   [0;1mUPDATE schema_info SET version = 2[0m
+  [4;35;1mSQL (0.000421)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddArticleLinkIndex (3)
+  [4;36;1mSQL (0.007778)[0m   [0;1mCREATE INDEX "index_articles_on_link" ON articles ("link")[0m
+  [4;35;1mSQL (0.001820)[0m   [0mUPDATE schema_info SET version = 3[0m
+  [4;36;1mSQL (0.000605)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to EnlargePasswordField (4)
+  [4;35;1mSQL (0.000718)[0m   [0mCREATE TEMPORARY TABLE altered_members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "password" varchar(32) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000110)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000391)[0m   [0mDROP TABLE members[0m
+  [4;36;1mSQL (0.000400)[0m   [0;1mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000103)[0m   [0mPRAGMA index_list(altered_members)[0m
+  [4;36;1mSQL (0.000219)[0m   [0;1mDROP TABLE altered_members[0m
+  [4;35;1mSQL (0.002144)[0m   [0mALTER TABLE members ADD "password" varchar(40)[0m
+  [4;36;1mSQL (0.022301)[0m   [0;1mVACUUM[0m
+  [4;35;1mSQL (0.003607)[0m   [0mUPDATE schema_info SET version = 4[0m
+  [4;36;1mSQL (0.000413)[0m   [0;1mSELECT version FROM schema_info[0m
+Migrating to HashMemberPasswords (5)
+  [4;35;1mMember Load (0.000274)[0m   [0mSELECT * FROM members [0m
+  [4;36;1mSQL (0.001605)[0m   [0;1mUPDATE schema_info SET version = 5[0m
+  [4;35;1mSQL (0.000419)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddPasswordReset (6)
+  [4;36;1mSQL (0.002289)[0m   [0;1mALTER TABLE members ADD "password_reset" varchar(40)[0m
+  [4;35;1mSQL (0.008487)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.002168)[0m   [0;1mUPDATE schema_info SET version = 6[0m
+  [4;35;1mSQL (0.000704)[0m   [0mSELECT version FROM schema_info[0m
+Migrating to AddMemberIrcNick (7)
+  [4;36;1mSQL (0.003099)[0m   [0;1mALTER TABLE members ADD "irc_nick" varchar(128)[0m
+  [4;35;1mSQL (0.013578)[0m   [0mVACUUM[0m
+  [4;36;1mSQL (0.002156)[0m   [0;1mUPDATE schema_info SET version = 7[0m
+  [4;35;1mSQL (0.000432)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000926)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000376)[0m   [0mPRAGMA index_list(articles)[0m
+  [4;36;1mSQL (0.000340)[0m   [0;1mPRAGMA index_info('index_articles_on_link')[0m
+  [4;35;1mSQL (0.000264)[0m   [0mPRAGMA index_list(events)[0m
+  [4;36;1mSQL (0.000238)[0m   [0;1mPRAGMA index_list(feedbacks)[0m
+  [4;35;1mSQL (0.000143)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000155)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000149)[0m   [0mPRAGMA index_list(participants)[0m
+  [4;36;1mSQL (0.000579)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000432)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000399)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000398)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000405)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000392)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000409)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000399)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000471)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000911)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000364)[0m   [0mPRAGMA index_list(articles)[0m
+  [4;36;1mSQL (0.000331)[0m   [0;1mPRAGMA index_info('index_articles_on_link')[0m
+  [4;35;1mSQL (0.000147)[0m   [0mPRAGMA index_list(events)[0m
+  [4;36;1mSQL (0.000136)[0m   [0;1mPRAGMA index_list(feedbacks)[0m
+  [4;35;1mSQL (0.000142)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000154)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000147)[0m   [0mPRAGMA index_list(participants)[0m
+  [4;36;1mSQL (0.000580)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: articles: DROP TABLE articles[0m
+  [4;36;1mSQL (0.003030)[0m   [0;1mCREATE TABLE articles ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "modified_at" datetime DEFAULT NULL, "title" varchar(256) DEFAULT NULL, "content" text DEFAULT NULL, "link" varchar(256) DEFAULT NULL, "content_hash" varchar(32) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.002022)[0m   [0mCREATE INDEX "index_articles_on_link" ON articles ("link")[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: events: DROP TABLE events[0m
+  [4;35;1mSQL (0.002702)[0m   [0mCREATE TABLE events ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "location_id" integer DEFAULT NULL, "name" varchar(64) DEFAULT NULL, "starts_at" datetime DEFAULT NULL, "ends_at" datetime DEFAULT NULL, "agenda" text DEFAULT NULL, "status" varchar(32) DEFAULT NULL, "minutes" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: feedbacks: DROP TABLE feedbacks[0m
+  [4;35;1mSQL (0.002324)[0m   [0mCREATE TABLE feedbacks ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "participant_id" integer DEFAULT NULL, "feedback" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;35;1mSQL (0.002970)[0m   [0mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(64) DEFAULT NULL, "address" text DEFAULT NULL, "homepage" varchar(256) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: members: DROP TABLE members[0m
+  [4;35;1mSQL (0.002830)[0m   [0mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "password_reset" varchar(40) DEFAULT NULL, "irc_nick" varchar(128) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: participants: DROP TABLE participants[0m
+  [4;35;1mSQL (0.002957)[0m   [0mCREATE TABLE participants ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "event_id" integer DEFAULT NULL, "attending" varchar(32) DEFAULT NULL, "comments" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002936)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.001743)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.002065)[0m   [0;1mUPDATE schema_info SET version = 7[0m
+  [4;36;1mSQL (0.001063)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000441)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000398)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000497)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000398)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000388)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000440)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000393)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000451)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.001296)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000366)[0m   [0mPRAGMA index_list(articles)[0m
+  [4;36;1mSQL (0.000358)[0m   [0;1mPRAGMA index_info('index_articles_on_link')[0m
+  [4;35;1mSQL (0.000148)[0m   [0mPRAGMA index_list(events)[0m
+  [4;36;1mSQL (0.000136)[0m   [0;1mPRAGMA index_list(feedbacks)[0m
+  [4;35;1mSQL (0.000140)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000156)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000144)[0m   [0mPRAGMA index_list(participants)[0m
+  [4;36;1mSQL (0.000333)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: articles: DROP TABLE articles[0m
+  [4;36;1mSQL (0.018071)[0m   [0;1mCREATE TABLE articles ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "modified_at" datetime DEFAULT NULL, "title" varchar(256) DEFAULT NULL, "content" text DEFAULT NULL, "link" varchar(256) DEFAULT NULL, "content_hash" varchar(32) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.029963)[0m   [0mCREATE INDEX "index_articles_on_link" ON articles ("link")[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: events: DROP TABLE events[0m
+  [4;35;1mSQL (0.039456)[0m   [0mCREATE TABLE events ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "location_id" integer DEFAULT NULL, "name" varchar(64) DEFAULT NULL, "starts_at" datetime DEFAULT NULL, "ends_at" datetime DEFAULT NULL, "agenda" text DEFAULT NULL, "status" varchar(32) DEFAULT NULL, "minutes" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: feedbacks: DROP TABLE feedbacks[0m
+  [4;35;1mSQL (0.002660)[0m   [0mCREATE TABLE feedbacks ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "participant_id" integer DEFAULT NULL, "feedback" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;35;1mSQL (0.002957)[0m   [0mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(64) DEFAULT NULL, "address" text DEFAULT NULL, "homepage" varchar(256) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: members: DROP TABLE members[0m
+  [4;35;1mSQL (0.019782)[0m   [0mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "password_reset" varchar(40) DEFAULT NULL, "irc_nick" varchar(128) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: participants: DROP TABLE participants[0m
+  [4;35;1mSQL (0.003241)[0m   [0mCREATE TABLE participants ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "event_id" integer DEFAULT NULL, "attending" varchar(32) DEFAULT NULL, "comments" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.006353)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.003196)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.002178)[0m   [0;1mUPDATE schema_info SET version = 7[0m
+  [4;36;1mSQL (0.000566)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000444)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000382)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000450)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000407)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000448)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000378)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000375)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000462)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000921)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000359)[0m   [0mPRAGMA index_list(articles)[0m
+  [4;36;1mSQL (0.000319)[0m   [0;1mPRAGMA index_info('index_articles_on_link')[0m
+  [4;35;1mSQL (0.000140)[0m   [0mPRAGMA index_list(events)[0m
+  [4;36;1mSQL (0.000133)[0m   [0;1mPRAGMA index_list(feedbacks)[0m
+  [4;35;1mSQL (0.000133)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000139)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000134)[0m   [0mPRAGMA index_list(participants)[0m
+  [4;36;1mSQL (0.000372)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: articles: DROP TABLE articles[0m
+  [4;36;1mSQL (0.034738)[0m   [0;1mCREATE TABLE articles ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "modified_at" datetime DEFAULT NULL, "title" varchar(256) DEFAULT NULL, "content" text DEFAULT NULL, "link" varchar(256) DEFAULT NULL, "content_hash" varchar(32) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.002572)[0m   [0mCREATE INDEX "index_articles_on_link" ON articles ("link")[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: events: DROP TABLE events[0m
+  [4;35;1mSQL (0.014333)[0m   [0mCREATE TABLE events ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "location_id" integer DEFAULT NULL, "name" varchar(64) DEFAULT NULL, "starts_at" datetime DEFAULT NULL, "ends_at" datetime DEFAULT NULL, "agenda" text DEFAULT NULL, "status" varchar(32) DEFAULT NULL, "minutes" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: feedbacks: DROP TABLE feedbacks[0m
+  [4;35;1mSQL (0.018445)[0m   [0mCREATE TABLE feedbacks ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "participant_id" integer DEFAULT NULL, "feedback" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;35;1mSQL (0.007789)[0m   [0mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(64) DEFAULT NULL, "address" text DEFAULT NULL, "homepage" varchar(256) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: members: DROP TABLE members[0m
+  [4;35;1mSQL (0.002252)[0m   [0mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "password_reset" varchar(40) DEFAULT NULL, "irc_nick" varchar(128) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: participants: DROP TABLE participants[0m
+  [4;35;1mSQL (0.002631)[0m   [0mCREATE TABLE participants ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "event_id" integer DEFAULT NULL, "attending" varchar(32) DEFAULT NULL, "comments" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002355)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.002075)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.001728)[0m   [0;1mUPDATE schema_info SET version = 7[0m
+  [4;36;1mSQL (0.000557)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.000420)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000380)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000371)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000403)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000385)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000375)[0m   [0mSELECT version FROM schema_info[0m
+  [4;36;1mSQL (0.000375)[0m   [0;1mSELECT version FROM schema_info[0m
+  [4;35;1mSQL (0.000414)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000888)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000356)[0m   [0mPRAGMA index_list(articles)[0m
+  [4;36;1mSQL (0.000319)[0m   [0;1mPRAGMA index_info('index_articles_on_link')[0m
+  [4;35;1mSQL (0.000140)[0m   [0mPRAGMA index_list(events)[0m
+  [4;36;1mSQL (0.000134)[0m   [0;1mPRAGMA index_list(feedbacks)[0m
+  [4;35;1mSQL (0.000131)[0m   [0mPRAGMA index_list(locations)[0m
+  [4;36;1mSQL (0.000135)[0m   [0;1mPRAGMA index_list(members)[0m
+  [4;35;1mSQL (0.000135)[0m   [0mPRAGMA index_list(participants)[0m
+  [4;36;1mSQL (0.000538)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: articles: DROP TABLE articles[0m
+  [4;36;1mSQL (0.022696)[0m   [0;1mCREATE TABLE articles ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "modified_at" datetime DEFAULT NULL, "title" varchar(256) DEFAULT NULL, "content" text DEFAULT NULL, "link" varchar(256) DEFAULT NULL, "content_hash" varchar(32) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.004866)[0m   [0mCREATE INDEX "index_articles_on_link" ON articles ("link")[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: events: DROP TABLE events[0m
+  [4;35;1mSQL (0.012791)[0m   [0mCREATE TABLE events ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "location_id" integer DEFAULT NULL, "name" varchar(64) DEFAULT NULL, "starts_at" datetime DEFAULT NULL, "ends_at" datetime DEFAULT NULL, "agenda" text DEFAULT NULL, "status" varchar(32) DEFAULT NULL, "minutes" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: feedbacks: DROP TABLE feedbacks[0m
+  [4;35;1mSQL (0.002231)[0m   [0mCREATE TABLE feedbacks ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "participant_id" integer DEFAULT NULL, "feedback" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: locations: DROP TABLE locations[0m
+  [4;35;1mSQL (0.002521)[0m   [0mCREATE TABLE locations ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(64) DEFAULT NULL, "address" text DEFAULT NULL, "homepage" varchar(256) DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: members: DROP TABLE members[0m
+  [4;35;1mSQL (0.002794)[0m   [0mCREATE TABLE members ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(128) DEFAULT NULL, "email" varchar(128) DEFAULT NULL, "feed_url" varchar(256) DEFAULT NULL, "about" text DEFAULT NULL, "created_at" datetime DEFAULT NULL, "password" varchar(40) DEFAULT NULL, "password_reset" varchar(40) DEFAULT NULL, "irc_nick" varchar(128) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: participants: DROP TABLE participants[0m
+  [4;35;1mSQL (0.002689)[0m   [0mCREATE TABLE participants ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "member_id" integer DEFAULT NULL, "event_id" integer DEFAULT NULL, "attending" varchar(32) DEFAULT NULL, "comments" text DEFAULT NULL, "created_at" datetime DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002841)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.001739)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.001829)[0m   [0;1mUPDATE schema_info SET version = 7[0m

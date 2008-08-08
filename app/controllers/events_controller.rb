@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :authenticate, :only => [ :edit, :create, :new, :claim ]
   before_filter :member_is_owner, :only => [ :edit, :destroy, :release ]
- 
+
   def index
     list
     render :action => 'list'
@@ -12,12 +12,12 @@ class EventsController < ApplicationController
   end
 
   def list
-    @event_pages, @events = paginate :event, :per_page => 10, :order_by => 'starts_at DESC'
+    @events = Event.paginate(:page => params[:page], :order => 'starts_at DESC')
   end
 
   def show
     @event = Event.find(params[:id])
-    
+
     @participants = @event.participants
 
     @participants_by_status = HashWithIndifferentAccess.new
@@ -43,7 +43,7 @@ class EventsController < ApplicationController
     if params[:event][:location_id].nil?
       location = Location.find_by_name(params[:location][:name])
       if location.nil?
-        location = Location.new(params[:location]) 
+        location = Location.new(params[:location])
         unless location.save
           @location = location
           render :action => 'new' and return
@@ -53,13 +53,13 @@ class EventsController < ApplicationController
     else
       @location = Location.find(params[:event][:location_id].to_i)
     end
-    
+
     @event.location = @location
     @event.active!
-    
+
     if @event.save
       flash[:notice] = 'Event was successfully created.'
-      Member.find(:all) do |member| 
+      Member.find(:all) do |member|
          MailBot::deliver_new_event_message(self, @event, member)
       end
       redirect_to :action => 'list'
@@ -72,9 +72,9 @@ class EventsController < ApplicationController
   def edit
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
-    	flash[:notice] = "Sorry. You do not own this event."
-	redirect_to :action => 'list'
-	return
+        flash[:notice] = "Sorry. You do not own this event."
+        redirect_to :action => 'list'
+        return
     end
     @location = @event.location
   end
@@ -82,16 +82,16 @@ class EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
-    	flash[:notice] = "Sorry. You do not own this event."
-	redirect_to :action => 'list'
-	return
+        flash[:notice] = "Sorry. You do not own this event."
+        redirect_to :action => 'list'
+        return
     end
 
     # deal with updates to location
     if params[:event][:location_id].nil?
       location = Location.find_by_name(params[:location][:name])
       if location.nil?
-        location = Location.new(params[:location]) 
+        location = Location.new(params[:location])
         unless location.save
           @location = location
           render :action => 'new' and return
@@ -116,8 +116,8 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
       flash[:notice] = "Sorry. You do not own this event."
-	    redirect_to :action => 'list'
-    	return
+            redirect_to :action => 'list'
+        return
     end
     @event.destroy
     redirect_to :action => 'list'
@@ -139,7 +139,7 @@ class EventsController < ApplicationController
     end
     redirect_to :action => 'list'
   end
-  
+
   def release
     @event = Event.find(params[:id])
     if session[:member].id != @event.member_id
@@ -155,7 +155,7 @@ class EventsController < ApplicationController
     end
     redirect_to :action => 'list'
   end
-  
+
   def claim
     @event = Event.find(params[:id])
     unless @event.unclaimed?
@@ -171,7 +171,7 @@ class EventsController < ApplicationController
     end
     redirect_to :action => 'show', :id => @event.id
   end
-  
+
   ICAL_EVENT_LIMIT = 100
   def ical
      @headers['content-type'] = 'text/plain'
@@ -180,9 +180,9 @@ class EventsController < ApplicationController
      @events = Event.find_within_range(now - 30.days, now + 30.days)
      render_without_layout
   end
-  
+
   private
-  
+
   def member_is_owner
     if !member_is_this_member? Event.find(params[:id]).member.id
       flash[:notice] = "Only the owner can edit or remove events."

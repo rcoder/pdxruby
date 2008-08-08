@@ -1,6 +1,9 @@
 # The filters added to this controller will be run for all controllers in the application.
 # Likewise will all the methods added be available for all controllers.
 class ApplicationController < ActionController::Base
+  # See ActionController::RequestForgeryProtection for details
+  # Uncomment the :secret if you're not using the cookie session store
+  protect_from_forgery # :secret => 'a993580a90b7793c250f29bd2d2672a3'
 
   # check to see if the current user is logged in as a valid
   # member, if not, log them out

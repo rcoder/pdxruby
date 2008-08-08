@@ -5,7 +5,7 @@ class ParticipantsController < ApplicationController
   end
 
   def list
-    @participant_pages, @participants = paginate :participant, :per_page => 10
+    @participants = Participant.paginate(:page => params[:page])
   end
 
   def show

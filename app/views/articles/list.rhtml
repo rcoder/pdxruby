@@ -5,7 +5,7 @@
     <th>Member</th>
     <th>Title</th>
   </tr>
-  
+
 <% for article in @articles %>
   <tr>
     <td><%= link_to article.member.name,
@@ -20,9 +20,7 @@
   </tr>
 <% end %>
 </table>
-
-<%= link_to 'Previous page', { :page => @article_pages.current.previous } if @article_pages.current.previous %>
-<%= link_to 'Next page', { :page => @article_pages.current.next } if @article_pages.current.next %> 
+<%= will_paginate @articles %>
 
 <br />
 

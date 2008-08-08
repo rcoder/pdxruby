@@ -9,7 +9,7 @@
     <th>Ends At</th>
     <th>Status</th>
   </tr>
-  
+
 <% for event in @events %>
   <tr class="<%= event.status %>_event">
     <td>
@@ -17,12 +17,12 @@
     </td>
     <td>
       <% if event.member %>
-          <%= link_to event.member.name, 
-              :controller => 'members', 
+          <%= link_to event.member.name,
+              :controller => 'members',
               :action => 'show',
               :id => event.member.id %>
       <% else %>
-        <span class="attention">no one</span> 
+        <span class="attention">no one</span>
         (<%= link_to 'claim',
             {:action => 'claim',
              :id => event.id },
@@ -33,10 +33,10 @@
       <td><i>unknown</i></td>
     <% else %>
       <td>
-        <%= link_to event.location.name, 
-            :controller => 'locations', 
-            :action => 'show', 
-            :id => event.location.id 
+        <%= link_to event.location.name,
+            :controller => 'locations',
+            :action => 'show',
+            :id => event.location.id
         %>
         </td>
     <% end %>
@@ -53,8 +53,7 @@
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @event_pages.current.previous } if @event_pages.current.previous %>
-<%= link_to 'Next page', { :page => @event_pages.current.next } if @event_pages.current.next %> 
+<%= will_paginate @events %>
 
 <br />
 

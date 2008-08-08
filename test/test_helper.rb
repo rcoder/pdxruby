@@ -10,6 +10,8 @@ class Test::Unit::TestCase
   # Instantiated fixtures are slow, but give you @david where you otherwise would need people(:david)
   self.use_instantiated_fixtures  = false
 
+  fixtures :all
+
   # Add more helper methods to be used by all tests here...
   include AuthenticatedTestHelper
 end

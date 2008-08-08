@@ -3,6 +3,6 @@
 <%= form_tag({:action => 'update', :id => @member}, {:multipart => true}) %>
   <%= render_partial 'form' %>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+</form>
 
 <%= link_to 'Show', :action => 'show', :id => @member %>

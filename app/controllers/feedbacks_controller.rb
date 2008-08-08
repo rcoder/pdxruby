@@ -5,7 +5,7 @@ class FeedbacksController < ApplicationController
   end
 
   def list
-    @feedback_pages, @feedbacks = paginate :feedback, :per_page => 10
+    @feedbacks = Feedback.paginate(:page => params[:page])
   end
 
   def show
@@ -15,12 +15,12 @@ class FeedbacksController < ApplicationController
   def new
     @feedback = Feedback.new
     @participant = Participant.find(
-    	:first,
-    	:conditions => [
-    		'member_id = ? and event_id = ?', 
-    		session[:member].id, 
-    		params[:event]
-    	]
+        :first,
+        :conditions => [
+                'member_id = ? and event_id = ?',
+                session[:member].id,
+                params[:event]
+        ]
     )
   end
 
@@ -30,9 +30,9 @@ class FeedbacksController < ApplicationController
     if @feedback.save
       flash[:notice] = 'Feedback was successfully created.'
       MailBot::deliver_feedback_message(self, @feedback)
-      redirect_to :controller => 'events', 
-      	:action => 'show', 
-      	:id => @feedback.participant.event.id
+      redirect_to :controller => 'events',
+        :action => 'show',
+        :id => @feedback.participant.event.id
     else
       render :action => 'new'
     end

@@ -7,7 +7,7 @@ class LocationsController < ApplicationController
   end
 
   def list
-    @location_pages, @locations = paginate :location, :per_page => 10
+    @locations = Location.paginate(:page => params[:page])
   end
 
   def show

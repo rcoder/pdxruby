@@ -6,7 +6,7 @@
     <th><%= column.human_name %></th>
   <% end %>
   </tr>
-  
+
 <% for participant in @participants %>
   <tr>
   <% for column in Participant.content_columns %>
@@ -19,8 +19,7 @@
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @participant_pages.current.previous } if @participant_pages.current.previous %>
-<%= link_to 'Next page', { :page => @participant_pages.current.next } if @participant_pages.current.next %> 
+<%= will_paginate @participants %>
 
 <br />
 

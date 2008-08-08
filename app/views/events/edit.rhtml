@@ -1,15 +1,15 @@
 <h1>Editing event</h1>
 
-<%= start_form_tag :action => 'update', :id => @event %>
-  <%= unless @event.ended? 
-        render_partial 'form' 
+<%= form_tag :action => 'update', :id => @event %>
+  <%= unless @event.ended?
+        render_partial 'form'
       else
         render_partial 'form_ended'
       end
   %>
   <p><%= check_box_tag 'trivial' %> <label for="trivial_change">Trivial Change</label></p>
   <%= submit_tag 'Edit' %>
-<%= end_form_tag %>
+</form>
 
 <%= link_to 'Show', :action => 'show', :id => @event %> |
 <%= link_to 'Event List', :action => 'list' %>
