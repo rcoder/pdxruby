@@ -21,9 +21,10 @@ class Participant < ActiveRecord::Base
   end
 
   def self.find_upcoming(member_id)
-    # XXX elw: find_all [statement, member_id] or else quote member_id ?
-    # http://manuals.rubyonrails.com/read/chapter/43
-    return self.find_by_sql("SELECT * FROM events e, participants p " +
-      "WHERE p.event_id=e.id AND p.member_id=#{member_id} AND e.starts_at>current_date")
+    # this is marginally slower than the original find_by_sql call, but doesn't expose
+    # a huge SQL injection hole, either
+    self.find(:all, :conditions => ['member_id = ?', member_id]).select do |p|
+      p.event.starts_at > Time.today
+    end
   end
 end
