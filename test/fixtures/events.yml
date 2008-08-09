@@ -3,8 +3,8 @@ babyshower:
   member_id: 1
   location_id: 1
   name: Peats baby shower
-  starts_at: <%= Time.now - 200000 %>
-  ends_at: <%= Time.now - 100000 %>
+  starts_at: <%= Time.now - (1.day + 1.hour) %>
+  ends_at: <%= Time.now - 1.day %>
   agenda: Peat will present his fat belly. We will all gather around. We will then rub it. 3 more weeks...and peat jr.
   status: active
   minutes: foobar
@@ -14,8 +14,8 @@ prom:
   member_id: 2
   location_id: 1
   name: Ben High School Prom
-  starts_at: <%= Time.now + 10000 %>
-  ends_at: <%= Time.now + 20000 %>
+  starts_at: <%= Time.now + 1.day %>
+  ends_at: <%= Time.now + (1.day + 1.hour) %>
   agenda: Ben is hoping to get some action tonight. He is going to pick me up at 9PM.
   status: active
   minutes: stuff happened
