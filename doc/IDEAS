@@ -13,7 +13,7 @@ _Community Stuff_
 
   - del.icio.us/simpy aggregator.  Let members share their del username
     and fetch certain tags
-  
+
   - provide an rss feed of our aggregated/combined feed data
 
   - provide an rss feed of events, and maybe an rss feed for
@@ -29,7 +29,7 @@ _Community Stuff_
 
   - It would be nice if the feeds could be moderated by people. If one
     person posts a bunch of off-topic entries, then the last 5 isn't very
-    Ruby-based. Currently, a user can delete his or her own articles, 
+    Ruby-based. Currently, a user can delete his or her own articles,
     which is probably good-enough for a little while.
         - Perhaps a field should be added to the articles relation
           that contains the number of 'nay' votes. When some threshold

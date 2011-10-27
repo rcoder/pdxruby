@@ -2,13 +2,13 @@
 
 Notes:
 
-1) If you complete one of these, please remove it from the list. 
+1) If you complete one of these, please remove it from the list.
 
-2) If you want to "claim" a task (i.e. you plan on doing it shortly), 
+2) If you want to "claim" a task (i.e. you plan on doing it shortly),
    put your name in [square brackets] at the end of the event.
 
 _Spamming_
-  
+
   - All members are notified of new events
 
   - Event organizer isn't notified when they sign up for the event
@@ -33,11 +33,11 @@ _Cosmetic_
 
   - Upcoming events should be ordered ASC (i.e. more soon things on top)
 
-  - Make timestamps prettier (this and following 2 items 
+  - Make timestamps prettier (this and following 2 items
     suggested by bleything on dev-list)
 
   - Article list enhancements (sort by author, etc.)
 
 _Testing_
-  
+
   - write functional tests for application.rb

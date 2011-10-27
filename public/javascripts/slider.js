@@ -1,5 +1,5 @@
 // Copyright (c) 2005 Marty Haught
-// 
+//
 // See scriptaculous.js for full license.
 
 if(!Control) var Control = {};
@@ -26,8 +26,8 @@ Control.Slider.prototype = {
     this.value     = 0;
 
     var defaultMaximum = Math.round(this.track.offsetWidth / this.increment);
-    if(this.isVertical()) defaultMaximum = Math.round(this.track.offsetHeight / this.increment);   
-    
+    if(this.isVertical()) defaultMaximum = Math.round(this.track.offsetHeight / this.increment);
+
     this.maximum = this.options.maximum || defaultMaximum;
     this.minimum = this.options.minimum || 0;
 
@@ -35,7 +35,7 @@ Control.Slider.prototype = {
     this.alignX = parseInt (this.options.alignX) || 0;
     this.alignY = parseInt (this.options.alignY) || 0;
 
-    // Zero out the slider position	
+    // Zero out the slider position
     this.setCurrentLeft(Position.cumulativeOffset(this.track)[0] - Position.cumulativeOffset(this.handle)[0] + this.alignX);
     this.setCurrentTop(this.trackTop() - Position.cumulativeOffset(this.handle)[1] + this.alignY);
 
@@ -54,7 +54,7 @@ Control.Slider.prototype = {
     this.disabled = false;
 
     // FIXME: use css
-    this.handleImage    = $(this.options.handleImage) || false; 
+    this.handleImage    = $(this.options.handleImage) || false;
     this.handleDisabled = this.options.handleDisabled || false;
     this.handleEnabled  = false;
     if(this.handleImage)
@@ -93,7 +93,7 @@ Control.Slider.prototype = {
     this.disabled = false;
     if(this.handleEnabled)
       this.handleImage.src = this.handleEnabled;
-  },  
+  },
   currentLeft: function() {
     return parseInt(this.handle.style.left || '0');
   },
@@ -111,7 +111,7 @@ Control.Slider.prototype = {
   },
   trackTop: function(){
     return Position.cumulativeOffset(this.track)[1];
-  }, 
+  },
   getNearestValue: function(value){
     if(this.values){
       var i = 0;
@@ -131,11 +131,11 @@ Control.Slider.prototype = {
   },
   setSliderValue:  function(sliderValue){
     // First check our max and minimum and nearest values
-    sliderValue = this.getNearestValue(sliderValue);	
+    sliderValue = this.getNearestValue(sliderValue);
     if(sliderValue > this.maximum) sliderValue = this.maximum;
     if(sliderValue < this.minimum) sliderValue = this.minimum;
     var offsetDiff = (sliderValue - (this.value||this.minimum)) * this.increment;
-    
+
     if(this.isVertical()){
       this.setCurrentTop(offsetDiff + this.currentTop());
     } else {
@@ -143,9 +143,9 @@ Control.Slider.prototype = {
     }
     this.value = sliderValue;
     this.updateFinished();
-  },  
+  },
   minimumOffset: function(){
-    return(this.isVertical() ? 
+    return(this.isVertical() ?
       this.trackTop() + this.alignY :
       this.trackLeft() + this.alignX);
   },
@@ -153,7 +153,7 @@ Control.Slider.prototype = {
     return(this.isVertical() ?
       this.trackTop() + this.alignY + (this.maximum - this.minimum) * this.increment :
       this.trackLeft() + this.alignX + (this.maximum - this.minimum) * this.increment);
-  },  
+  },
   isVertical:  function(){
     return (this.axis == 'vertical');
   },
@@ -191,7 +191,7 @@ Control.Slider.prototype = {
 
     offsets[0] -= this.currentLeft();
     offsets[1] -= this.currentTop();
-        
+
     // Adjust for the pointer's position on the handle
     pointer[0] -= this.offsetX;
     pointer[1] -= this.offsetY;
@@ -232,7 +232,7 @@ Control.Slider.prototype = {
     }
     this.active = false;
     this.dragging = false;
-  },  
+  },
   finishDrag: function(event, success) {
     this.active = false;
     this.dragging = false;
@@ -249,7 +249,7 @@ Control.Slider.prototype = {
       switch(event.keyCode) {
         case Event.KEY_ESC:
           this.finishDrag(event, false);
-          Event.stop(event); 
+          Event.stop(event);
           break;
       }
       if(navigator.appVersion.indexOf('AppleWebKit')>0) Event.stop(event);

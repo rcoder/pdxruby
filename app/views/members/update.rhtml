@@ -1,4 +1,4 @@
-<% form_for :member, @member, 
+<% form_for :member, @member,
 	:html => { :multipart => true } do |f| %>
   <% f.fieldset :legend => 'Profile' do |s| %>
     <%= error_messages_for 'member' %>

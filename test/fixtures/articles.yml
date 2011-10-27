@@ -11,7 +11,7 @@ peatsbooks:
   modified_at: now
   member_id: 1
   title: PDX.rb versus Peats Books
-  content: meep. meep. moop. 
+  content: meep. meep. moop.
   link: http//www.peatbooks.com/
 
 hackfest:
@@ -19,5 +19,5 @@ hackfest:
   modified_at: now
   member_id: 2
   title: PDX.rb gets drunk. Ben takes off his clothes
-  content: Seriously... he took his clothes off and sat on PeatsBooks.com. 
+  content: Seriously... he took his clothes off and sat on PeatsBooks.com.
   link: http//blog.bleything.net/
