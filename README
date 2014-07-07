@@ -1,18 +1,18 @@
 Cat Herder (source code to pdxruby.org)
 
-This application was written way back in late 2005 at a group hackfest hosted 
+This application was written way back in late 2005 at a group hackfest hosted
 by the Portland Ruby Brigade. We wanted a way to propose and RSVP for events
-without requiring any particular person or group to manage a calendar for 
-everyone else. 
+without requiring any particular person or group to manage a calendar for
+everyone else.
 
-Anyone can register for an account, propose an event, and sign up to attend 
+Anyone can register for an account, propose an event, and sign up to attend
 other people's events. There is also some basic support for aggregation of
 members' RSS feeds, and feedback from event participants, but the primary use
 of the system is still as a simple event calendar.
 
-The file doc/TODO contains a few miscellaneous items we've thought about 
+The file doc/TODO contains a few miscellaneous items we've thought about
 changing over the years, but overall this whole codebase is probably of more
 interest as a historical oddity than as a useful application for other people
 to use. It uses a mish-mash of APIs, coding styles, and tests contributed by
-about a dozen different maintainers over the last three years, and certainly 
+about a dozen different maintainers over the last three years, and certainly
 shows its age when compared to a shiny new legacy-free Rails 2 application.

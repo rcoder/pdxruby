@@ -2,28 +2,28 @@
 <% if @event.cancelled? %>
 <% end %>
 
-<p>Organized by 
+<p>Organized by
   <% if @event.member.nil? %>
-  no one 
+  no one
   (<%= link_to 'claim',
         {:id => @event.id, :action => 'claim'},
         :confirm => 'Are you sure?' %>)
   <% else %>
-  <%= link_to @event.member.name, 
-      :controller => 'members', 
-      :action => 'show', 
-      :id => @event.member.id 
+  <%= link_to @event.member.name,
+      :controller => 'members',
+      :action => 'show',
+      :id => @event.member.id
   %>
   <% end %>
 </p>
-<p>Time: <%= @event.starts_at.strftime('%a %b %d %Y at %I:%M%p') %> 
+<p>Time: <%= @event.starts_at.strftime('%a %b %d %Y at %I:%M%p') %>
   - <%= @event.ends_at.strftime('%a %b %d %Y at %I:%M%p') %></p>
-<p>Location: 
-  <%= link_to @event.location.name, 
-      :controller => 'locations', 
-      :action => 'show', 
-      :id => @event.location.id 
-   %>, 
+<p>Location:
+  <%= link_to @event.location.name,
+      :controller => 'locations',
+      :action => 'show',
+      :id => @event.location.id
+   %>,
    <%= @event.location.address %>
 </p>
 
@@ -38,9 +38,9 @@
 
 <% unless (session[:member].nil?) || (@event.has_participant(session[:member])) %>
 <p>
-<%= link_to 'Will you be attending?', 
-	:controller => 'participants', 
-	:action => 'new', 
+<%= link_to 'Will you be attending?',
+	:controller => 'participants',
+	:action => 'new',
 	:event => @event unless @event.ended?
 %>
 </p>
@@ -50,7 +50,7 @@
 <%= if @participants_by_status[:yes].empty?
       "(none)"
     else
-      render :partial => 'rsvp', :collection => @participants_by_status[:yes] 
+      render :partial => 'rsvp', :collection => @participants_by_status[:yes]
     end
 %>
  </blockquote>
@@ -59,7 +59,7 @@
 <%= if @participants_by_status[:no].empty?
       "(none)"
     else
-      render :partial => 'rsvp', :collection => @participants_by_status[:no] 
+      render :partial => 'rsvp', :collection => @participants_by_status[:no]
     end
 %>
  </blockquote>
@@ -68,7 +68,7 @@
 <%= if @participants_by_status[:maybe].empty?
       "(none)"
     else
-      render :partial => 'rsvp', :collection => @participants_by_status[:maybe] 
+      render :partial => 'rsvp', :collection => @participants_by_status[:maybe]
     end
 %>
  </blockquote>
@@ -89,7 +89,7 @@
 	:action => 'new',
 	:event => @event if @event.has_participant(session[:member]) %>
 
-<% if @event.feedbacks.size > 0 %>	
+<% if @event.feedbacks.size > 0 %>
 <%= render :partial => 'feedback', :collection => @event.feedbacks %>
 <% else %>
 <p>(none)</p>
@@ -105,8 +105,8 @@
 | <%= link_to 'Cancel this event', :action => 'cancel', :id => @event, :confirm => 'Are you sure?' %>
 <% end %>
 <% if @event.member == session[:member] %>
-| <%= link_to 'Give up ownership', 
-    :action => 'release', 
+| <%= link_to 'Give up ownership',
+    :action => 'release',
     :id => @event,
     :confirm => 'Are you sure?' %>
 <% end %>

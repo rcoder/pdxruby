@@ -17,7 +17,7 @@ module AuthenticatedTestHelper
   end
 
   # Assert the block accepts the login
-  # 
+  #
   #   assert_accepts_login(:bob) { get :edit, :id => 1 }
   #
   # Accepts anonymous logins:

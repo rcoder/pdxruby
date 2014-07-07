@@ -1,10 +1,10 @@
 module Rubaidh #:nodoc:
   module FormHelper
-    
+
     # def self.included(base)
     #   base.alias_method_chain :fields_for, :fieldset
     # end
-    # 
+    #
     # # Behaves just like the regular +fields_for+ with a little extra magic
     # # juju in that it creates a fieldset around the fields inside.
     # def fields_for_with_fieldset(object_name, *args, &block)
@@ -32,7 +32,7 @@ module Rubaidh #:nodoc:
       block.call(builder)
       concat "</fieldset>", block.binding
     end
-    
+
     def grouped_collection_select(object_name, method, collection, group_method, group_label_method, value_method, text_method, options = {}, html_options = {})
       ActionView::Helpers::InstanceTag.new(object_name, method, self, nil, options.delete(:object)).to_grouped_collection_select_tag(collection, group_method, group_label_method, value_method, text_method, options, html_options)
     end
@@ -57,7 +57,7 @@ module Rubaidh #:nodoc:
 
       label
     end
-    
+
     def to_grouped_collection_select_tag(collection, group_method, group_label_method, value_method, text_method, options, html_options)
       html_options = html_options.stringify_keys
       add_default_name_and_id(html_options)
@@ -140,17 +140,17 @@ module Rubaidh #:nodoc:
     def fieldset(options = {}, builder = self, &block)
       @template.fieldset(options, builder, &block)
     end
-    
+
     private
     def label_options_from_options(options)
       label_options = options.dup
-      
-      # Remove the options from the main field which apply solely to the 
+
+      # Remove the options from the main field which apply solely to the
       # label.
       [:label, :description, :required].each do |v|
         options.delete(v)
       end
-      
+
       # Tidy up the label options so they only have what's required.
       label_options.reject do |k, v|
         ![:id, :label, :description, :required].include?(k)

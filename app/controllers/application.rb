@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   def authenticated?
     session[:member] && Member.find(session[:member].id)
   end
-  
+
   # check to see if the currently authenticated member is
   # the member with the given id
   def member_is_this_member?(id)

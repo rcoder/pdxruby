@@ -58,15 +58,15 @@ Then your database.yml would be roughly:
     host: /tmp/pdxruby_socket
     user: yourusername
     password: itdoesntmatter
-  
+
   development:
     database: pdxruby_dev
     <<: *login
-  
+
   test:
     database: pdxruby_test
     <<: *login
-  
+
   production:
     database: pdxruby_production
     <<: *login
